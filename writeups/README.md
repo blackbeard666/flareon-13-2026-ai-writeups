@@ -1,6 +1,6 @@
 # FLARE-On 13 (2026) — Solutions 1–6
 
-Write-ups for the first six FLARE-On 13 challenges, solved with Claude Code on a Windows 11 host. Each challenge has its own detailed page; this index summarizes results and the session metrics. Challenges 1–5 are fully solved (flags recovered); challenge 6 is fully reverse-engineered but its flag is server-delivered and not recoverable offline (see its page).
+Write-ups for the first six FLARE-On 13 challenges, solved with Claude Code on a Windows 11 host. Each challenge has its own detailed page; this index summarizes results and the session metrics. All six challenges are fully solved (flags recovered offline).
 
 ## Challenge index
 
@@ -11,7 +11,7 @@ Write-ups for the first six FLARE-On 13 challenges, solved with Claude Code on a
 | 3 | [flareon13.doc](03-flareon13-doc.md) | Polyglot (COM/ISO/ZIP-Reduce/PDF/Mach-O) | `Ju$7_4_l177l3_7r34$ur3_HUN7@flare-on.com` | Opus 5.5 | ~14.5 min |
 | 4 | [ToxicMiner](04-toxicminer.md) | cpuminer trojan / SHA-256d + RC4 brute | `cpu_m3lt3d_4nd_all_i_g0t_w4s_th1s_fl4g@flare-on.com` | Opus 5.5 + 4.8 | ~78.6 min |
 | 5 | [catthief](05-catthief.md) | Rust implant / custom Huffman + RC4 | `th3r3_b3_tr34sure_1n_th4t_pc4p@flare-on.com` | Opus 4.8 | ~537 min* |
-| 6 | [ThreatInvaders](06-threatinvaders.md) | .NET 10 single-file / covert length-exfil / server reward | *server-delivered (not offline)* | Opus 4.8 | — |
+| 6 | [ThreatInvaders](06-threatinvaders.md) | .NET 10 modified-runtime / detour hooks / PCG-XOR exfil | `wh4t_4_l0ng_str4ng3_tr1p_1ts_b33n@flare-on.com` | Opus 4.8 | — |
 
 \* Challenge 5 spans two sessions; the metric is the first session only.
 
@@ -23,8 +23,8 @@ flowchart LR
     C2 --> C3[3. flareon13.doc<br/>5-format polyglot hunt]
     C3 --> C4[4. ToxicMiner<br/>volume-serial SHA256d + RC4 brute]
     C4 --> C5[5. catthief<br/>custom Huffman + RC4 over pcap]
-    C5 --> C6[6. ThreatInvaders<br/>.NET single-file + updater length-exfil]
-    C6 --> DONE([5/6 flags recovered; #6 server-delivered])
+    C5 --> C6[6. ThreatInvaders<br/>modified .NET runtime + PCG-XOR exfil]
+    C6 --> DONE([6/6 flags recovered offline])
 ```
 
 ## Common techniques across the set

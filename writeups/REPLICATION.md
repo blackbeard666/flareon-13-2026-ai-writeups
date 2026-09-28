@@ -68,6 +68,19 @@ python -m pip install capstone unicorn pefile z3-solver pycryptodome numpy pillo
 2. The flag is painted on the treasure-chest scroll in `recovered/catcatcat.jpg`.
 3. *(Only if re-deriving the format)* the Frida **compression oracle** scripts (`c2.py`, `decoracle*.py`, etc.) replay the pcap commands and feed known-frequency probe files to confirm the table layout and the bit-2091 data start — **not required** to reproduce the flag from the provided pcap.
 
+### 6 — ThreatInvaders
+1. `solve.py` recovers the flag from **`challenge.pcapng` alone** (no runtime needed):
+   ```bash
+   cd 6-threatinvaders/ThreatInvaders && python solve.py
+   ```
+   It reassembles the client TCP stream (telemetry POSTs are LSO/GRO frames with `ip.len == 0`, so read to end-of-frame), then:
+   - `tableA = session_id.ToByteArray()` (from the pcap), `TEL#3 = reverse(tableA) ^ tableB` ⇒ `MachineGuid_bytes = TEL#3 ⊕ reverse(session_id_bytes)`,
+   - `seed = splitmix64_variant(MachineGuid_bytes)` (consts `0x9e3779b97f4a7c15`, `0xff51afd7ed558ccd`, `0xc4ceb9fe1a85ec53`),
+   - keystream `state = state*0x5851f42d4c957f2d + 0x14057b7ef767814f`, output byte = `state >> 56`,
+   - `TEL#4 ⊕ keystream` (offset 18) = the updater's `dir` output (shows `flag.txt`), `TEL#5 ⊕ keystream` (offset 576) = **flag**.
+2. *(Only if re-deriving the algorithm from the binary)* the exe uses a **modified static CoreCLR** that installs MinHook detours; the injected `EncodeFeedbackBuffer` is at RVA `0xC6BA0`, the PCG/LCG cipher at `0xC65E0`. Reversed dynamically via a custom **EventPipe** dumper (`csharp/eptrace`, gets JIT'd native code without a working DAC) + **Frida** hooks on the cipher (`exp/`). Not required to reproduce the flag from the pcap.
+
 ## Sanity checks
 - ch5: `Σ 2^-len == 1.000000` (Kraft equality) confirms the length-table parse; every recovered file starts `ff d8 ff e0` and ends `ff d9`.
 - ch4: expect exactly one serial in `[0, 2^32)` whose plaintext contains `flare-on.com`.
+- ch6: `TEL#4` decrypts to a `dir` listing containing `flag.txt (46 bytes)`; `TEL#5` decrypts to a 46-byte string ending `@flare-on.com`.

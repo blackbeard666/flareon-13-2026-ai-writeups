@@ -1,87 +1,109 @@
 # FLARE-On 13 — Challenge 6: ThreatInvaders
 
-**Status:** Client + protocol + reward mechanism fully reverse-engineered. The flag is delivered by the **live high-score server** as a "reward"; it is not present in the provided files and the server (`threatinvaders.domain`) is unreachable in this offline environment, so the literal flag string was not recovered here. The complete exploit path is documented below.
+**Status:** ✅ Solved — flag recovered **fully offline** from `challenge.pcapng`.
+
+**Flag:** `wh4t_4_l0ng_str4ng3_tr1p_1ts_b33n@flare-on.com`
 
 ## Prompt
 > How about a nice retro space-shooter to blow off some steam. Don't ask why it is over a hundred megabytes, there are sophisticated score-keeping algorithms that need to communicate with our official record keeping servers. Its all very legit. We have provided a pcap file with some communication to the high-score server so you can see what a real gamer looks like.
 
 ## Files
-- `ThreatInvaders.exe` — 116 MB. A **.NET 10 self-contained single-file** app (WinForms Space Invaders). PDB path: `Z:\CTFs\FlareOn\SpaceInvaders\space-invaders\src\SpaceInvaders\obj\Release\net10.0-windows\win-x64\ThreatInvaders.pdb`.
-- `challenge.pcapng` — 966 packets, one TCP/80 conversation (client `192.168.198.129` ↔ mock server `192.168.198.130`, `Server: MockHighscore/1.0 Python/3.12.3`).
+- `ThreatInvaders.exe` — 116 MB **.NET 10 self-contained single-file** WinForms *Space Invaders*. PDB path: `Z:\CTFs\FlareOn\SpaceInvaders\space-invaders\src\SpaceInvaders\...\ThreatInvaders.pdb`.
+- `challenge.pcapng` — 966 packets, one TCP/80 conversation (`192.168.198.129` ↔ mock `192.168.198.130`, `Server: MockHighscore/1.0`).
 
-## Tooling
-- `pefile` — PE triage (found a ~106 MB overlay past the last section).
-- .NET single-file **bundle parser** (custom Python) — located the bundle manifest via the bundle signature `8b 12 02 b9 …`, parsed 254 embedded files, extracted `ThreatInvaders.dll` (100 KB managed assembly).
-- `ilspycmd` 9.1 (run via `dotnet` with `DOTNET_ROLL_FORWARD=LatestMajor`; 8.2 can't parse .NET 10) — decompiled to C# and IL.
-- `scapy` — pcap TCP-stream reassembly and HTTP body extraction.
-- Dynamic: `config.json` redirect + a Python mock server + a stub `updater.exe` (built with `ziglang cc`) to observe runtime behavior.
+## TL;DR
+The game's **managed code is a faithful decoy**. The exe ships a **modified .NET runtime** (a custom‑built CoreCLR statically linked into the apphost, reporting a fake version `42.42.42.42424`). At startup it installs **MinHook‑style detours** on a handful of managed methods. The `EncodeFeedbackBuffer` detour secretly exfiltrates the stdout of a local `updater.exe` through the telemetry `feedback_b64` field, **XOR‑encrypted with a PCG/LCG keystream** whose seed is the machine's `MachineGuid`. Because the covert `feedback_length` and a 16‑byte header (`TEL#3`) leak enough state, the whole thing is decryptable **from the pcap alone**.
 
-## Triage — it's .NET, not Electron
-The exe matched the string `Electron` (a false positive from a bundled runtime DLL) but is really a **.NET 10 single-file bundle**: PE sections sum to ~15 MB, leaving a ~106 MB overlay. The overlay is a .NET bundle (signature + manifest of 254 files: the app DLL, its config, and the entire .NET/WinForms runtime — that's the "hundred megabytes"). Extracting and decompiling `ThreatInvaders.dll` reveals a faithful Space Invaders plus a REST high-score client.
+## Triage
+The 116 MB is a .NET single‑file bundle: PE sections ≈ 15 MB, the rest is the embedded runtime + assemblies (bundle signature `8b 12 02 b9 …`). Extracting `ThreatInvaders.dll` (100 KB) and decompiling (ICSharpCode.Decompiler 11.1) yields a normal Space Invaders plus a REST high‑score client.
 
-## The protocol (`SpaceInvaders.Scores.HttpRemoteScoreClient`)
-Base URL `http://threatinvaders.domain`, header `X-Api-Key: ed347a07305214ab98974a008674eb78cd03b1fedb73c8be9f79e40fb8e155b0`.
-
-| Endpoint | Purpose |
-|---|---|
-| `GET /api/v1/health` | liveness |
-| `GET /api/v1/highscores?limit=25` | leaderboard (entries have `comment_b64`) |
-| `GET /api/v1/version` | `{latest, message}` — `message` shown in an "update available" dialog |
-| `POST /api/v1/highscores` | submit a score (`ScoreDto`) |
-| `POST /api/v1/telemetry` | beacon: `{request_id, session_id, games_played, client_version, feedback_b64, feedback_length}` |
-
-The telemetry **response** carries `{received, duplicate, session_games, total_games, sessions, feedback_received, connects, reward_now}`.
-
-## The reward mechanism (the crux)
-Walking the pcap's five telemetry beacons:
-
-| beacon | feedback_length | feedback_received | connects | reward_now |
-|---|---|---|---|---|
-| 1 | 0 | false | 1 | false |
-| 2 | 4096 (text feedback) | **false** | 2 | false |
-| 3 | 8208 | **true** | 3 | false |
-| 4 | 16914 | true | 4 | false |
-| 5 | 16430 | true | 5 | **true** |
-
-Two conditions gate the reward:
-1. **`feedback_received` flips true only when `feedback_length > 4096`.** A normal player can never achieve this: `TelemetryReporter.SetFeedback`/`BuildDocument` copy user feedback into a fixed **4096-byte** buffer, so `feedback_length = min(len, 4096) ≤ 4096`.
-2. **`reward_now` fires once `feedback_received` is true and `connects ≥ 5`.**
-
-### The bypass — `updater.exe` output length is exfiltrated uncapped
-`Program.Main` force-enables headless update and, when the server advertises a newer `latest`, the game silently runs a local **`updater.exe`** (`UpdateLauncher`), capturing its stdout. Empirically (confirmed by detonation), the game reports **`feedback_length` equal to the byte length of `updater.exe`'s stdout, bypassing the 4096 cap** (stub outputs of 13 / 26 / 4099 bytes produced `feedback_length` 13 / 26 / 4099). The feedback *content* stayed zeroed in tests — only the length is the signal that matters for `feedback_received`.
-
-So the exploit is:
-1. Drop an `updater.exe` next to the game that writes **> 4096 bytes** to stdout.
-2. Point the game at the high-score server (or edit `config.json`'s `baseUrl`).
-3. Run it: the server sees `feedback_length > 4096` → `feedback_received = true`; after ≥ 5 beacons → `reward_now = true` → the server returns the **flag** (delivered in a client-displayed field such as the `version.message` dialog or an injected high-score `comment_b64`).
-
-### Decoy
-`UpdateLauncher` passes `updater.exe` a hard-coded base64 argument that decodes to:
+## The telemetry (managed view — the decoy)
+`TelemetryReporter.BuildDocument` builds `{request_id, session_id, games_played, client_version, feedback_b64, feedback_length}` where:
+```csharp
+length      = Math.Min(feedback.Length, 4096);   // capped at 4096
+Array.Copy(feedback, buf4096, length);
+feedbackB64 = EncodeFeedbackBuffer(buf4096, ref length); // Base64(buf), never edits length
+FeedbackLength = length;                          // <= 4096
 ```
---install-dir Wouldn't_it_be_nice_if_this_was_the_real_flag@no-flare.com --cwd But_sadly_it_isn't
+The raw IL (verified with `ilspycmd -il`) matches exactly. **Yet the pcap shows `feedback_length` = 0, 0, 8208, 16914, 16430** and high‑entropy `feedback_b64` content — impossible under this IL.
+
+**Ground‑truth pcap telemetry** (note: the telemetry POSTs are LSO/GRO frames with IP total‑length = 0, so reassembly must read to the end of the captured frame, not `ip.len`):
+
+| beacon | feedback_length | content (Base64‑decoded, nonzero prefix) |
+|---|---|---|
+| TEL#1 | 0 | empty |
+| TEL#2 | 0 | `Crashes sometimes. But overall very fun…` (plaintext user feedback) |
+| TEL#3 | 8208 | 16 bytes (header) |
+| TEL#4 | 16914 | 530 bytes (encrypted) |
+| TEL#5 | 16430 | 46 bytes (encrypted — flag‑sized) |
+
+## Proving it's native
+- The extracted game IL is faithful (BuildDocument, EncodeFeedbackBuffer, Math.Min all verified via **live JIT dumps**).
+- **Every managed runtime assembly** in the bundle (`System.Private.CoreLib.dll`, `System.Text.Json.dll`, …) is **byte‑identical** to stock .NET 10.0.11 → nothing modified in managed land.
+- The native CoreCLR is a **custom build** (only ~8 % of 16‑byte code slices match stock) → the modification is native.
+
+## Finding the modification (native RE)
+Static diffing was hopeless (custom build). Instead:
+1. **EventPipe rundown** (custom `eptrace` tool) → native code addresses of all JIT'd methods; `ReadProcessMemory` to dump them. Confirmed BuildDocument/EncodeFeedbackBuffer/Math.Min are faithful.
+2. Resolved the actual `EncodeFeedbackBuffer` call target from BuildDocument's JIT'd code → it lands **not** on the real method but on an **injected function at RVA `0xC6BA0`** inside the exe's `.text`.
+3. A hook‑installer at RVA `0xC6E30` wires several detours (`0xC6BA0`, `0xC6A70`, `0xC6DF0`, `0xF54E0`, …) — a MinHook‑style framework.
+4. **Frida** hooks on the cipher confirmed the data flow live.
+
+### The injected pieces
+- `0xC65E0` — **stream cipher**: `seed = splitmix64‑variant(tableB)`, then an LCG keystream
+  `state = state*0x5851f42d4c957f2d + 0x14057b7ef767814f`, output byte = `state >> 56`, XORed into the buffer. Symmetric.
+- `0xC6A70` — captures a hooked method's result (the **updater stdout**), copies it into a static buffer, and calls `0xC65E0` to encrypt it in place.
+- `0xC6DF0` → `tableA` (RVA `0x7FF800`) = **`session_id.ToByteArray()`**.
+- `0xF54E0` → `tableB` (RVA `0x7FFA30`) = **`MachineGuid.ToByteArray()`**.
+- `0xC6BA0` — the `EncodeFeedbackBuffer` detour / state machine that emits the beacons:
+  - **first exfil (TEL#3):** writes 16 bytes = `reverse(tableA) ^ tableB`, sets length global `0x2010` (8208).
+  - **subsequent (TEL#4/#5):** streams the encrypted updater output, length `|= 0x4000` → `0x4212`/`0x402E`.
+- Anti‑analysis: content exfil is gated by a byte at RVA `0x7FD5FE` (unset in a sandbox → content stays zero, only the length leaks).
+
+## The offline decryption
+`TEL#3 = reverse(session_id_bytes) ^ MachineGuid_bytes`, and `session_id` is in the pcap, so:
 ```
-An explicit troll — the real flag is **not** in the client; it comes from the server reward.
-
-## Why the flag wasn't recovered offline here
-- The provided files contain **no crypto, no flag string, and no `updater.exe`** — the client is benign and only exfiltrates the updater-output *length*.
-- The pcap's mock server returns `reward_now:true` but **omits the actual flag** (it is a mock).
-- `threatinvaders.domain` does not resolve and the real challenge server is not reachable from this environment.
-
-To finish: run the game with a `>4096`-byte-emitting `updater.exe` against the real FLARE-On high-score server and read the flag from the reward it returns.
+MachineGuid_bytes = TEL#3 ⊕ reverse(session_id_bytes)     # = 78584d61-6348-496e-8045-4964586c756c
+seed              = splitmix64_variant(MachineGuid_bytes)
+keystream         = PCG_LCG(seed)
+updater_stdout    = TEL#4 ⊕ keystream   (dir listing, offset 18)
+flag.txt          = TEL#5 ⊕ keystream   (offset 576)
+```
+TEL#4 decrypts to the author's `dir` output — including `flag.txt (46 bytes)` — and TEL#5 decrypts to the flag.
 
 ```mermaid
 flowchart TD
-    A[ThreatInvaders.exe<br/>.NET 10 single-file, 116MB] --> B[Parse bundle manifest<br/>extract ThreatInvaders.dll]
-    B --> C[Decompile: WinForms Space Invaders<br/>+ REST high-score client]
-    C --> D[pcap: telemetry beacons]
-    D --> E{reward_now flips true}
-    E --> F[feedback_received needs<br/>feedback_length &gt; 4096]
-    F --> G[client caps user feedback at 4096]
-    G --> H[BYPASS: game exfils length of<br/>updater.exe stdout, uncapped]
-    H --> I[Plant updater.exe emitting &gt;4096 bytes<br/>+ ≥5 beacons]
-    I --> J[server: reward_now=true → returns FLAG<br/>via displayed field]
-    C --> K[Decoy: updater args base64 →<br/>...@no-flare.com 'sadly it isn't']
+    A[ThreatInvaders.exe<br/>custom static CoreCLR, fake ver 42.42.42.42424] --> B[startup: install MinHook detours]
+    B --> C[hook: tableA = session_id bytes]
+    B --> D[hook: tableB = MachineGuid bytes]
+    B --> E[EncodeFeedbackBuffer detour @0xC6BA0]
+    F[updater.exe stdout<br/>dir listing + flag.txt] --> G[PCG/LCG XOR cipher @0xC65E0<br/>seed = splitmix64 MachineGuid]
+    G --> E
+    E --> H[TEL#3 = reverse tableA XOR tableB]
+    E --> I[TEL#4/#5 = keystream XOR updater stdout]
+    H --> J[pcap]
+    I --> J
+    C --> J
+    J --> K[offline: MachineGuid = TEL#3 XOR reverse session_id]
+    K --> L[seed -> keystream -> decrypt TEL#4/#5]
+    L --> M[FLAG: wh4t_4_l0ng_str4ng3_tr1p_1ts_b33n@flare-on.com]
 ```
 
-## Session note
-This challenge consumed the bulk of the session's challenge-6 budget on exhaustive (ultimately negative) offline crypto/feedback-decode attempts before the length-based reward gate was identified via dynamic analysis.
+## Recovered `dir` output (TEL#4)
+```
+ Directory of Z:\CTFs\FlareOn\SpaceInvaders\space-invaders\src\SpaceInvaders\bin\Release\net10.0-windows\publish\win-x64
+15/09/2026  19:34               324 config.json
+30/08/2026  23:23                46 flag.txt
+15/09/2026  17:29       116.238.508 ThreatInvaders.exe
+```
+
+## Reproduce
+`python solve.py` (in `6-threatinvaders/ThreatInvaders/`) — needs only `challenge.pcapng`; prints the recovered MachineGuid, the `dir` output, and the flag.
+
+## Tooling used
+- `pefile`/`capstone` — PE + native disassembly; bundle parser.
+- `ilspycmd` 9.1 / ICSharpCode.Decompiler 11.1 — managed decompile + raw IL.
+- Custom **EventPipe** client (`csharp/eptrace`, TraceEvent + `Microsoft.Diagnostics.NETCore.Client`) — dump JIT'd native code without a working DAC.
+- **Frida** 16.5 — live hooks on the injected cipher / detours to confirm `tableA`/`tableB` = session_id/MachineGuid.
+- Stock .NET 10.0.11 runtime (from NuGet) — to prove the managed assemblies were unmodified.
+- `ziglang cc` — build stub `updater.exe` for chosen‑plaintext keystream capture.
