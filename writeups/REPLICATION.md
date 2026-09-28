@@ -1,4 +1,4 @@
-# Replication Guide — FLARE-On 13 (1–5)
+# Replication Guide — FLARE-On 13 (1–7)
 
 How to reproduce each solve from the provided archives.
 
@@ -80,7 +80,21 @@ python -m pip install capstone unicorn pefile z3-solver pycryptodome numpy pillo
    - `TEL#4 ⊕ keystream` (offset 18) = the updater's `dir` output (shows `flag.txt`), `TEL#5 ⊕ keystream` (offset 576) = **flag**.
 2. *(Only if re-deriving the algorithm from the binary)* the exe uses a **modified static CoreCLR** that installs MinHook detours; the injected `EncodeFeedbackBuffer` is at RVA `0xC6BA0`, the PCG/LCG cipher at `0xC65E0`. Reversed dynamically via a custom **EventPipe** dumper (`csharp/eptrace`, gets JIT'd native code without a working DAC) + **Frida** hooks on the cipher (`exp/`). Not required to reproduce the flag from the pcap.
 
+### 7 — FlareCalc
+1. `solve7.py` recovers the flag from `FlareCalc.exe` alone (offline):
+   ```bash
+   cd 7-flarecalc && python solve7.py     # -> t3mplat3s_asn_and_j1t_0h_my@flare-on.com
+   ```
+   It unpacks the flag-ciphertext blob `9990` with the recovered de-interleave `SEED=1116755918` + fold `90`, then runs the real blob-`4485` **XTEA** decryptor (via Unicorn) with the labyrinth-derived `keybuf` → the flag.
+2. *(Only if re-deriving from scratch)*:
+   - `map_entries.pkl` = the 1035 `{key, blob}` records parsed from the cert's custom OID `1.3.6.1.4.1.1337.1` (`cryptography`/`pefile` on `FlareCalc.exe`).
+   - `seedscan.c` (`ziglang cc`) brute-forces the `2^32` de-interleave seed using an x64-validity oracle (calibrated on the plaintext loader blob `3821`); folds are recovered per-blob by common-byte frequency.
+   - `chain_dfs.py` solves the `'3'`-command 32-blob "labyrinth" (input `FLAREON_ASN1_Labyrinth_Key_2026!`) to derive the XTEA `keybuf`; `chain_result.pkl` holds the result.
+   - `unpack.py` has the `deinterleave`/`xor_fold` primitives.
+   - The calc's hidden self-loader (`FUN_1400019d0`) maps its own cert RWX and calls the stub at cert-offset `0x6d3a` with `(A<<32|B, C)` where `A=(int)n1, B=(int)n2, C=(int)(n3*1e7)` from 3 calc-stack numbers.
+
 ## Sanity checks
 - ch5: `Σ 2^-len == 1.000000` (Kraft equality) confirms the length-table parse; every recovered file starts `ff d8 ff e0` and ends `ff d9`.
 - ch4: expect exactly one serial in `[0, 2^32)` whose plaintext contains `flare-on.com`.
 - ch6: `TEL#4` decrypts to a `dir` listing containing `flag.txt (46 bytes)`; `TEL#5` decrypts to a 46-byte string ending `@flare-on.com`.
+- ch7: the plaintext loader blob `3821` linear-disassembles with **0** invalid opcodes (seed calibration); blob `9990` de-interleaves to exactly **40 bytes** (5 XTEA blocks); the 32-step labyrinth lands entirely on valid map keys and terminates at blob `4485`; `solve7.py` asserts the decrypt equals the flag.
