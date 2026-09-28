@@ -1,0 +1,32 @@
+# Large challenge samples / binaries — do not commit
+*.exe
+*.dll
+*.7z
+*.pcapng
+*.pcap
+*.bin
+*.jpg
+*.jpeg
+*.png
+*.wav
+*.pdb
+*.wim
+*.iso
+*.doc
+*.docx
+*.pdf
+# extracted runtime / large dumps
+**/extracted/
+**/il/
+**/streams/
+**/resps/
+**/exfil_bodies/
+**/probe_out/
+**/fb/
+image.bin
+known_random.bin
+_bundle_files.json
+_jsregion.txt
+detonate_requests.log
+# keep decompiled source snippets small? exclude the giant decompiled cs
+**/extracted/src/
