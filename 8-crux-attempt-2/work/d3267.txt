@@ -1,0 +1,908 @@
+
+######## func[3267] 
+  SP = gSP
+loop_2:
+  dispatch(PC)
+STATE [0, 1, 2]:
+  if !((SP <=u (u32[gG+16] + 48))) goto else_133
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0000
+  CALL f1348  [1348]
+  SP = gSP
+  if (ret1348) goto end_1
+else_133:
+  SP = (SP - 176)
+  gSP = SP
+  if !(!(SP[192])) goto else_134
+  PC = 38
+  goto loop_2
+else_134:
+STATE [3, 4]:
+  r2 = u8[SP[184]]
+  if !(!(!(r2))) goto else_135
+  PC = 14
+  goto loop_2
+else_135:
+STATE [5, 6]:
+  if !(!((SP[192] != 1))) goto else_136
+  PC = 12
+  goto loop_2
+else_136:
+STATE [7, 8, 9]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf000a
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [10, 11]:
+  r2 = SP[8]
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = 0x4ef80
+  SP[232] = r2
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [12, 13]:
+  SP[208] = 0x4ef40
+  SP[216] = 0x227da0
+  SP[224] = 0
+  SP[232] = 0
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [14]:
+  if !(!((r2 == 1))) goto else_137
+  PC = 33
+  goto loop_2
+else_137:
+STATE [15, 16, 17]:
+  if !((SP[192] <s 5)) goto else_138
+  PC = 21
+  goto loop_2
+else_138:
+STATE [18, 19, 20]:
+  r2 = u32[SP[184]+1]
+  r3 = 0
+  r4 = 0
+  PC = 27
+  goto loop_2
+STATE [21, 22, 23]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0018
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [24, 25]:
+  r2 = SP[8]
+  r3 = 0x4ef80
+  r4 = r2
+  r2 = 0
+STATE [26, 27]:
+  if !(!(!(r3))) goto else_139
+  PC = 31
+  goto loop_2
+else_139:
+STATE [28, 29]:
+  SP[0] = 0x24fc0
+  r2 = (r2 & 0xffffffff)
+  SP[72] = r2
+  SP[8] = r2
+  SP[16] = r2
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf001e
+  CALL f1310  [1310]
+  SP = gSP
+  if (ret1310) goto end_1
+STATE [30]:
+  r2 = SP[24]
+  SP[168] = r2
+  r3 = 0
+  r4 = 5
+  PC = 49
+  goto loop_2
+STATE [31, 32]:
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = r3
+  SP[232] = r4
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [33, 34, 35]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0024
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [36, 37]:
+  r2 = SP[8]
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = 0x4ef80
+  SP[232] = r2
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [38, 39, 40]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0029
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [41, 42]:
+  r2 = SP[8]
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = 0x4ef80
+  SP[232] = r2
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [43, 44, 45, 46, 47]:
+  u64[r3+8] = r4
+  r3 = (SP[56] + 1)
+  r2 = SP[168]
+  r4 = SP[96]
+STATE [48, 49, 50, 51]:
+  SP[64] = r4
+  if !(!((r3 <s SP[72]))) goto else_140
+  PC = 112
+  goto loop_2
+else_140:
+STATE [52, 53, 54, 55, 56]:
+  SP[56] = r3
+  r5 = (r4 + 4)
+  if !((SP[192] <s r5)) goto else_141
+  PC = 69
+  goto loop_2
+else_141:
+STATE [57, 58]:
+  if !(!((r4 <u SP[192]))) goto else_142
+  PC = 288
+  goto loop_2
+else_142:
+STATE [59, 60, 61, 62]:
+  r6 = (r4 + 1)
+  r7 = (SP[184] + r4)
+  if !(!((r6 <u SP[192]))) goto else_143
+  PC = 285
+  goto loop_2
+else_143:
+STATE [63, 64]:
+  r6 = (r4 + 2)
+  if !(!((r6 <u SP[192]))) goto else_144
+  PC = 282
+  goto loop_2
+else_144:
+STATE [65, 66]:
+  r6 = (r4 + 3)
+  if !(!((r6 <u SP[192]))) goto else_145
+  PC = 279
+  goto loop_2
+else_145:
+STATE [67, 68]:
+  r6 = u32[r7]
+  r7 = 0
+  r8 = 0
+  PC = 80
+  goto loop_2
+STATE [69, 70, 71, 72]:
+  SP[96] = r5
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0049
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [73, 74, 75, 76, 77, 78]:
+  r2 = SP[8]
+  r3 = SP[56]
+  r4 = SP[64]
+  r5 = SP[96]
+  r7 = 0x4ef80
+  r6 = 0
+  r8 = r2
+  r2 = SP[168]
+STATE [79, 80]:
+  if !(!(!(r7))) goto else_146
+  PC = 110
+  goto loop_2
+else_146:
+STATE [81, 82, 83, 84, 85]:
+  r6 = (r6 & 0xffffffff)
+  r7 = ((r4 + r6) + 4)
+  SP[96] = r7
+  if !((SP[192] <s r7)) goto else_147
+  PC = 91
+  goto loop_2
+else_147:
+STATE [86, 87]:
+  if !(!((r7 <=u SP[200]))) goto else_148
+  PC = 277
+  goto loop_2
+else_148:
+STATE [88]:
+  if !(!((r5 <=u r7))) goto else_149
+  PC = 274
+  goto loop_2
+else_149:
+STATE [89, 90]:
+  r4 = ((SP[200] - r4) + -4)
+  r5 = (r5 & ((0 - r4) >>s 63))
+  r5 = (SP[184] + r5)
+  r8 = 0
+  r9 = 0
+  PC = 100
+  goto loop_2
+STATE [91, 92, 93]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf005e
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [94, 95, 96, 97, 98]:
+  r2 = SP[8]
+  r3 = SP[56]
+  r7 = SP[96]
+  r8 = 0x4ef80
+  r4 = 0
+  r6 = 0
+  r5 = 0
+  r9 = r2
+  r2 = SP[168]
+STATE [99, 100, 101]:
+  if !(!(!(r8))) goto else_150
+  PC = 108
+  goto loop_2
+else_150:
+STATE [102, 103]:
+  SP[0] = r5
+  SP[8] = r6
+  SP[16] = r4
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0068
+  CALL f3267  [3267]
+  SP = gSP
+  if (ret3267) goto end_1
+STATE [104]:
+  r2 = SP[40]
+  if !(!(!(r2))) goto else_151
+  PC = 107
+  goto loop_2
+else_151:
+STATE [105]:
+  r2 = SP[24]
+  r3 = (SP[168] + (SP[56] << 4))
+  r4 = SP[32]
+  u64[r3] = r2
+  if !(!(!(!(u32[0x228050])))) goto else_152
+  PC = 43
+  goto loop_2
+else_152:
+STATE [106]:
+  SP[160] = r3
+  SP[104] = r4
+  r2 = u64[r3+8]
+  SP[88] = r2
+  SP = gSP
+  r2 = f1380()
+  u64[r2] = SP[104]
+  u64[r2+8] = SP[88]
+  r3 = SP[160]
+  r4 = SP[104]
+  PC = 43
+  goto loop_2
+STATE [107]:
+  r3 = SP[48]
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = r2
+  SP[232] = r3
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [108, 109]:
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = r8
+  SP[232] = r9
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [110, 111]:
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = r7
+  SP[232] = r8
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [112, 113, 114, 115]:
+  r3 = (r4 + 4)
+  if !((SP[192] <s r3)) goto else_153
+  PC = 128
+  goto loop_2
+else_153:
+STATE [116, 117]:
+  if !(!((r4 <u SP[192]))) goto else_154
+  PC = 271
+  goto loop_2
+else_154:
+STATE [118, 119, 120, 121]:
+  r5 = (r4 + 1)
+  r6 = (SP[184] + r4)
+  if !(!((r5 <u SP[192]))) goto else_155
+  PC = 268
+  goto loop_2
+else_155:
+STATE [122, 123]:
+  r5 = (r4 + 2)
+  if !(!((r5 <u SP[192]))) goto else_156
+  PC = 265
+  goto loop_2
+else_156:
+STATE [124, 125]:
+  r5 = (r4 + 3)
+  if !(!((r5 <u SP[192]))) goto else_157
+  PC = 262
+  goto loop_2
+else_157:
+STATE [126, 127]:
+  r5 = u32[r6]
+  r6 = 0
+  r7 = 0
+  PC = 138
+  goto loop_2
+STATE [128, 129, 130, 131]:
+  SP[96] = r3
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0084
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [132, 133, 134, 135, 136]:
+  r2 = SP[8]
+  r3 = SP[96]
+  r4 = SP[64]
+  r6 = 0x4ef80
+  r5 = 0
+  r7 = r2
+  r2 = SP[168]
+STATE [137, 138]:
+  if !(!(!(r6))) goto else_158
+  PC = 238
+  goto loop_2
+else_158:
+STATE [139, 140, 141, 142, 143]:
+  r5 = (r5 & 0xffffffff)
+  r6 = (r4 + r5)
+  SP[96] = r6
+  r7 = (r6 + 4)
+  SP[80] = r7
+  if !((SP[192] <s r7)) goto else_159
+  PC = 149
+  goto loop_2
+else_159:
+STATE [144, 145]:
+  if !(!((r7 <=u SP[200]))) goto else_160
+  PC = 260
+  goto loop_2
+else_160:
+STATE [146]:
+  if !(!((r3 <=u r7))) goto else_161
+  PC = 257
+  goto loop_2
+else_161:
+STATE [147, 148]:
+  r4 = ((SP[200] - r4) + -4)
+  r3 = (r3 & ((0 - r4) >>s 63))
+  r3 = (SP[184] + r3)
+  r8 = 0
+  r9 = 0
+  PC = 158
+  goto loop_2
+STATE [149, 150, 151]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0098
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [152, 153, 154, 155, 156]:
+  r2 = SP[8]
+  r6 = SP[96]
+  r7 = SP[80]
+  r8 = 0x4ef80
+  r4 = 0
+  r5 = 0
+  r9 = r2
+  r3 = 0
+  r2 = SP[168]
+STATE [157, 158, 159]:
+  if !(!(!(r8))) goto else_162
+  PC = 236
+  goto loop_2
+else_162:
+STATE [160, 161]:
+  SP[0] = r3
+  SP[8] = r5
+  SP[16] = r4
+  SP[24]:u8 = 0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00a2
+  CALL main.WtD0ajazVx55  [3252]
+  SP = gSP
+  if (ret3252) goto end_1
+STATE [162]:
+  r2 = SP[32]
+  if !(!(!(!(r2)))) goto else_163
+  PC = 231
+  goto loop_2
+else_163:
+STATE [163, 164, 165, 166]:
+  SP[112] = r2
+  r3 = (SP[96] + 8)
+  if !((SP[192] <s r3)) goto else_164
+  PC = 179
+  goto loop_2
+else_164:
+STATE [167, 168]:
+  if !(!((SP[80] <u SP[192]))) goto else_165
+  PC = 254
+  goto loop_2
+else_165:
+STATE [169, 170, 171, 172]:
+  r4 = (SP[96] + 5)
+  r5 = (SP[184] + SP[80])
+  if !(!((r4 <u SP[192]))) goto else_166
+  PC = 251
+  goto loop_2
+else_166:
+STATE [173, 174]:
+  r4 = (SP[96] + 6)
+  if !(!((r4 <u SP[192]))) goto else_167
+  PC = 248
+  goto loop_2
+else_167:
+STATE [175, 176]:
+  r4 = (SP[96] + 7)
+  if !(!((r4 <u SP[192]))) goto else_168
+  PC = 245
+  goto loop_2
+else_168:
+STATE [177, 178]:
+  r4 = u32[r5]
+  r5 = 0
+  r6 = 0
+  PC = 188
+  goto loop_2
+STATE [179, 180, 181, 182]:
+  SP[80] = r3
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00b7
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [183, 184, 185, 186]:
+  r2 = SP[8]
+  r3 = SP[80]
+  r5 = 0x4ef80
+  r4 = 0
+  r6 = r2
+  r2 = SP[112]
+STATE [187, 188]:
+  if !(!(!(r5))) goto else_169
+  PC = 229
+  goto loop_2
+else_169:
+STATE [189, 190, 191, 192, 193]:
+  r4 = (r4 & 0xffffffff)
+  r5 = ((r4 + SP[96]) + 8)
+  SP[80] = r5
+  if !((SP[192] <s r5)) goto else_170
+  PC = 199
+  goto loop_2
+else_170:
+STATE [194, 195]:
+  if !(!((r5 <=u SP[200]))) goto else_171
+  PC = 243
+  goto loop_2
+else_171:
+STATE [196]:
+  if !(!((r3 <=u r5))) goto else_172
+  PC = 240
+  goto loop_2
+else_172:
+STATE [197, 198]:
+  r6 = ((SP[200] - SP[96]) + -8)
+  r3 = (((0 - r6) >>s 63) & r3)
+  r3 = (SP[184] + r3)
+  r7 = 0
+  r8 = 0
+  PC = 207
+  goto loop_2
+STATE [199, 200, 201]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00ca
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [202, 203, 204, 205]:
+  r2 = SP[8]
+  r5 = SP[80]
+  r7 = 0x4ef80
+  r6 = 0
+  r4 = 0
+  r8 = r2
+  r3 = 0
+  r2 = SP[112]
+STATE [206, 207, 208]:
+  if !(!(!(r7))) goto else_173
+  PC = 227
+  goto loop_2
+else_173:
+STATE [209, 210]:
+  SP[0] = r3
+  SP[8] = r4
+  SP[16] = r6
+  SP[24]:u8 = 0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00d3
+  CALL main.WtD0ajazVx55  [3252]
+  SP = gSP
+  if (ret3252) goto end_1
+STATE [211]:
+  r2 = SP[32]
+  if !(!(!(!(r2)))) goto else_174
+  PC = 222
+  goto loop_2
+else_174:
+STATE [212, 213]:
+  if !(!((SP[80] <s SP[192]))) goto else_175
+  PC = 219
+  goto loop_2
+else_175:
+STATE [214, 215, 216]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00d9
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [217, 218]:
+  r2 = SP[8]
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = 0x4ef80
+  SP[232] = r2
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [219, 220]:
+  SP[120] = SP[168]
+  SP[128] = SP[72]
+  SP[136] = SP[72]
+  SP[144] = SP[112]
+  SP[152] = r2
+  SP[0] = 0x357c0
+  SP[8] = SP+120
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00dd
+  CALL f251  [251]
+  SP = gSP
+  if (ret251) goto end_1
+STATE [221]:
+  r2 = SP[16]
+  SP[208] = 0x4ef60
+  SP[216] = r2
+  SP[224] = 0
+  SP[232] = 0
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [222, 223, 224]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00e1
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [225, 226]:
+  r2 = SP[8]
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = 0x4ef80
+  SP[232] = r2
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [227, 228]:
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = r7
+  SP[232] = r8
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [229, 230]:
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = r5
+  SP[232] = r6
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [231, 232, 233]:
+  SP[0] = 0x26fa0
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00ea
+  CALL f291  [291]
+  SP = gSP
+  if (ret291) goto end_1
+STATE [234, 235]:
+  r2 = SP[8]
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = 0x4ef80
+  SP[232] = r2
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [236, 237]:
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = r8
+  SP[232] = r9
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [238, 239]:
+  SP[208] = 0
+  SP[216] = 0
+  SP[224] = r6
+  SP[232] = r7
+  SP = SP+176
+  gSP = SP
+  SP = SP+8
+  gSP = SP
+  return 0
+STATE [240, 241]:
+  SP[0] = r3
+  SP[8] = r5
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00f2
+  CALL f680  [680]
+  SP = gSP
+  if (ret680) goto end_1
+STATE [242]:
+STATE [243]:
+  SP[0] = r5
+  SP[8] = SP[200]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00f4
+  CALL f678  [678]
+  SP = gSP
+  if (ret678) goto end_1
+STATE [244]:
+STATE [245, 246]:
+  SP[0] = r4
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00f7
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [247]:
+STATE [248, 249]:
+  SP[0] = r4
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00fa
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [250]:
+STATE [251, 252]:
+  SP[0] = r4
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf00fd
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [253]:
+STATE [254, 255]:
+  SP[0] = SP[80]
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0100
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [256]:
+STATE [257, 258]:
+  SP[0] = r3
+  SP[8] = r7
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0103
+  CALL f680  [680]
+  SP = gSP
+  if (ret680) goto end_1
+STATE [259]:
+STATE [260]:
+  SP[0] = r7
+  SP[8] = SP[200]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0105
+  CALL f678  [678]
+  SP = gSP
+  if (ret678) goto end_1
+STATE [261]:
+STATE [262, 263]:
+  SP[0] = r5
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0108
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [264]:
+STATE [265, 266]:
+  SP[0] = r5
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf010b
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [267]:
+STATE [268, 269]:
+  SP[0] = r5
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf010e
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [270]:
+STATE [271, 272]:
+  SP[0] = r4
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0111
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [273]:
+STATE [274, 275]:
+  SP[0] = r5
+  SP[8] = r7
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0114
+  CALL f680  [680]
+  SP = gSP
+  if (ret680) goto end_1
+STATE [276]:
+STATE [277]:
+  SP[0] = r7
+  SP[8] = SP[200]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0116
+  CALL f678  [678]
+  SP = gSP
+  if (ret678) goto end_1
+STATE [278]:
+STATE [279, 280]:
+  SP[0] = r6
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0119
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [281]:
+STATE [282, 283]:
+  SP[0] = r6
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf011c
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [284]:
+STATE [285, 286]:
+  SP[0] = r6
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf011f
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [287]:
+STATE [288, 289]:
+  SP[0] = r4
+  SP[8] = SP[192]
+  SP = (SP - 8)
+  gSP = SP
+  SP[0] = 0x1caf0122
+  CALL f674  [674]
+  SP = gSP
+  if (ret674) goto end_1
+STATE [290]:
+STATE [291]:
+end_1:

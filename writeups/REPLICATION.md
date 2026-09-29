@@ -1,4 +1,4 @@
-# Replication Guide — FLARE-On 13 (1–7)
+# Replication Guide — FLARE-On 13 (1–8)
 
 How to reproduce each solve from the provided archives.
 
@@ -23,7 +23,8 @@ How to reproduce each solve from the provided archives.
 | Ghidra | 12.1.2 (headless `support/analyzeHeadless.bat`, scripts `DecompAll.java` / `DecompOne.java`) |
 | Frida | 16.5.9 (Python venv) — used for ch2 pipe sniffing and ch5 compression oracle |
 | Python | 3.12+ |
-| Python packages | `capstone`, `unicorn`, `pefile`, `z3-solver`, `pycryptodome`, `numpy`, `pillow` |
+| Python packages | `capstone`, `unicorn`, `pefile`, `z3-solver`, `pycryptodome`, `numpy`, `pillow`, `cryptography`, `sympy` (ch8) |
+| Node.js | 24.x — runs Go WASM via the stock `wasm_exec.js` (ch8); `npm i wabt` only for `wasm-objdump -x` |
 | C compiler | `python -m ziglang cc` (used for ch4 `harness.c` / `recover.c` when no native toolchain) |
 
 Install the Python deps:
@@ -93,8 +94,30 @@ python -m pip install capstone unicorn pefile z3-solver pycryptodome numpy pillo
    - `unpack.py` has the `deinterleave`/`xor_fold` primitives.
    - The calc's hidden self-loader (`FUN_1400019d0`) maps its own cert RWX and calls the stub at cert-offset `0x6d3a` with `(A<<32|B, C)` where `A=(int)n1, B=(int)n2, C=(int)(n3*1e7)` from 3 calc-stack numbers.
 
+### 8 — crux
+1. Extract and run the solver (flag comes from the **unmodified** `main.wasm`):
+   ```bash
+   cd 8-crux-attempt-2
+   "C:/Program Files/7-Zip/7z.exe" x -pflare 8-crux.7z -oext && (cd ext && unzip -o extension.zip -d x)
+   python solve8.py --run    # -> Pr4tt_Pr1M4lItY_C3rt5_4nd_Wa4aA4aAA4aAA4a4a5M@flare-on.com  (~15–30 s)
+   ```
+   `solve8.py`:
+   - recursively factors `N−1` with sympy, starting from `N = 0xd389dfbb…c930e261`;
+   - emits the canonical Pratt certificate: leaf `0x00` = 2; node `0x01 u32 n, n×(u32 len, child), u32 len+A, u32 len+B`, with children sorted and repeated by multiplicity, minimal LE bigints, and B = smallest primitive root;
+   - PKCS#7-pads it, AES-256-CBC-encrypts it (key `cabeba7a…cdbf8723`, IV `5ff26040…ecf65d91`) and base64-encodes it.
+2. *(Only if re-deriving from the binary)* the tools are in `8-crux-attempt-2/work/`:
+   - `wparse.py` builds the memory image (`mem.bin`).
+   - `pcln.py` parses the garble pclntab (magic `0xa3c41c63` @ `0x51660`, 3255 funcs, wasm func = functab index + 20) → `funcs.json`.
+   - `wdis.py` / `dec.py`: flat disassembler / Go-wasm state-machine decompiler (`python dec.py 3251-3274 dmain.txt`).
+   - `instr.py` + `trace.js`: splices entry/exit hooks into chosen functions through the `runtime.getRandomData` import (tag, then `SP|1`). Usage: `python instr.py 3140-3274 i.wasm && node trace.js <input>` → `trace.txt`, with string and bigint arguments decoded.
+   - `cert.py` / `enc.py` / `build.py` / `pratt.py`: the original solve path (`facts.json` = the factor tree).
+
 ## Sanity checks
 - ch5: `Σ 2^-len == 1.000000` (Kraft equality) confirms the length-table parse; every recovered file starts `ff d8 ff e0` and ends `ff d9`.
 - ch4: expect exactly one serial in `[0, 2^32)` whose plaintext contains `flare-on.com`.
 - ch6: `TEL#4` decrypts to a `dir` listing containing `flag.txt (46 bytes)`; `TEL#5` decrypts to a 46-byte string ending `@flare-on.com`.
 - ch7: the plaintext loader blob `3821` linear-disassembles with **0** invalid opcodes (seed calibration); blob `9990` de-interleaves to exactly **40 bytes** (5 XTEA blocks); the 32-step labyrinth lands entirely on valid map keys and terminates at blob `4485`; `solve7.py` asserts the decrypt equals the flag.
+- ch8:
+  - `AES_dec(key, 0¹⁶) = 9ba0147dcb8e3ac4d9dd815bbc2a4be1` (plain AES-256).
+  - The 20-byte certificate for 3 (`0101000000010000000001000000030100000002`) passes `Kd5oA2q` and reaches the comparison against `N`.
+  - The full certificate is 3,891 bytes (5,208 base64 chars), and every node satisfies ∏children = A−1.

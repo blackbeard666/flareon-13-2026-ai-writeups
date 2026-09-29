@@ -30,3 +30,9 @@ _jsregion.txt
 detonate_requests.log
 # keep decompiled source snippets small? exclude the giant decompiled cs
 **/extracted/src/
+# ch8: WASM samples/instrumented builds, npm tooling, regenerable dumps
+*.wasm
+**/node_modules/
+__pycache__/
+8-crux-attempt-2/ext/extension.zip
+8-crux-attempt-2/objdump_x.txt

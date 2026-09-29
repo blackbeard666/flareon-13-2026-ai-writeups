@@ -60,5 +60,37 @@
     },
     "tmin": "2026-09-27T15:00:17.755000+00:00",
     "tmax": "2026-09-27T23:57:54.995000+00:00"
+  },
+  "8": {
+    "name": "crux",
+    "out": 46607,
+    "inp": 136,
+    "cr": 6260769,
+    "cc": 134096,
+    "models": {
+      "claude-opus-5-5": 68
+    },
+    "tmin": "2026-09-29T10:05:13.260Z",
+    "tmax": "2026-09-29T10:23:57.718Z",
+    "session": "98b30fb5-78a7-401a-9d26-c6ee6ed4be68",
+    "dir": "8-crux-attempt-2",
+    "result": "solved"
+  },
+  "8-attempt1": {
+    "name": "crux (attempt 1, unsolved)",
+    "out": 4322864,
+    "inp": 3174,
+    "cr": 464348235,
+    "cc": 15357443,
+    "models": {
+      "claude-opus-4-8": 1581,
+      "claude-fable-5": 6,
+      "<synthetic>": 1
+    },
+    "tmin": "2026-09-28T10:10:09.645Z",
+    "tmax": "2026-09-29T09:59:39.409Z",
+    "session": "8ad03a1c-d47c-470b-9aee-210c2a3d8873 (+subagents)",
+    "dir": "8-crux",
+    "result": "abandoned"
   }
 }
