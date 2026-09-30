@@ -1,0 +1,24 @@
+==== func 687cff size 51
+687cff: movapd xmm1, xmm0
+687d03: xorpd xmm0, xmm0
+687d07: cmp rdi, rsi
+687d0a: jae 0x687d4f
+687d0c: push r14
+687d0e: push rbx
+687d0f: sub rsp, 0x18
+687d13: mov rbx, rsi
+687d16: mov r14, rdi
+687d19: movapd xmm0, xmm1
+687d1d: movsd qword ptr [rsp + 8], xmm1
+687d23: call 0x687d80
+687d28: movsd qword ptr [rsp + 0x10], xmm0
+687d2e: inc r14
+687d31: movsd xmm0, qword ptr [rsp + 8]
+687d37: mov rdi, r14
+687d3a: mov rsi, rbx
+687d3d: call 0x687cff
+687d42: addsd xmm0, qword ptr [rsp + 0x10]
+687d48: add rsp, 0x18
+687d4c: pop rbx
+687d4d: pop r14
+687d4f: ret 

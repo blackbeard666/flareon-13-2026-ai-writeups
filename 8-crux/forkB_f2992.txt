@@ -1,0 +1,244 @@
+num_imp_funcs=20 num_defined=3255
+=== func[2992] type=0 params=[127] results=[127] locals=[(1, 127), (2, 126)] ===
+  0005 global.get 0
+  0007 local.set 1
+  0009 block
+  000b block
+  000d block
+  000f block
+  0011 block
+  0013 block
+  0015 block
+  0017 local.get 0
+  0019 br_table [0, 0, 0, 1, 1, 2, 2, 2, 2, 3, 3, 4] default 5
+  0028 end
+  0029 local.get 1
+  002b global.get 2
+  002d i32.wrap_i64
+  002e i32.load off=16
+  0031 i32.le_u
+  0032 if
+  0034 local.get 1
+  0036 i32.const 8 (0x8)
+  0038 i32.sub
+  0039 local.tee 1
+  003b global.set 0
+  003d local.get 1
+  003f i64.const 463208448 (0x1b9c0000)
+  0045 i64.store off=0
+  0048 i32.const 0 (0x0)
+  004a call 1348
+  004d global.get 0
+  004f local.set 1
+  0051 br_if 6
+  0053 end
+  0054 local.get 1
+  0056 i32.const 72 (0x48)
+  0059 i32.sub
+  005a local.tee 1
+  005c global.set 0
+  005e local.get 1
+  0060 i32.const 8 (0x8)
+  0062 i32.sub
+  0063 local.tee 1
+  0065 global.set 0
+  0067 local.get 1
+  0069 i64.const 463208451 (0x1b9c0003)
+  006f i64.store off=0
+  0072 i32.const 0 (0x0)
+  0074 call 2989
+  0077 global.get 0
+  0079 local.set 1
+  007b br_if 5
+  007d end
+  007e local.get 1
+  0080 i64.load off=0
+  0083 local.set 2
+  0085 local.get 1
+  0087 local.get 2
+  0089 i64.store off=64
+  008c local.get 1
+  008e i64.extend_i32_u
+  008f i64.const 8 (0x8)
+  0091 i64.add
+  0092 i32.wrap_i64
+  0093 local.get 1
+  0095 i64.load off=80
+  0098 i64.store off=0
+  009b local.get 1
+  009d i64.extend_i32_u
+  009e i64.const 16 (0x10)
+  00a0 i64.add
+  00a1 i32.wrap_i64
+  00a2 local.get 1
+  00a4 i64.load off=88
+  00a7 i64.store off=0
+  00aa local.get 1
+  00ac i64.extend_i32_u
+  00ad i64.const 24 (0x18)
+  00af i64.add
+  00b0 i32.wrap_i64
+  00b1 local.get 1
+  00b3 i64.load off=96
+  00b6 i64.store off=0
+  00b9 local.get 1
+  00bb i64.extend_i32_u
+  00bc i64.const 32 (0x20)
+  00be i64.add
+  00bf i32.wrap_i64
+  00c0 local.get 1
+  00c2 i64.load off=104
+  00c5 i64.store off=0
+  00c8 local.get 1
+  00ca i64.extend_i32_u
+  00cb i64.const 40 (0x28)
+  00cd i64.add
+  00ce i32.wrap_i64
+  00cf local.get 1
+  00d1 i64.load off=112
+  00d4 i64.store off=0
+  00d7 local.get 1
+  00d9 i32.const 8 (0x8)
+  00db i32.sub
+  00dc local.tee 1
+  00de global.set 0
+  00e0 local.get 1
+  00e2 i64.const 463208453 (0x1b9c0005)
+  00e8 i64.store off=0
+  00eb i32.const 0 (0x0)
+  00ed call 3017
+  00f0 global.get 0
+  00f2 local.set 1
+  00f4 br_if 4
+  00f6 end
+  00f7 local.get 1
+  00f9 i64.load off=64
+  00fc i64.eqz
+  00fd if
+  00ff local.get 1
+  0101 i32.const 8 (0x8)
+  0103 i32.sub
+  0104 local.tee 1
+  0106 global.set 0
+  0108 local.get 1
+  010a i64.const 463208455 (0x1b9c0007)
+  0110 i64.store off=0
+  0113 i32.const 0 (0x0)
+  0115 call 671
+  0118 global.get 0
+  011a local.set 1
+  011c br_if 4
+  011e end
+  011f local.get 1
+  0121 i64.load off=64
+  0124 i32.wrap_i64
+  0125 i64.load off=0
+  0128 local.set 2
+  012a local.get 1
+  012c i64.load off=64
+  012f i32.wrap_i64
+  0130 i64.load off=8
+  0133 local.set 3
+  0135 local.get 1
+  0137 i64.const 0 (0x0)
+  0139 i64.store off=0
+  013c local.get 1
+  013e i64.extend_i32_u
+  013f i64.const 8 (0x8)
+  0141 i64.add
+  0142 i32.wrap_i64
+  0143 local.get 2
+  0145 i64.store off=0
+  0148 local.get 1
+  014a i64.extend_i32_u
+  014b i64.const 16 (0x10)
+  014d i64.add
+  014e i32.wrap_i64
+  014f local.get 3
+  0151 i64.store off=0
+  0154 local.get 1
+  0156 i32.const 8 (0x8)
+  0158 i32.sub
+  0159 local.tee 1
+  015b global.set 0
+  015d local.get 1
+  015f i64.const 463208457 (0x1b9c0009)
+  0165 i64.store off=0
+  0168 i32.const 0 (0x0)
+  016a call 954
+  016d global.get 0
+  016f local.set 1
+  0171 br_if 3
+  0173 end
+  0174 local.get 1
+  0176 i64.extend_i32_u
+  0177 i64.const 24 (0x18)
+  0179 i64.add
+  017a i32.wrap_i64
+  017b i64.load off=0
+  017e local.set 2
+  0180 local.get 1
+  0182 local.get 2
+  0184 i64.store off=56
+  0187 local.get 1
+  0189 i64.extend_i32_u
+  018a i64.const 32 (0x20)
+  018c i64.add
+  018d i32.wrap_i64
+  018e i64.load off=0
+  0191 local.set 2
+  0193 local.get 1
+  0195 local.get 2
+  0197 i64.store off=48
+  019a local.get 1
+  019c local.get 1
+  019e i64.load off=64
+  01a1 i64.store off=0
+  01a4 local.get 1
+  01a6 i32.const 8 (0x8)
+  01a8 i32.sub
+  01a9 local.tee 1
+  01ab global.set 0
+  01ad local.get 1
+  01af i64.const 463208459 (0x1b9c000b)
+  01b5 i64.store off=0
+  01b8 i32.const 0 (0x0)
+  01ba call 2990
+  01bd global.get 0
+  01bf local.set 1
+  01c1 br_if 2
+  01c3 end
+  01c4 local.get 1
+  01c6 i64.extend_i32_u
+  01c7 i64.const 120 (0x78)
+  01ca i64.add
+  01cb i32.wrap_i64
+  01cc local.get 1
+  01ce i64.load off=56
+  01d1 i64.store off=0
+  01d4 local.get 1
+  01d6 i64.extend_i32_u
+  01d7 i64.const 128 (0x80)
+  01da i64.add
+  01db i32.wrap_i64
+  01dc local.get 1
+  01de i64.load off=48
+  01e1 i64.store off=0
+  01e4 local.get 1
+  01e6 i32.const 72 (0x48)
+  01e9 i32.add
+  01ea local.tee 1
+  01ec global.set 0
+  01ee local.get 1
+  01f0 i32.const 8 (0x8)
+  01f2 i32.add
+  01f3 local.tee 1
+  01f5 global.set 0
+  01f7 i32.const 0 (0x0)
+  01f9 return
+  01fa end
+  01fb unreachable
+  01fc end
+  01fd i32.const 1 (0x1)
+  01ff end
+

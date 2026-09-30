@@ -1,0 +1,413 @@
+==== func 67f9d8 size 666
+67f9d8: mov ecx, 0xc2d221e1
+67f9dd: xor eax, eax
+67f9df: xor edx, edx
+67f9e1: cmp ecx, 0x853d1087
+67f9e7: je 0x67fb06
+67f9ed: cmp ecx, 0x8cbe7105
+67f9f3: je 0x67fb0d
+67f9f9: cmp ecx, 0x9d2eac54
+67f9ff: je 0x67fa8e
+67fa05: cmp ecx, 0xab043125
+67fa0b: je 0x67fad8
+67fa11: cmp ecx, 0xc2d221e1
+67fa17: je 0x67fafd
+67fa1d: cmp ecx, 0xcf71f8bf
+67fa23: je 0x67fa97
+67fa25: cmp ecx, 0xd1d26ffb
+67fa2b: je 0x67faa0
+67fa2d: cmp ecx, 0xdc898685
+67fa33: je 0x67fae1
+67fa39: cmp ecx, 0xe97cf892
+67fa3f: je 0x67faaa
+67fa41: cmp ecx, 0x3d3840b
+67fa47: je 0x67face
+67fa4d: cmp ecx, 0x66365ee
+67fa53: je 0x67fac5
+67fa55: cmp ecx, 0xa891eaa
+67fa5b: je 0x67faea
+67fa61: cmp ecx, 0x449cfd96
+67fa67: je 0x67faf3
+67fa6d: cmp ecx, 0x5e897597
+67fa73: je 0x67fab3
+67fa75: cmp ecx, 0x7c870c7b
+67fa7b: je 0x67fabc
+67fa7d: cmp ecx, 0x2dbc1feb
+67fa83: je 0x67fb1b
+67fa89: jmp 0x67fb14
+67fa8e: xor al, 0x70
+67fa90: mov edx, 0x4cfcc3af
+67fa95: jmp 0x67fb14
+67fa97: add al, 0xbf
+67fa99: mov edx, 0xc5f8e615
+67fa9e: jmp 0x67fb14
+67faa0: rol al, 3
+67faa3: mov edx, 0x1ea39744
+67faa8: jmp 0x67fb14
+67faaa: add al, 0xe2
+67faac: mov edx, 0x745254c6
+67fab1: jmp 0x67fb14
+67fab3: add al, 0xb9
+67fab5: mov edx, 0x8200f312
+67faba: jmp 0x67fb14
+67fabc: add al, 0xfd
+67fabe: mov edx, 0x220e79ec
+67fac3: jmp 0x67fb14
+67fac5: xor al, 0xd0
+67fac7: mov edx, 0x7ae46995
+67facc: jmp 0x67fb14
+67face: rol al, 2
+67fad1: mov edx, 0x5b0e1e5
+67fad6: jmp 0x67fb14
+67fad8: add al, 0xc4
+67fada: mov edx, 0x27ba4020
+67fadf: jmp 0x67fb14
+67fae1: add al, 0xe0
+67fae3: mov edx, 0x778db7a0
+67fae8: jmp 0x67fb14
+67faea: xor al, 0x96
+67faec: mov edx, 0x8fb40e2d
+67faf1: jmp 0x67fb14
+67faf3: rol al, 5
+67faf6: mov edx, 0xade00504
+67fafb: jmp 0x67fb14
+67fafd: mov al, 0xf2
+67faff: mov edx, 0x864edc77
+67fb04: jmp 0x67fb14
+67fb06: mov edx, 0x86ee948c
+67fb0b: jmp 0x67fb14
+67fb0d: add al, 0xe8
+67fb0f: mov edx, 0xa1026eee
+67fb14: xor ecx, edx
+67fb16: jmp 0x67f9e1
+67fb1b: mov edx, 0x2ad1820f
+67fb20: xor ecx, ecx
+67fb22: xor r8d, r8d
+67fb25: cmp edx, 0xa14a28c0
+67fb2b: je 0x67fc60
+67fb31: cmp edx, 0xe6a4c754
+67fb37: je 0x67fbc6
+67fb3d: cmp edx, 0xed3e5222
+67fb43: je 0x67fbfb
+67fb49: cmp edx, 0xfed4cacc
+67fb4f: je 0x67fcbc
+67fb55: cmp edx, 0x446ade3
+67fb5b: je 0x67fcc7
+67fb61: cmp edx, 0x14bb509c
+67fb67: je 0x67fc76
+67fb6d: cmp edx, 0x2ad1820f
+67fb73: je 0x67fcb2
+67fb79: cmp edx, 0x2f48f2b0
+67fb7f: je 0x67fbd4
+67fb81: cmp edx, 0x37caeb50
+67fb87: je 0x67fc81
+67fb8d: cmp edx, 0x45a91ae8
+67fb93: je 0x67fbe2
+67fb95: cmp edx, 0x48e03ff8
+67fb9b: je 0x67fc2f
+67fba1: cmp edx, 0x5a13717a
+67fba7: je 0x67fbed
+67fba9: cmp edx, 0x65721f6b
+67fbaf: je 0x67fc6b
+67fbb5: cmp edx, 0xf9cbd48d
+67fbbb: je 0x67fcd5
+67fbc1: jmp 0x67fccd
+67fbc6: add cl, 0x5f
+67fbc9: mov r8d, 0xa30dddbc
+67fbcf: jmp 0x67fccd
+67fbd4: rol cl, 6
+67fbd7: mov r8d, 0x755b83ca
+67fbdd: jmp 0x67fccd
+67fbe2: mov r8d, 0x41efb70b
+67fbe8: jmp 0x67fccd
+67fbed: rol cl, 6
+67fbf0: mov r8d, 0x12f34e82
+67fbf6: jmp 0x67fccd
+67fbfb: rol cl, 4
+67fbfe: mov r8d, ecx
+67fc01: and r8b, 0x33
+67fc05: shl r8b, 2
+67fc09: shr cl, 2
+67fc0c: and cl, 0x33
+67fc0f: or cl, r8b
+67fc12: mov r8d, ecx
+67fc15: and r8b, 0x55
+67fc19: add r8b, r8b
+67fc1c: shr cl, 1
+67fc1e: and cl, 0x55
+67fc21: or cl, r8b
+67fc24: mov r8d, 0x4c747ae2
+67fc2a: jmp 0x67fccd
+67fc2f: rol cl, 4
+67fc32: mov r8d, ecx
+67fc35: and r8b, 0x33
+67fc39: shl r8b, 2
+67fc3d: shr cl, 2
+67fc40: and cl, 0x33
+67fc43: or cl, r8b
+67fc46: mov r8d, ecx
+67fc49: and r8b, 0x55
+67fc4d: add r8b, r8b
+67fc50: shr cl, 1
+67fc52: and cl, 0x55
+67fc55: or cl, r8b
+67fc58: mov r8d, 0x7f2ad4a8
+67fc5e: jmp 0x67fccd
+67fc60: add cl, 0xcb
+67fc63: mov r8d, 0xb5f1785c
+67fc69: jmp 0x67fccd
+67fc6b: add cl, 0x78
+67fc6e: mov r8d, 0x83d6d83f
+67fc74: jmp 0x67fccd
+67fc76: add cl, 0x7e
+67fc79: mov r8d, 0x3bf3a22c
+67fc7f: jmp 0x67fccd
+67fc81: rol cl, 4
+67fc84: mov r8d, ecx
+67fc87: and r8b, 0x33
+67fc8b: shl r8b, 2
+67fc8f: shr cl, 2
+67fc92: and cl, 0x33
+67fc95: or cl, r8b
+67fc98: mov r8d, ecx
+67fc9b: and r8b, 0x55
+67fc9f: add r8b, r8b
+67fca2: shr cl, 1
+67fca4: and cl, 0x55
+67fca7: or cl, r8b
+67fcaa: mov r8d, 0xc91e219c
+67fcb0: jmp 0x67fccd
+67fcb2: mov cl, 0xca
+67fcb4: mov r8d, 0xc7efd02d
+67fcba: jmp 0x67fccd
+67fcbc: xor cl, 0x8d
+67fcbf: mov r8d, 0x9ba6d5a7
+67fcc5: jmp 0x67fccd
+67fcc7: mov r8d, 0xfd8d796e
+67fccd: xor edx, r8d
+67fcd0: jmp 0x67fb25
+67fcd5: mul dil
+67fcd8: mov edx, eax
+67fcda: rol dl, 3
+67fcdd: mov eax, ecx
+67fcdf: mul dl
+67fce1: xor al, sil
+67fce4: mov edx, 0x8c0327b2
+67fce9: xor esi, esi
+67fceb: cmp edx, 0x8c0327b2
+67fcf1: je 0x67fd29
+67fcf3: cmp edx, 0x7c9a233
+67fcf9: je 0x67fd18
+67fcfb: cmp edx, 0x682432c2
+67fd01: je 0x67fe8c
+67fd07: cmp edx, 0x9c8e1f64
+67fd0d: je 0x68003d
+67fd13: jmp 0x680036
+67fd18: mov ecx, eax
+67fd1a: shr cl, 4
+67fd1d: xor al, cl
+67fd1f: mov esi, 0x9b47bd57
+67fd24: jmp 0x680036
+67fd29: mov esi, 0xf7f633e3
+67fd2e: xor ecx, ecx
+67fd30: xor edi, edi
+67fd32: cmp esi, 0x88699e31
+67fd38: je 0x67fe6b
+67fd3e: cmp esi, 0xa77b1452
+67fd44: je 0x67fdbb
+67fd46: cmp esi, 0xb245e8cb
+67fd4c: je 0x67fdc8
+67fd4e: cmp esi, 0xcb4f7e3e
+67fd54: je 0x67fe58
+67fd5a: cmp esi, 0xea67608b
+67fd60: je 0x67fe03
+67fd66: cmp esi, 0xf7f633e3
+67fd6c: je 0x67fe3b
+67fd72: cmp esi, 0xf853ffcf
+67fd78: je 0x67fe0d
+67fd7e: cmp esi, 0x11ce8bf1
+67fd84: je 0x67fe61
+67fd8a: cmp esi, 0x2885e082
+67fd90: je 0x67fdd5
+67fd92: cmp esi, 0x607c7538
+67fd98: je 0x67fe44
+67fd9e: cmp esi, 0x70013f2d
+67fda4: je 0x67fe4e
+67fdaa: cmp esi, 0xe8f9b87f
+67fdb0: je 0x67fe79
+67fdb6: jmp 0x67fe72
+67fdbb: add cl, 0x47
+67fdbe: mov edi, 0x153efc99
+67fdc3: jmp 0x67fe72
+67fdc8: rol cl, 2
+67fdcb: mov edi, 0x3a2c76fa
+67fdd0: jmp 0x67fe72
+67fdd5: rol cl, 4
+67fdd8: mov edi, ecx
+67fdda: and dil, 0x33
+67fdde: shl dil, 2
+67fde2: shr cl, 2
+67fde5: and cl, 0x33
+67fde8: or cl, dil
+67fdeb: mov edi, ecx
+67fded: and dil, 0x55
+67fdf1: add dil, dil
+67fdf4: shr cl, 1
+67fdf6: and cl, 0x55
+67fdf9: or cl, dil
+67fdfc: mov edi, 0x5884dfaf
+67fe01: jmp 0x67fe72
+67fe03: xor cl, 0x19
+67fe06: mov edi, 0x21281eb5
+67fe0b: jmp 0x67fe72
+67fe0d: rol cl, 4
+67fe10: mov edi, ecx
+67fe12: and dil, 0x33
+67fe16: shl dil, 2
+67fe1a: shr cl, 2
+67fe1d: and cl, 0x33
+67fe20: or cl, dil
+67fe23: mov edi, ecx
+67fe25: and dil, 0x55
+67fe29: add dil, dil
+67fe2c: shr cl, 1
+67fe2e: and cl, 0x55
+67fe31: or cl, dil
+67fe34: mov edi, 0x12349f44
+67fe39: jmp 0x67fe72
+67fe3b: mov cl, 0x28
+67fe3d: mov edi, 0xfa5cc2c
+67fe42: jmp 0x67fe72
+67fe44: rol cl, 5
+67fe47: mov edi, 0x48f995ba
+67fe4c: jmp 0x67fe72
+67fe4e: add cl, 0x81
+67fe51: mov edi, 0xd77a2b7f
+67fe56: jmp 0x67fe72
+67fe58: ror cl, 1
+67fe5a: mov edi, 0xab330b06
+67fe5f: jmp 0x67fe72
+67fe61: add cl, 0xde
+67fe64: mov edi, 0xf937338e
+67fe69: jmp 0x67fe72
+67fe6b: ror cl, 1
+67fe6d: mov edi, 0x99a715c0
+67fe72: xor esi, edi
+67fe74: jmp 0x67fd32
+67fe79: mov edi, eax
+67fe7b: shr dil, 4
+67fe7f: xor dil, al
+67fe82: mov esi, 0xe4271570
+67fe87: jmp 0x680031
+67fe8c: mov esi, 0x18926756
+67fe91: xor ecx, ecx
+67fe93: xor edi, edi
+67fe95: cmp esi, 0x96316b57
+67fe9b: je 0x67ffc9
+67fea1: cmp esi, 0xbc2ad27b
+67fea7: je 0x680014
+67fead: cmp esi, 0xbc95f6b4
+67feb3: je 0x67ff2a
+67feb5: cmp esi, 0xe9af1dcf
+67febb: je 0x67ff5b
+67fec1: cmp esi, 0x17b8503b
+67fec7: je 0x67ffd3
+67fecd: cmp esi, 0x18926756
+67fed3: je 0x67ff68
+67fed9: cmp esi, 0x1d295416
+67fedf: je 0x67ff9b
+67fee5: cmp esi, 0x3fbada03
+67feeb: je 0x67ff8e
+67fef1: cmp esi, 0x448e43b1
+67fef7: je 0x680001
+67fefd: cmp esi, 0x5623a73d
+67ff03: je 0x68000b
+67ff09: cmp esi, 0x65fed9d9
+67ff0f: je 0x67ff74
+67ff11: cmp esi, 0x72d28c32
+67ff17: je 0x67ff81
+67ff19: cmp esi, 0x73d7c97c
+67ff1f: je 0x680023
+67ff25: jmp 0x68001c
+67ff2a: rol cl, 4
+67ff2d: mov edi, ecx
+67ff2f: and dil, 0x33
+67ff33: shl dil, 2
+67ff37: shr cl, 2
+67ff3a: and cl, 0x33
+67ff3d: or cl, dil
+67ff40: mov edi, ecx
+67ff42: and dil, 0x55
+67ff46: add dil, dil
+67ff49: shr cl, 1
+67ff4b: and cl, 0x55
+67ff4e: or cl, dil
+67ff51: mov edi, 0xab2da68f
+67ff56: jmp 0x68001c
+67ff5b: add cl, 0xcd
+67ff5e: mov edi, 0x7f9e7698
+67ff63: jmp 0x68001c
+67ff68: mov cl, 0xd1
+67ff6a: mov edi, 0xa40791e2
+67ff6f: jmp 0x68001c
+67ff74: xor cl, 0x15
+67ff77: mov edi, 0xd9d40ba2
+67ff7c: jmp 0x68001c
+67ff81: xor cl, 0x93
+67ff84: mov edi, 0x105454e
+67ff89: jmp 0x68001c
+67ff8e: add cl, 0xe6
+67ff91: mov edi, 0x22938e15
+67ff96: jmp 0x68001c
+67ff9b: rol cl, 4
+67ff9e: mov edi, ecx
+67ffa0: and dil, 0x33
+67ffa4: shl dil, 2
+67ffa8: shr cl, 2
+67ffab: and cl, 0x33
+67ffae: or cl, dil
+67ffb1: mov edi, ecx
+67ffb3: and dil, 0x55
+67ffb7: add dil, dil
+67ffba: shr cl, 1
+67ffbc: and cl, 0x55
+67ffbf: or cl, dil
+67ffc2: mov edi, 0xf48649d9
+67ffc7: jmp 0x68001c
+67ffc9: add cl, 0x92
+67ffcc: mov edi, 0xe4e3e765
+67ffd1: jmp 0x68001c
+67ffd3: rol cl, 4
+67ffd6: mov edi, ecx
+67ffd8: and dil, 0x33
+67ffdc: shl dil, 2
+67ffe0: shr cl, 2
+67ffe3: and cl, 0x33
+67ffe6: or cl, dil
+67ffe9: mov edi, ecx
+67ffeb: and dil, 0x55
+67ffef: add dil, dil
+67fff2: shr cl, 1
+67fff4: and cl, 0x55
+67fff7: or cl, dil
+67fffa: mov edi, 0x419bf706
+67ffff: jmp 0x68001c
+680001: rol cl, 5
+680004: mov edi, 0x7b3499b2
+680009: jmp 0x68001c
+68000b: rol cl, 1
+68000d: mov edi, 0x33dd7ee4
+680012: jmp 0x68001c
+680014: add cl, 0x97
+680017: mov edi, 0xf8a491ca
+68001c: xor esi, edi
+68001e: jmp 0x67fe95
+680023: mov edi, eax
+680025: shr dil, 3
+680029: xor dil, al
+68002c: mov esi, 0x6fed90f1
+680031: mov eax, ecx
+680033: mul dil
+680036: xor edx, esi
+680038: jmp 0x67fceb
+68003d: ret 

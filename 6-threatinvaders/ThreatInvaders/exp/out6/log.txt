@@ -1,0 +1,7 @@
+spawned 28396
+TEL#0 conn=1 fb_len=0 decoded=4096 nonzero=0 head=000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+game hwnds: []
+NO WINDOW FOUND - cannot submit feedback
+waiting for exfil beacons...
+done; distinct beacons: 1
+updater ran count: 0

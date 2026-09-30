@@ -1,0 +1,17 @@
+a=0 tried=24576 0s hits=0
+a=256 tried=6348928 36s hits=0
+a=512 tried=12738816 85s hits=0
+a=768 tried=19194240 114s hits=0
+a=1024 tried=25715200 137s hits=0
+a=1280 tried=32301696 165s hits=0
+a=1536 tried=38953728 180s hits=0
+a=1792 tried=45671296 207s hits=0
+a=2048 tried=52454400 224s hits=0
+a=2304 tried=59303040 269s hits=0
+a=2560 tried=66217216 293s hits=0
+a=2816 tried=73196928 349s hits=0
+a=3072 tried=80242176 381s hits=0
+a=3328 tried=87352960 400s hits=0
+a=3584 tried=94529280 420s hits=0
+a=3840 tried=101771136 467s hits=0
+DONE tried=109049856 hits=[]

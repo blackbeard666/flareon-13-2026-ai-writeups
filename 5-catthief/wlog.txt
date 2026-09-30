@@ -1,0 +1,10 @@
+crafted cmd len 24
+Traceback (most recent call last):
+  File "C:\Users\cavila\Desktop\ctf\flareon13-2026\5-catthief\weaponize.py", line 59, in <module>
+    scr = sess.create_script(js); scr.on('message', on_msg); scr.load(); dev.resume(pid)
+  File "C:\Users\cavila\Desktop\tools\frida-16.5.9-venv\Lib\site-packages\frida\core.py", line 86, in wrapper
+    return f(*args, **kwargs)
+  File "C:\Users\cavila\Desktop\tools\frida-16.5.9-venv\Lib\site-packages\frida\core.py", line 635, in create_script
+    return Script(self._impl.create_script(source, **kwargs))  # type: ignore
+                  ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+frida.InvalidArgumentError: script(line 3): SyntaxError: unexpected end of string

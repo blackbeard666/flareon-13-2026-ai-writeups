@@ -111,13 +111,22 @@ python solve8.py --run     # -> Pr4tt_Pr1M4lItY_C3rt5_4nd_Wa4aA4aAA4aAA4a4a5M@fl
 `solve8.py` is self-contained: sympy factoring, certificate builder, AES wrap. `--run` feeds the input to the untouched `main.wasm` through `ext/run.js`.
 
 ## First attempt (unsolved) — what went wrong
-An earlier multi-agent session (`8-crux/`, Opus 4.8, about 24 h of wall clock, about 4.3 M output tokens) got the AES layer and the parser grammar right. It then spent most of its budget on two wrong assumptions:
+An earlier multi-agent session (`8-crux/`, Opus 4.8 then continued on Opus 4.8/Fable 5/Opus 5.5, ~24 h+ of wall clock across a compaction, ~4.3 M+ output tokens) got the AES layer and the parser grammar right. Its **early** phase burned budget on two wrong assumptions:
 - **Message length pinned to 32–47 bytes (one 48-byte ciphertext).** Nothing requires that: the real certificate is 3.9 KB.
 - **3269 was modeled as an "S-expression arithmetic evaluator" with a treap.** It's a primality-certificate verifier. It was attacked as a flag byte-VM, and parts of the 1,800-state `3270` flag decoder were reversed by hand, when the flag appears on its own once the certificate is valid.
+
+Its **later/continuation** phase actually recovered the correct model — Pratt certificate of the 256-bit prime N, `flag = pkcs7_unpad(AES-dec(fixed CT, SHA256(M), IV))`, all fields forced — and even proved full branch coverage of the `3270` decode. But it got trapped for many hours on **one wrong byte in the leaf encoding**, the single most instructive mistake of the whole set:
+
+- **The crux bug: it encoded the prime-2 leaf as a 14-byte `0x01`-node** `01 00000000 01000000 02 00000000` (a childless node with key=2 and an empty value field) **instead of the canonical single `0x00` byte.** The verifier's `value()` returns 2 for *both* forms, so the non-canonical cert *passed the verifier and reached the final AES* — masking the error. But it made the cert 6,699 bytes instead of 3,891, with a **different SHA-256**, so the flag key was always wrong.
+- Because the `0x01`-node form carries a value field the verifier ignores, the session concluded there were "216 free leaf-value bytes" and spent enormous effort — a validated SHA-NI brute over the entire uniform 4-byte space, ~50 deterministic value conventions, modexp-residue analysis, and full state-coverage instrumentation — hunting a **SHA-256 preimage that never existed.** With the correct `0x00` leaf there is no free field at all; the certificate is unique and deterministic.
+- **Lesson:** "passes the checker" ≠ "canonical." When a downstream step hashes the *raw input bytes*, a lenient parser that accepts multiple encodings of the same value will happily verify a non-canonical input that then hashes wrong. Re-read the grammar for the *minimal/expected* encoding of every terminal (here: the leaf is literally one `0x00` byte), don't just find *an* accepted encoding.
 
 The second attempt (this write-up) started fresh in `8-crux-attempt-2/` and got to the flag in about 19 minutes. What made the difference:
 - Tracing **arguments and bigint values** at every call gave concrete data, instead of modeling the state machines.
 - **Building a tiny valid input first** (the certificate for 3) exposed the target prime directly, so the flag decoder never had to be reversed.
+- Reading the parser grammar precisely, so the leaf was the canonical `0x00` byte from the start.
+
+(A later continuation of the first-attempt session independently re-derived the whole mechanism and, once shown the `0x00`-leaf grammar, reproduced the flag byte-for-byte through the unmodified `main.wasm` — confirming this write-up.)
 
 ## Tooling used
 - `wabt` (npm), but only for `wasm-objdump -x`; its disassembler, decompiler and wat printer can't handle garble's nesting depth.

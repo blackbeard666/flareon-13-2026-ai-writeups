@@ -1,0 +1,137 @@
+INFO  Using log config file: jar:file:/C:/Users/cavila/Desktop/tools/ghidra_12.1.2_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\application.log (LoggingInitialization)  
+INFO  Loading user preferences: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\preferences (Preferences)  
+INFO  Loading previous preferences: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.3_PUBLIC\preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (1386 ms) (ClassSearcher)  
+WARNING: Final field name in class ghidra.util.charset.CharsetInfo has been mutated reflectively by class com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$2 in unnamed module @6574a52c (file:/C:/Users/cavila/Desktop/tools/ghidra_12.1.2_PUBLIC/Ghidra/Framework/Generic/lib/gson-2.13.2.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: SHA1PRNG (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (6190 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldOffset has been called by org.apache.felix.framework.util.SecureAction (file:/C:/Users/cavila/Desktop/tools/ghidra_12.1.2_PUBLIC/Ghidra/Features/Base/lib/org.apache.felix.framework-7.0.5.jar)
+WARNING: Please consider reporting this to the maintainers of class org.apache.felix.framework.util.SecureAction
+WARNING: sun.misc.Unsafe::staticFieldOffset will be removed in a future release
+INFO  HEADLESS Script Paths:
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\FileFormats\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\Base\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\PyGhidra\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\DATA\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\BytePatterns\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\SwiftDemangler\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\JVM\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\VersionTracking\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\PIC\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\Atmel\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\PDB\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\WildcardAssembler\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\MicrosoftCodeAnalyzer\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\8051\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\FunctionID\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\BSim\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\Decompiler\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Debug\Debugger-rmi-trace\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\DecompilerDependent\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\GnuDemangler\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Debug\Debugger\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\SystemEmulation\ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Creating project: C:\Users\cavila\Desktop\ctf\flareon13-2026\7-flarecalc\ghidra_proj\fc (HeadlessAnalyzer)  
+INFO  Creating project: C:\Users\cavila\Desktop\ctf\flareon13-2026\7-flarecalc\ghidra_proj\fc (DefaultProject)  
+INFO  REPORT: Processing input files:  (HeadlessAnalyzer)  
+INFO       project: C:\Users\cavila\Desktop\ctf\flareon13-2026\7-flarecalc\ghidra_proj\fc (HeadlessAnalyzer)  
+INFO  IMPORTING: file:///C:/Users/cavila/Desktop/ctf/flareon13-2026/7-flarecalc/FlareCalc.exe (HeadlessAnalyzer)  
+INFO  Using Loader: Portable Executable (PE) (ProgramLoader)  
+INFO  Using Language/Compiler: x86:LE:64:default:windows (ProgramLoader)  
+INFO  Using Library Search Path: [., C:\WINDOWS\SysWOW64, C:\Program Files\Java\jdk-26.0.1\bin, C:\WINDOWS\Sun\Java\bin, C:\WINDOWS\system32, C:\WINDOWS, C:\Users\cavila\bin, C:\Program Files\Git\mingw64\bin, C:\Program Files\Git\usr\local\bin, C:\Program Files\Git\usr\bin, C:\Program Files\Common Files\Oracle\Java\javapath, C:\WINDOWS\System32\Wbem, C:\WINDOWS\System32\WindowsPowerShell\v1.0, C:\WINDOWS\System32\OpenSSH, C:\Program Files\Git\cmd, C:\Program Files\7-Zip, C:\Users\cavila\AppData\Local\Android\Sdk\platform-tools, C:\Program Files\nodejs, C:\Program Files\Docker\Docker\resources\bin, C:\Program Files (x86)\cloudflared, C:\Users\cavila\AppData\Local\Microsoft\WindowsApps, C:\Users\cavila\AppData\Local\Microsoft\WinGet\Packages\marlocarlo.psmux_Microsoft.Winget.Source_8wekyb3d8bbwe, C:\Users\cavila\AppData\Local\Programs\Microsoft VS Code\bin, C:\Users\cavila\.local\bin, C:\Users\cavila\AppData\Roaming\npm, C:\Users\cavila\AppData\Local\Microsoft\WinGet\Packages\Hugo.Hugo.Extended_Microsoft.Winget.Source_8wekyb3d8bbwe, C:\Users\cavila\AppData\Local\Python\pythoncore-3.14-64\Scripts, C:\Program Files\Rizin\bin, C:\Users\cavila\.dotnet\tools, C:\Program Files\Git\usr\bin\vendor_perl, C:\Program Files\Git\usr\bin\core_perl] (ProgramLoader)  
+WARN  Invalid or missing function at 1800c894c (ExportDataDirectory)  
+INFO  Additional info:
+Loading file:///C:/Users/cavila/Desktop/ctf/flareon13-2026/7-flarecalc/FlareCalc.exe?MD5=bd80e83d0311257fd8c25ed87de06216...
+------------------------------------------------
+
+Searching 27 paths for library GDI32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/gdi32.dll
+Loading file:///C:/Windows/System32/gdi32.dll?MD5=15928ba7f26cf88a9ce75d713a45ce24...
+Created exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\gdi32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library KERNEL32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/kernel32.dll
+Loading file:///C:/Windows/System32/kernel32.dll?MD5=046e6b86273b9cc2ed367bdcf9c12b44...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\kernel32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library USER32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/user32.dll
+Loading file:///C:/Windows/System32/user32.dll?MD5=0a96167c4b0625336617aee21c3a7ad1...
+[user32.dll]: failed to create WEVTResource at 1800e7a70: Failed to resolve data length for WEVTResource
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\user32.exports
+Library not saved to project.
+------------------------------------------------
+
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\kernel32.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\user32.exports
+Applying cached symbols from GDI32.DLL
+Linking the External Programs of 'FlareCalc.exe' to imported libraries...
+  [KERNEL32.DLL] -> not found in project
+  [USER32.DLL] -> not found in project
+  [GDI32.DLL] -> not found in project
+------------------------------------------------
+
+ (ProgramLoader)  
+INFO  IMPORTING: Loaded 0 additional files (HeadlessAnalyzer)  
+INFO  ANALYZING all memory and code: file:///C:/Users/cavila/Desktop/ctf/flareon13-2026/7-flarecalc/FlareCalc.exe (HeadlessAnalyzer)  
+WARN  Ignoring leading '_' chars on no-return name '___raise_securityfailure' specified in file: C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\Base\data\PEFunctionsThatDoNotReturn (NoReturnFunctionAnalyzer)  
+WARN  Ignoring leading '_' chars on no-return name '___report_rangecheckfailure' specified in file: C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\Base\data\PEFunctionsThatDoNotReturn (NoReturnFunctionAnalyzer)  
+INFO  Skipping PDB processing: missing PDB information in program metadata (PdbUniversalAnalyzer)  
+INFO  Packed database cache: C:\Users\cavila\AppData\Local\ghidra\packed-db-cache (PackedDatabaseCache)  
+INFO  Unprocessed TypeDescriptor: int (__cdecl *)(void (__cdecl *)(struct _TP_CALLBACK_INSTANCE * __ptr64,void * __ptr64),void * __ptr64,struct _TP_CALLBACK_ENVIRON_V3 * __ptr64) (TypeDescriptorModel)  
+INFO  Unprocessed TypeDescriptor: int (__cdecl *)(void (__cdecl *)(struct _TP_CALLBACK_INSTANCE * __ptr64,void * __ptr64),void * __ptr64,struct _TP_CALLBACK_ENVIRON_V3 * __ptr64) (TypeDescriptorModel)  
+INFO  Applied data type archive: windows_vs12_64 (ApplyDataArchiveAnalyzer)  
+INFO  Applied data type archive: windows_vs12_64 (ApplyDataArchiveAnalyzer)  
+INFO  -----------------------------------------------------
+    ASCII Strings                              1.347 secs
+    Apply Data Archives                        0.505 secs
+    Call Convention ID                         0.148 secs
+    Call-Fixup Installer                       0.067 secs
+    Create Address Tables                      0.497 secs
+    Create Address Tables - One Time           0.640 secs
+    Create Function                            0.232 secs
+    Data Reference                             0.510 secs
+    Decompiler Parameter ID                   30.702 secs
+    Decompiler Switch Analysis                 5.393 secs
+    Demangler Microsoft                        0.129 secs
+    Disassemble Entry Points                  15.684 secs
+    Embedded Media                             0.056 secs
+    External Entry References                  0.000 secs
+    Function ID                                6.040 secs
+    Function Start Search                      0.076 secs
+    Non-Returning Functions - Discovered       5.067 secs
+    Non-Returning Functions - Known            0.053 secs
+    PDB Universal                              0.006 secs
+    Reference                                  1.185 secs
+    Scalar Operand References                  3.228 secs
+    Shared Return Calls                        0.730 secs
+    Stack                                     21.219 secs
+    Subroutine References                      0.629 secs
+    Subroutine References - One Time           0.016 secs
+    Windows x86 PE Exception Handling          4.775 secs
+    Windows x86 PE RTTI Analyzer               1.099 secs
+    Windows x86 Thread Environment Block (TEB) Analyzer     0.045 secs
+    WindowsResourceReference                   1.907 secs
+    x86 Constant Reference Analyzer           20.287 secs
+-----------------------------------------------------
+     Total Time   122 secs
+-----------------------------------------------------
+ (AutoAnalysisManager)  
+INFO  REPORT: Analysis succeeded for file: file:///C:/Users/cavila/Desktop/ctf/flareon13-2026/7-flarecalc/FlareCalc.exe (HeadlessAnalyzer)  
+INFO  /FlareCalc.exe: file created (cavila) (LocalFileSystem)  
+INFO  REPORT: Save succeeded for: /FlareCalc.exe (fc:/FlareCalc.exe) (HeadlessAnalyzer)  
+INFO  REPORT: Import succeeded (HeadlessAnalyzer)  

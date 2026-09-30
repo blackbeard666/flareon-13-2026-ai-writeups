@@ -36,3 +36,28 @@ detonate_requests.log
 __pycache__/
 8-crux-attempt-2/ext/extension.zip
 8-crux-attempt-2/objdump_x.txt
+# ch9: ELF sample, Ghidra projects, cores
+9-neonoutrun*/neon_outrun
+9-neonoutrun*/ghidra/
+core.*
+# Ghidra project databases (regenerable, >100 MB)
+**/ghidra_proj/
+**/ghidra_blob/
+*.rep/
+*.gpr
+# vendored toolchains / build outputs
+8-crux/wabt-1.0.36/
+*.tar.gz
+**/csharp/*/bin/
+**/csharp/*/obj/
+NUL
+# challenge samples and sample-derived payloads
+**/extension.zip
+3-doc/macho/
+3-doc/udf/click_me
+3-doc/layer.zip
+7-flarecalc/cert_0*
+7-flarecalc/certs.pem
+7-flarecalc/sig.p7b
+# V8 profiler logs
+isolate-*-v8.log

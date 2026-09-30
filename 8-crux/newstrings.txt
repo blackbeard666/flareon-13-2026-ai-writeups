@@ -1,0 +1,318 @@
+' 0 ^ p q t 
+!&$@$J$`$s+v+
+%%Jr..\$
+%Jo..\r
+x%Jo%.\r.
+Bc!! 0
+xJo%%\r..8$
+_p&&<Y.
+| R?Ul`
+C'$nG!
+Zanabazar_Squarex!nASCII|
+x!nASCII_Hex_DigASCII_Hex_Digit
+CunsuppoCunsupported opeinvalid argument_
+ile already invalid syntax
+short write
+hort write]
+short b
+short buffer
+nexpected EOF
+unsafe.Pointer
+O_WRONLYO_APPENDValue.Int
+Value.Int
+alue.Int
+Value.Intr
+peration not peNo such 
+o such file or No such process
+/O error
+Argument list tBad file number
+Try again!S
+Try again
+Out of memory
+ad address
+ile exists
+No such device
+ot a directory
+Is a directory
+Invalid argumenInvalid argumentNot a typewriterFile too large
+llegal seek
+oo many links
+roken pz
+Broken pipe
+Quota exceeded
+ath resulDeadlock
+eadlock conditi
+Directory not 
+8Too many sym
+Identifier remoLevel 3 halted
+Level 3 resetg
+Level 3 reset
+Protocol dri
+No CSI 
+No CSI structurLevel 2 halted
+nvalid exchangeoCExchan#
+oCExchange full
+Exchange full
+No anodeNo anodeNo anode
+Invalid slot
+ad font fil
+No data(
+o data (for noTimer expired`E
+Timer expired
+The link hasAdvertise error
+Srmount error
+rotocol error
+Remote q
+emote address 
+Attempting t
+estination adMessage too longUnknown protocolOperatioc
+Operation not suSocket i
+ocket is alread
+onnection tim
+Host is downx
+ost is down
+No medium (in`Inode i
+Inode is remoteNo more files
+)No su
+No such host 
+ime: invali
+time: bu
+ime: bad [0-9]time: bad [0-9]*`
+alformed tinot pollable
+nvalid path
+os: process a3os: proi
+3os: process han
+{path e
+{path escapes f
+`Bad input
+:eropps ton ep
+qD!Line_Separator
+Mende_Kikakui!
+nsupported operation
+t,invalid argument
+ermission deniedY%V
+ermission denied
+file already exists
+file does not exist
+file already closed
+value out of range
+nvalid syntax
+nvalid write result
+Funexpected EOF
+eek: invalid whence
+eek: invalid offset
+ytes.Buffer: too large
+nsafe.Pointer7
+Operation not permitted
+No such process
+Interrupted system call
+Argument list too long
+rExec format error
+Exec format error
+Bad file number
+No child processesK
+No child processes
+ut of memoryG
+ermission deniedj{
+Permission denied
+Device or resource busy
+oCross-device linkGB
+ross-device link
+o such device
+ot a directory6
+ile table overflow
+Too many open files
+Not a typewriter4p6M
+ile too large]
+No space left on device
+Illegal seek
+ead-only file system
+File name too long
+ile name too long
+not implemented on jsI
+not implemented on js
+uota exceeded
+Deadlock condition
+irectory not empty
+Too many symbolic links
+Identifier removed
+evel 2 not synchronized
+Level 3 halted
+Link number out of range
+evel 2 halted
+lInvalid exchange
+Invalid request code_
+nvalid request code
+ad font file fmt
+Device not a stream
+Out of streams resourcesPackage not installed>0
+Package not installed
+The object is remote
+dvertise error
+-Srmount error
+ultihop attempted
+emote address changed
+tMessage too long_)
+rotocol not available
+nknown protocol
+ddress already in use
+ddress not available
+Address not available
+Network is unreachable
+onnection aborted
+onnection reset by peerSocket is not connected
+Connection timed out
+onnection refused
+ost is unreachable
+Host is unreachable
+Socket already connectedOperation canceled.
+.No more files
+ime: invalid number
+ad value for field
+se of closed file
+use of closed file
+ot pollable&#
+yntax error in pattern
+skip this directory
+path escapes from parent
+Bad input^
+!nASCII_Hex_Digit
+unsupported operation
+file already existsA
+file already closedY
+alue out of range
+Rinvalid write result828
+eek: invalid whenceW?
+Seek: invalid offset@h
+o: read/write on closed pipe
+io: read/write on closed pipe
+bytes.Buffer: too large
+No such file or directory
+Interrupted system callA
+^VNo such device or addressZ
+No such device or address
+rgument list too long
+evice or resource busy
+Invalid argumentX
+File table overflow
+o space left on device
+Read-only file system
+Math arg out of domain of func
+ath result not representaMath result not representable
+Deadlock condition 
+haNo record locks available
+No record locks available
+Directory not empty9
+8Too many symbolic links
+No message of desired type
+o message of desired type
+Identifier removed~1
+hannel number out of range
+Level 2 not synchronizedH
+ink number out of rangeC
+2Protocol driver not attachedProtocol driver not attached
+No CSI structure available_
+o CSI structure available
+YInvalid request descriptorl
+Invalid request descriptor
+ad font file fmt2
+<Device not a stream
+o data (for no delay io)
+Out of streams resources|3
+achine is not on the network
+The object is remote8
+The link has been severed
+Communication error on send
+Protocol error
+Multihop attempted;
+iven log. name not unique
+.d. invalid for this operation
+Can't access a needed shared libAccessing a corrupted shared lib.lib section in a.out corrupted
+Attempting to exec a shared Socket operation on non-socket
+estination address required
+cDestination address required
+rotocol wrong type for socket
+rotocol not availablei_@
+Socket type not supported|
+ocket type not supported
+Operation not supported on transProtocol family not supported
+RAddress already in use
+xConnection aborted
+onnection reset by peer
+o buffer space available
+No buffer space available
+Socket is already connectedo
+ocket is already connected
+Socket is not connected$
+an't send after socket shutdown
+onnection timed out
+Socket already connected
+Connection already in progress
+No medium (in tape drive)
+o medium (in tape drive)
+Operation canceled.
+`Inode is remote (not really err
+No such host or network path
+ime: invalid number!
+bad value for field
+ime: bad [0-9]*
+ime: invalid location name
+malformed time zone informatmalformed time zone information
+Nskip this directory
+os: process already finished
+os: process already released
+os: process handle unavailable
+{path escapes from parentb%Se
+attern contains path separator
+syntax error scanning boolean
+ultiple Read calls return no data or error
+ath arg out of domain of func
+Machine is not on the network
+Communication error on send4
+ross mount point (not really error)qi
+ross mount point (not really error)
+rying to read unreadable messagef
+rying to read unreadable message
+alue too large for defined data type'
+Value too large for defined data type
+an't access a needed shared lib[
+ccessing a corrupted shared lib
+.lib section in a.out corruptedM!
+Attempting to link in too many libs-
+ttempting to link in too many libs
+Attempting to exec a shared library
+Socket operation on non-socket
+peration not supported on transport endpoint
+Protocol family not supportedo9
+Address family not supported by protocol family
+Network interface is not configured
+Can't send after socket shutdown
+onnection already in progressi
+Inode is remote (not really error)
+Inappropriate file type or formatC
+Inappropriate file type or format
+pFilename exists with different case
+ilename exists with different case
+$time: invalid location namez.+
+Mfile type does not support deadlined
+file type does not support deadline
+skip everything and stop the walky
+kip everything and stop the walk
+pattern contains path separator
+syntax error scanning complex numberDam
+yntax error scanning complex number
+yntax error scanning boolean
+cipher: message authentication failed
+multiple Read calls return no data or error
+[bytes.Buffer: reader returned negative count from Reado]
+ytes.Buffer: reader returned negative count from Read
+ath result not representablep
+2Protocol driver not attached
+;Attempting to exec a shared libraryq
+Address family not supported by protocol familyn?Q
+ocket is already connectedo
+Inode is remote (not really error)"t
+malformed time zone information
+3os: process handle unavailable
+os: invalid use of WriteAt on file opened with O_APPEND
+bytes.Buffer: UnreadByte: previous operation was not a successful read

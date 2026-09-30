@@ -1,0 +1,20 @@
+require('./wasm_exec.js');
+const fs=require('fs');
+(async()=>{
+ const go=new Go(); go.importObject.env={trace:()=>{}};
+ const {instance}=await WebAssembly.instantiate(fs.readFileSync('main_instr2.wasm'),go.importObject);
+ go.run(instance); await new Promise(r=>setImmediate(r));
+ const U=new Uint8Array(instance.exports.mem.buffer), D=new DataView(instance.exports.mem.buffer);
+ const hx=(p,n)=>Buffer.from(U.subarray(p,p+n)).toString('hex');
+ const u32=o=>D.getUint32(o,true), u16=o=>D.getUint16(o,true);
+ const G=D.getUint32(0x20abb0,true);
+ console.log('PRE-check (fresh instance, no input processed):');
+ console.log(' g[0x20abb0] ->', G.toString(16));
+ console.log(' G.off52 =', u32(G+52).toString(16));
+ console.log(' G.off72 =', hx(G+72,8));
+ console.log(' G.off96 =', U[G+96].toString(16));
+ const p112=D.getUint32(G+112,true);
+ console.log(' G.off112 =', p112.toString(16), ' [off112].off68 =', u16(p112+68).toString(16));
+ console.log(' g[0x20ab28] =', hx(0x20ab28,8));
+ process.exit(0);
+})();

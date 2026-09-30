@@ -1,0 +1,38 @@
+require('./wasm_exec.js');
+const fs=require('fs'),crypto=require('crypto');
+const key=Buffer.from("cabeba7ad156801d1c82381c7cb8a3c406ae2c3cd168a96cd8373684cdbf8723","hex");
+const iv=Buffer.from("5ff26040c4c20b9f2ffdefa7ecf65d91","hex");
+function mk(m){const pl=48-m.length;const p=Buffer.concat([m,Buffer.alloc(pl,pl)]);const c=crypto.createCipheriv('aes-256-cbc',key,iv);c.setAutoPadding(false);return Buffer.concat([c.update(p),c.final()]).toString('base64');}
+function u32(n){const b=Buffer.alloc(4);b.writeUInt32LE(n>>>0);return b;}
+function bLE(n){let a=[];n=BigInt(n||0);if(n<0n)n=-n;while(n>0n){a.push(Number(n&255n));n>>=8n;}return Buffer.from(a);}
+function nd(children,k,v){k=k||0;v=v||0;const kb=bLE(k),vb=bLE(v);const p=[Buffer.from([1]),u32(children.length)];for(const c of children){p.push(u32(c.length));p.push(c);}p.push(u32(kb.length),kb,u32(vb.length),vb);return Buffer.concat(p);}
+global.nd=nd;
+(async()=>{
+ let inst=null,DV=null,U8=null,on=false,log=[];
+ function q(o){o=Number(o);if(o<0||o+8>U8.length)return 0n;return DV.getBigUint64(o,true);}
+ function rI(p){p=Number(p);if(p<=0||p+24>U8.length)return'<nil>';const neg=U8[p];const ptr=Number(q(p+8)),len=Number(q(p+16));if(ptr<=0||len<0||len>256||ptr+len>U8.length)return(neg?'-':'')+'0';let v=0n;for(let i=len-1;i>=0;i--)v=(v<<8n)|BigInt(U8[ptr+i]);return(neg?'-':'')+v.toString();}
+ const go=new Go();
+ go.importObject.env={trace:(idx,sp)=>{ if(!on||!inst)return;
+   if(idx===3251)log.push('NewInt('+BigInt.asIntN(64,q(sp+8))+')');
+   else if(idx===3254)log.push('Cmp('+rI(q(sp+8))+','+rI(q(sp+16))+')');
+   else if(idx===3256)log.push('Add('+rI(q(sp+8))+','+rI(q(sp+16))+')');
+   else if(idx===3257)log.push('Sub('+rI(q(sp+8))+','+rI(q(sp+16))+')');
+   else if(idx===3258)log.push('Mul('+rI(q(sp+8))+','+rI(q(sp+16))+')');
+   else if(idx===3262)log.push('DivMod('+rI(q(sp+8))+','+rI(q(sp+16))+')');
+   else if(idx===3268){ // dump raw ptrs + list
+     const a0p=Number(q(sp+8)),a1p=Number(q(sp+16)),lp=Number(q(sp+24)),n=Number(BigInt.asIntN(64,q(sp+32)));
+     let items=[];for(let i=0;i<Math.min(n,6);i++){const it=Number(q(lp+i*16)),dp=Number(q(lp+i*16+8));items.push('{itab='+it.toString(16)+',d='+rI(dp)+'}');}
+     log.push('PRED(a0='+rI(a0p)+'[p'+a0p.toString(16)+'],a1='+rI(a1p)+'[p'+a1p.toString(16)+'],n='+n+',list=['+items.join(',')+'])');
+   }
+ }};
+ const {instance}=await WebAssembly.instantiate(fs.readFileSync('main_instr2.wasm'),go.importObject);
+ inst=instance;go.run(instance);await new Promise(r=>setImmediate(r));
+ U8=new Uint8Array(instance.exports.mem.buffer);DV=new DataView(instance.exports.mem.buffer);
+ const check=globalThis.check;
+ const msg=eval(process.argv[2]);
+ //nogate
+ on=true;let r;try{r=check(mk(msg));}catch(e){r='ERR:'+e.message;}on=false;
+ console.log(process.argv[3]||'',"len"+msg.length,"->",JSON.stringify(r),"| "+msg.toString('hex'));
+ console.log("  "+log.join(' ; '));
+ process.exit(0);
+})();

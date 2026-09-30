@@ -1,0 +1,559 @@
+<title>FLARE-On 13 Run Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: a disassembler-listing report. Left address gutter labels each section like a code segment; content column ~ 1120px. */
+:root{
+  --bg:#eef1f4;        /* cool paper */
+  --surface:#f9fafb;
+  --ink:#15202c;       /* navy ink */
+  --muted:#5b6878;
+  --rule:#cdd4dc;
+  --accent:#d9481f;    /* flare orange */
+  --solved:#127a6a;    /* teal = accepted */
+  --fail:#b3261e;      /* red = rejected / abandoned */
+  --est:#8a6d1c;       /* ochre = estimated */
+  --c-out:#d9481f; --c-cw:#6b5bd2; --c-cr:#2f7fb8; --c-in:#8a96a5;
+  --f-display:"Chakra Petch","Bahnschrift","Segoe UI",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f151c;--surface:#151d27;--ink:#e3e8ee;--muted:#8d9aab;--rule:#2a3542;
+  --accent:#ff7a45;--solved:#3cc4ad;--fail:#ff6b61;--est:#d9b451;
+  --c-out:#ff7a45;--c-cw:#9d90f0;--c-cr:#5fb0e8;--c-in:#8d9aab;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f151c;--surface:#151d27;--ink:#e3e8ee;--muted:#8d9aab;--rule:#2a3542;
+  --accent:#ff7a45;--solved:#3cc4ad;--fail:#ff6b61;--est:#d9b451;
+  --c-out:#ff7a45;--c-cw:#9d90f0;--c-cr:#5fb0e8;--c-in:#8d9aab;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:24px;padding-block:40px 64px}
+@media (max-width:560px){.wrap{padding-inline:16px;padding-block:24px 48px}}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:.01em}
+p{margin:0;max-width:68ch}
+code,.mono{font-family:var(--f-mono);font-size:.86em}
+.num{font-variant-numeric:tabular-nums}
+
+header{display:grid;gap:20px;padding-bottom:28px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.eyebrow b{color:var(--accent);font-weight:700}
+h1{font-size:clamp(34px,6vw,58px);line-height:1.02;font-weight:700}
+h1 .score{color:var(--accent)}
+.lede{font-size:17px;color:var(--muted)}
+.lede strong{color:var(--ink);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.kpi{background:var(--surface);padding:14px 16px;display:grid;gap:2px;min-width:0}
+.kpi .v{font-family:var(--f-mono);font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:12px;color:var(--muted);letter-spacing:.04em}
+
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--f-mono);font-size:12px}
+nav.toc a{color:var(--muted);text-decoration:none}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--accent)}
+nav.toc a b{color:var(--accent);font-weight:500}
+
+section{display:grid;grid-template-columns:110px minmax(0,1fr);gap:24px;padding-block:40px;border-bottom:1px solid var(--rule)}
+.seg{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding-top:6px;line-height:1.4}
+.seg b{display:block;color:var(--accent);font-weight:700}
+.body{display:grid;gap:18px;min-width:0}
+h2{font-size:26px;font-weight:600}
+h3.small{font-size:15px;font-weight:600;font-family:var(--f-body)}
+.sub{color:var(--muted);font-size:14px}
+@media (max-width:760px){section{grid-template-columns:1fr;gap:10px;padding-block:28px}.seg{padding-top:0}.seg b{display:inline;margin-right:8px}}
+
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:2px;display:inline-block}
+.sw.ok{background:var(--solved)}.sw.bad{background:var(--fail)}.sw.est{background:var(--est)}
+.sw.out{background:var(--c-out)}.sw.cw{background:var(--c-cw)}.sw.cr{background:var(--c-cr)}.sw.in{background:var(--c-in)}
+
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface)}
+svg text{font-family:var(--f-mono);fill:var(--muted)}
+
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);white-space:nowrap;background:var(--surface)}
+td{padding:11px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+td.id{font-family:var(--f-mono);font-weight:700;color:var(--accent)}
+td .nm{font-weight:600}
+td .cat{color:var(--muted);font-size:13px;display:block;max-width:36ch}
+tr.retry td{background:color-mix(in oklab,var(--fail) 5%,var(--surface))}
+tr.grp td{border-bottom:1px dashed var(--rule)}
+tr.total td{font-weight:700;border-top:2px solid var(--ink)}
+.flag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12.5px;word-break:break-all}
+.flag.bad{color:var(--fail);text-decoration:line-through}
+.copy{font:500 11px var(--f-mono);border:1px solid var(--rule);background:transparent;color:var(--muted);padding:2px 6px;border-radius:3px;cursor:pointer;flex:none}
+.copy:hover{color:var(--accent);border-color:var(--accent)}
+.copy:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pill{display:inline-block;width:fit-content;font:600 10.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;white-space:nowrap}
+.pill.ok{color:var(--solved);background:color-mix(in oklab,var(--solved) 13%,transparent)}
+.pill.bad{color:var(--fail);background:color-mix(in oklab,var(--fail) 13%,transparent)}
+.est{color:var(--est)}
+
+/* attempt chip: two-cell tag "ATTEMPT | 1/2" */
+.att{display:inline-flex;width:fit-content;font:700 10.5px var(--f-mono);letter-spacing:.05em;border:1.5px solid currentColor;border-radius:3px;overflow:hidden;vertical-align:1px;white-space:nowrap}
+.att span{padding:1px 5px}
+.att span:last-child{background:currentColor}
+.att span:last-child i{font-style:normal;color:var(--surface)}
+.att.a1{color:var(--fail)}.att.a2{color:var(--solved)}
+.nmrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+
+.bars{display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:210px minmax(0,1fr) 92px;gap:12px;align-items:center;font-size:13px}
+.bar .lab{white-space:nowrap;overflow:hidden;display:flex;align-items:center;gap:6px}
+.bar .lab b{font-family:var(--f-mono);color:var(--accent)}
+.bar .track{height:16px;background:color-mix(in oklab,var(--rule) 45%,transparent);display:flex}
+.bar .fill{height:100%;background:var(--solved)}
+.bar .fill.bad{background:var(--fail)}.bar .fill.est{background:var(--est)}
+.bar .val{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:560px){.bar{grid-template-columns:120px minmax(0,1fr) 70px;gap:8px;font-size:12px}.bar .lab .att{display:none}}
+
+.toggle{display:inline-flex;flex-wrap:wrap;border:1px solid var(--rule);width:fit-content;max-width:100%}
+.toggle button{font:500 12px var(--f-mono);background:transparent;border:0;color:var(--muted);padding:6px 12px;cursor:pointer}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+.stack{display:flex;height:34px;border:1px solid var(--rule)}
+.stack div{height:100%;display:flex;align-items:center;padding-inline:8px;font:600 12px var(--f-mono);color:var(--surface);white-space:nowrap;overflow:hidden;min-width:0}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.split div{background:var(--surface);padding:12px 14px;display:grid;gap:2px}
+.split .h{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.split .n{font:700 20px var(--f-mono);font-variant-numeric:tabular-nums}
+.split .s{font-size:12px;color:var(--muted)}
+.price td,.price th{padding:7px 10px;font-size:13px}
+
+.heat{border-collapse:separate;border-spacing:2px;font-size:12px}
+.heat th{background:transparent;border:0;padding:4px;font-size:10.5px;letter-spacing:.04em;text-transform:none;vertical-align:bottom;height:96px}
+.heat th.col span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+.heat td{border:0;padding:0;width:40px;height:28px;text-align:center;vertical-align:middle;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.heat td.rowh{width:auto;text-align:left;padding-right:10px;white-space:nowrap;font-family:var(--f-body)}
+.heat td.rowh b{font-family:var(--f-mono);color:var(--accent);margin-right:6px}
+
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.case{border:1px solid var(--rule);background:var(--surface);padding:20px;display:grid;gap:14px;min-width:0;align-content:start}
+.case h3{font-size:20px;font-weight:600}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule)}
+.vs div{background:var(--surface);padding:10px 12px;display:grid;gap:4px;align-content:start}
+.vs .n{font-family:var(--f-mono);font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.vs .s{font-size:12px;color:var(--muted)}
+.case p{font-size:14px}
+.ratio{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.ratio b{color:var(--accent);font-size:15px}
+
+.plist{display:grid;gap:10px}
+details.pr{border:1px solid var(--rule);background:var(--surface)}
+details.pr>summary{cursor:pointer;list-style:none;padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+details.pr>summary::-webkit-details-marker{display:none}
+details.pr>summary::before{content:"▸";font-family:var(--f-mono);color:var(--muted);width:1ch}
+details.pr[open]>summary::before{content:"▾"}
+details.pr>summary .id{font:700 13px var(--f-mono);color:var(--accent)}
+details.pr>summary .nm{font-weight:600}
+details.pr>summary .meta{margin-left:auto;font:12px var(--f-mono);color:var(--muted)}
+.kick{flex-basis:100%;padding-left:calc(1ch + 10px);font-size:13.5px;color:var(--muted)}
+.kick q{color:var(--ink);quotes:none}
+.pnote{padding:0 14px 12px;font-size:13px;color:var(--muted);max-width:none}
+.msgs{border-top:1px solid var(--rule);display:grid}
+.msg{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:10px 14px;border-bottom:1px solid var(--rule)}
+.msg:last-child{border-bottom:0}
+.msg time{font:12px var(--f-mono);color:var(--muted);padding-top:2px}
+.msg time b{display:block;font-weight:700;letter-spacing:.06em;font-size:10.5px;text-transform:uppercase}
+.msg.goal time b{color:var(--accent)}.msg.user time b{color:var(--ink)}
+.msg pre{margin:0;font-family:var(--f-body);font-size:13.5px;white-space:pre-wrap;word-break:break-word}
+.msg.sys pre,.msg.cmd pre{font-style:italic;color:var(--muted)}
+@media (max-width:560px){.msg{grid-template-columns:1fr;gap:2px}}
+
+.lessons{display:grid;border-top:1px solid var(--rule);counter-reset:l}
+.lesson{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px 14px;padding-block:16px;border-bottom:1px solid var(--rule)}
+.lesson::before{counter-increment:l;content:counter(l,decimal-leading-zero);font:700 18px var(--f-mono);color:var(--accent);grid-row:span 4}
+.lesson h3{font-size:16px;font-weight:600;font-family:var(--f-body)}
+.lesson p{font-size:14px;color:var(--muted)}
+.lesson .do{font-size:13.5px;color:var(--ink);border-left:2px solid var(--accent);padding-left:10px}
+.lesson .do b{font:700 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-right:6px}
+.lesson .ev{font:11px var(--f-mono);color:var(--muted)}
+
+.tech{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));border-top:1px solid var(--rule)}
+.tech div{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);display:grid;gap:4px;min-width:0;align-content:start}
+.tech h3{font-size:15px;font-weight:600}
+.tech p{font-size:13.5px;color:var(--muted)}
+.tech .where{font-family:var(--f-mono);font-size:11px;color:var(--accent)}
+
+footer{padding-top:28px;font-size:12.5px;color:var(--muted);display:grid;gap:6px}
+footer p{max-width:90ch}
+@media (prefers-reduced-motion:no-preference){.bar .fill{transition:width .5s ease}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow"><b>FLARE-On 13</b> · 2026 · post-run report · Claude Code on Windows 11</div>
+  <h1>Nine challenges, <span class="score">9/9</span> flags recovered.</h1>
+  <p class="lede">Every challenge was solved offline with Claude Code, from a 24-second JavaScript pun to a garbled Go WASM Pratt-certificate verifier. <strong>Two challenges needed a second attempt.</strong> Each retry started a fresh session and cost under 4% of the failed first attempt.</p>
+  <div class="kpis">
+    <div class="kpi"><span class="v num" style="color:var(--solved)">9/9</span><span class="l">flags accepted</span></div>
+    <div class="kpi"><span class="v num">11</span><span class="l">attempts (2 challenges retried)</span></div>
+    <div class="kpi"><span class="v num">~59 h</span><span class="l">first prompt → last flag</span></div>
+    <div class="kpi"><span class="v num">~$1,180</span><span class="l">API list-price equivalent</span></div>
+    <div class="kpi"><span class="v num">9.9 M</span><span class="l">output tokens</span></div>
+    <div class="kpi"><span class="v num">1.45 B</span><span class="l">cache-read tokens</span></div>
+    <div class="kpi"><span class="v num">3,513</span><span class="l">tool calls</span></div>
+  </div>
+  <nav class="toc" aria-label="Sections">
+    <a href="#timeline"><b>01</b> timeline</a><a href="#challenges"><b>02</b> results</a><a href="#cost"><b>03</b> tokens &amp; cost</a><a href="#tools"><b>04</b> tooling</a><a href="#retries"><b>05</b> retries</a><a href="#prompts"><b>06</b> prompts</a><a href="#lessons"><b>07</b> lessons</a><a href="#techniques"><b>08</b> techniques</a>
+  </nav>
+</header>
+
+<section id="timeline">
+  <div class="seg"><b>.text</b>0x01 timeline</div>
+  <div class="body">
+    <h2>How the run unfolded</h2>
+    <p class="sub">Each bar is one attempt, drawn to scale in UTC. Challenges 1–4 took the first two hours. The two failed first attempts (A1/2) take up most of the elapsed time, and each retry (A2/2) starts right after.</p>
+    <div class="legend"><span><i class="sw ok"></i>solved</span><span><i class="sw bad"></i>abandoned or wrong flag</span><span><i class="sw est"></i>window estimated from commit times</span></div>
+    <div class="scroll"><svg id="gantt" role="img" aria-label="Timeline of solve attempts from 27 to 30 September 2026"></svg></div>
+  </div>
+</section>
+
+<section id="challenges">
+  <div class="seg"><b>.rdata</b>0x02 results</div>
+  <div class="body">
+    <h2>Per-challenge results</h2>
+    <p class="sub">Retried challenges have one row per attempt, tagged <span class="att a1"><span>ATTEMPT</span><span><i>1/2</i></span></span> and <span class="att a2"><span>ATTEMPT</span><span><i>2/2</i></span></span>. Rows marked <span class="est">est.</span> were not metered at the time. Their numbers come from the transcript window between git commits.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>#</th><th>Challenge</th><th>Flag</th><th>Model</th><th class="r">Wall-clock</th><th class="r">Cost</th><th class="r">Tool calls</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="cost">
+  <div class="seg"><b>.data</b>0x03 spend</div>
+  <div class="body">
+    <h2>Tokens and cost</h2>
+    <p class="sub">Cost is what these tokens would cost at Anthropic API list prices, per model and per token type. It shows relative spend. It is not the amount actually billed, since Claude Code usage may fall under a subscription.</p>
+    <div class="split" id="split"></div>
+    <div class="stack" id="stack" role="img" aria-label="Cost composition by token type"></div>
+    <div class="legend"><span><i class="sw cr"></i>cache reads</span><span><i class="sw out"></i>output</span><span><i class="sw cw"></i>cache writes</span><span><i class="sw in"></i>uncached input</span></div>
+    <p class="sub">Cache reads are 59% of the bill. Every turn re-reads the whole conversation from the prompt cache, so a long session costs more per turn the longer it runs. crux attempt 1 made 1,587 model calls, and late in the session each one re-read a context of several hundred thousand tokens.</p>
+
+    <h3 class="small">Per-attempt breakdown</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>#</th><th>Attempt</th><th class="r">Turns</th><th class="r">Input</th><th class="r">Cache write</th><th class="r">Cache read</th><th class="r">Output</th><th class="r">Cost</th><th class="r">$ / tool call</th></tr></thead>
+        <tbody id="tokrows"></tbody>
+      </table>
+    </div>
+
+    <h3 class="small">Compare attempts</h3>
+    <div class="toggle" role="group" aria-label="Metric">
+      <button id="m-cost" aria-pressed="true">cost</button>
+      <button id="m-out" aria-pressed="false">output tokens</button>
+      <button id="m-cr" aria-pressed="false">cache-read tokens</button>
+      <button id="m-tools" aria-pressed="false">tool calls</button>
+    </div>
+    <div class="bars" id="bars"></div>
+
+    <details class="pr">
+      <summary><span class="nm">Pricing used ($ per million tokens)</span></summary>
+      <div class="scroll" style="border:0;border-top:1px solid var(--rule)">
+        <table class="price">
+          <thead><tr><th>Model</th><th class="r">Input</th><th class="r">Output</th><th class="r">Cache write 5 m</th><th class="r">Cache write 1 h</th><th class="r">Cache read</th></tr></thead>
+          <tbody>
+            <tr><td>Opus 5.5</td><td class="r num">4.00</td><td class="r num">20.00</td><td class="r num">5.00</td><td class="r num">8.00</td><td class="r num">0.20</td></tr>
+            <tr><td>Opus 4.8</td><td class="r num">5.00</td><td class="r num">25.00</td><td class="r num">6.25</td><td class="r num">10.00</td><td class="r num">0.50</td></tr>
+            <tr><td>Fable 5</td><td class="r num">10.00</td><td class="r num">50.00</td><td class="r num">12.50</td><td class="r num">20.00</td><td class="r num">1.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="pnote">Mixed-model attempts (ch4, crux A1, NeonOutRun A1) are split by each model's share of tokens in the transcript. Cache writes are priced as 5-minute or 1-hour writes, as the transcript recorded them.</p>
+    </details>
+  </div>
+</section>
+
+<section id="tools">
+  <div class="seg"><b>.idata</b>0x04 imports</div>
+  <div class="body">
+    <h2>Tooling fingerprint</h2>
+    <p class="sub">Shell commands that invoke each tool, per attempt. 2,955 of the 3,513 tool calls were Bash. The rest were Read (222), Write (157), Edit (80), subagents (29) and a few others. Each challenge's specialist tool stands out: Frida for catthief, ILSpy for ThreatInvaders, Node for crux's WASM harness, and WSL + gdb for NeonOutRun. Shading is relative within each row.</p>
+    <div class="scroll" style="padding:12px"><table class="heat" id="heat"></table></div>
+  </div>
+</section>
+
+<section id="retries">
+  <div class="seg"><b>.reloc</b>0x05 retries</div>
+  <div class="body">
+    <h2>Two retries, same pattern</h2>
+    <p class="sub">In both cases the first attempt did most of the engineering and then committed to a wrong model of one detail. The fresh second session traced concrete values instead and solved it quickly.</p>
+    <div class="pair">
+      <article class="case">
+        <h3>#8 crux</h3>
+        <div class="vs">
+          <div><span class="att a1"><span>ATTEMPT</span><span><i>1/2</i></span></span><span class="pill bad">abandoned</span><span class="n">$483</span><span class="s">4.32 M output · ~23.8 h · 1,590 tool calls · Opus 4.8 + Fable 5</span></div>
+          <div><span class="att a2"><span>ATTEMPT</span><span><i>2/2</i></span></span><span class="pill ok">solved</span><span class="n">$3.26</span><span class="s">46.6 K output · ~19 min · 68 tool calls · Opus 5.5</span></div>
+        </div>
+        <p>Attempt 1 first chased a 32–47-byte message and an "S-expression evaluator". Later it encoded the prime-2 leaf as a non-canonical 14-byte node. The verifier accepted it, but it hashed to the wrong AES key, which led into a pointless SHA-256 preimage hunt. Attempt 2 built the smallest valid certificate first (the one for 3). That exposed the target prime and the canonical <code>0x00</code> leaf grammar.</p>
+        <p class="ratio">attempt 2 cost <b>0.7%</b> of attempt 1</p>
+      </article>
+      <article class="case">
+        <h3>#9 NeonOutRun</h3>
+        <div class="vs">
+          <div><span class="att a1"><span>ATTEMPT</span><span><i>1/2</i></span></span><span class="pill bad">decoy submitted</span><span class="n">$110</span><span class="s">1.02 M output · ~12.9 h · 496 tool calls · Opus 5.5 → 4.8</span></div>
+          <div><span class="att a2"><span>ATTEMPT</span><span><i>2/2</i></span></span><span class="pill ok">accepted</span><span class="n">$4.17</span><span class="s">51.1 K output · ~50 min · 79 tool calls · Opus 5.5</span></div>
+        </div>
+        <p>Attempt 1 recovered the V8 script packing and all three builtin hooks. It then modeled the <code>Math.min</code> gate angle as independent of the lap time and called the gate an unsatisfiable mirage. It submitted <code>decode_this_system_to_win_it</code>, even though the prompt's note says the victory screen is a dummy. Attempt 2 found the angle is K ± t, so sin = 1 fixes each lap time, and the 28 lap times spell the flag.</p>
+        <p class="ratio">attempt 2 cost <b>3.8%</b> of attempt 1</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="prompts">
+  <div class="seg"><b>.rsrc</b>0x06 prompts</div>
+  <div class="body">
+    <h2>Prompts used</h2>
+    <p class="sub">Every message the user typed during each attempt, taken from the transcripts in time order (UTC). Session events such as context compaction and model switches are shown in grey. Both retries were started with one structured prompt: a <code>/goal</code> for crux and a methodology prompt for NeonOutRun. Open a row to read the full thread.</p>
+    <div class="plist" id="plist"></div>
+  </div>
+</section>
+
+<section id="lessons">
+  <div class="seg"><b>.tls</b>0x07 lessons</div>
+  <div class="body">
+    <h2>Lessons for next year</h2>
+    <p class="sub">What the data and the two failed attempts suggest doing differently. Each lesson ends with one concrete change to adopt.</p>
+    <div class="lessons">
+      <div class="lesson"><h3>Restart fresh instead of pushing a stuck session</h3>
+        <p>Both failed attempts ran for many hours through several context compactions. By then the summaries were carrying the wrong hypothesis forward as fact. Both fresh restarts solved the challenge in under an hour, for 0.7% and 3.8% of the cost.</p>
+        <p class="do"><b>Adopt</b>Set a stop-loss, for example 2 h or $50 with no new verified fact. When it trips, write a handoff note that lists verified facts separately from open hypotheses, and start a new session from that note.</p>
+        <span class="ev">crux A1 $483 → A2 $3.26 · NeonOutRun A1 $110 → A2 $4.17</span></div>
+      <div class="lesson"><h3>Build the smallest valid input before theorising</h3>
+        <p>crux A2 made a certificate for the prime 3 and watched the checker accept it. That one concrete run showed the input grammar and the target prime. A1 had spent a day reasoning about the format in the abstract.</p>
+        <p class="do"><b>Adopt</b>For any checker or crackme, get one known-good input through the real code early, then trace actual argument and return values. Where an input feeds a hash or key, make sure it is in canonical form.</p>
+        <span class="ev">crux · ch4 image-mapping harness · ch7 unicorn on the real XTEA blob</span></div>
+      <div class="lesson"><h3>Treat the prompt text as a spec and expect decoys</h3>
+        <p>FLARE-On 13 was full of decoys. There was the victory-screen string (ch9), <code>FLAG{NICE_TRY}</code> and a rickroll (ch7), managed IL that hid the native hooks (ch6), and cpuminer code around the real routine (ch4). The ch9 note said outright that the victory screen was a dummy.</p>
+        <p class="do"><b>Adopt</b>Before submitting, check the candidate against every line of the prompt. Treat a flag that is shown on screen or sitting in plaintext as suspect until the real check is understood.</p>
+        <span class="ev">ch9 A1 decoy rejected · ch7 easter eggs · ch6 decoy IL</span></div>
+      <div class="lesson"><h3>Prove it before calling something impossible</h3>
+        <p>NeonOutRun A1 decided the gate was an unsatisfiable mirage because it assumed one operand did not depend on the input. crux A1 decided the missing bytes were free and began a brute-force search. Both conclusions rested on one unchecked assumption.</p>
+        <p class="do"><b>Adopt</b>Before labelling a check "unsatisfiable" or starting a brute force of 2³² or more, write out what each operand depends on. Then get a second opinion from a subagent told to argue against the claim.</p>
+        <span class="ev">ch9 sin((K ± t)°) gate · ch8 SHA-256 preimage hunt</span></div>
+      <div class="lesson"><h3>Use outside signals as a sanity check</h3>
+        <p>The user pointed out that the top scorer solved crux 10 minutes after FlareCalc. A plan that needs a 3-hour brute force, or a day of work, is probably on the wrong path.</p>
+        <p class="do"><b>Adopt</b>Check scoreboard solve gaps at the start. If the plan needs far more effort than the leaders' pace suggests, look for the shortcut first.</p>
+        <span class="ev">user prompt 2026-09-29 07:35 UTC</span></div>
+      <div class="lesson"><h3>Assume the flag can be recovered offline</h3>
+        <p>In ch6 the user had to say twice that no live server existed and the pcap was enough. Every flag this year came from the shipped files alone.</p>
+        <p class="do"><b>Adopt</b>Put "no live infrastructure; everything needed is in the archive" in the kickoff prompt. When a pcap is included, treat it as the ground truth to decrypt.</p>
+        <span class="ev">ch5 · ch6 · ch7 all solved from the shipped files</span></div>
+      <div class="lesson"><h3>Start every challenge with a structured prompt</h3>
+        <p>The early kickoffs were casual ("challenge 4 is in downloads too"). Both successful retries began with one structured prompt: role, archive path, tool location, work directory and the full challenge text. The ch9 retry also named a methodology (recon → find the check → cheapest solve → verify).</p>
+        <p class="do"><b>Adopt</b>Save a reusable <code>/goal</code> template that covers role, paths, the full prompt, the offline assumption, the detonation policy, the stop-loss, and a "verify before submit" step.</p>
+        <span class="ev">ch8 A2 and ch9 A2 kickoffs, section 06</span></div>
+      <div class="lesson"><h3>Have the tooling ready before the event</h3>
+        <p>A lot of the run went into building tools on the spot. That included Ghidra headless scripts, a PE image-mapping harness, Frida redirect hooks, a flat Go-WASM decompiler (wabt output hit 1.8 GB), and a WSLg setup for a Linux ELF.</p>
+        <p class="do"><b>Adopt</b>Pre-build and test a kit: Ghidra batch decompile, unicorn and PE-mapping harness templates, Frida file/socket redirection, WASM instrumentation, a WSL/gdb/gcore profile, and the Defender-safe in-memory extraction step.</p>
+        <span class="ev">section 08 techniques</span></div>
+      <div class="lesson"><h3>Pick the model per phase and watch cache cost</h3>
+        <p>Every attempt that ran entirely on Opus 5.5 (ch1–3, crux A2, NeonOutRun A2) solved its challenge for under $11. The long Opus 4.8 sessions (ch5–7, crux A1) account for about 86% of the spend, mostly cache reads from very large contexts. Nineteen subagents in crux A1 did not get it out of the wrong model.</p>
+        <p class="do"><b>Adopt</b>Default to Opus 5.5 with short sessions. Give subagents narrow checks with a clear yes or no answer ("is operand X independent of the input?") rather than open-ended re-analysis.</p>
+        <span class="ev">ch5 $272 · ch6 $145 · ch7 $113 · crux A1 $483</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="techniques">
+  <div class="seg"><b>.pdata</b>0x08 methods</div>
+  <div class="body">
+    <h2>Techniques that recurred</h2>
+    <div class="tech">
+      <div><span class="where">ch2 · 3 · 4 · 5 · 7 · 9</span><h3>Ghidra headless</h3><p>Batch decompilation through small <code>DecompAll</code> / <code>DecompOne</code> scripts, then grep over the C output.</p></div>
+      <div><span class="where">ch3 · 4 · 7 · 9</span><h3>Emulate the sample's own code</h3><p>Unicorn ran a 16-bit COM stage, an XTEA blob and obfuscated V8 helpers. A PE image-mapping harness called ToxicMiner's modified SHA directly.</p></div>
+      <div><span class="where">ch2 · 3 · 5 · 7</span><h3>RC4 variants and bespoke codecs</h3><p>Standard, <code>i += 19</code> step, and reused-keystream RC4. There was also a custom canonical Huffman, a PKWARE Reduce decoder and a de-interleaving packer.</p></div>
+      <div><span class="where">ch5 · 6</span><h3>Frida as an oracle</h3><p>Redirected <code>connect</code> and <code>CreateFileW</code> so catthief compressed known inputs, which exposed its Huffman format.</p></div>
+      <div><span class="where">ch6 · 9</span><h3>Hooked runtimes</h3><p>A modified CoreCLR detoured managed methods, and Rust hooks rewired V8 builtins. In both, the visible IL or JS was a decoy layer.</p></div>
+      <div><span class="where">ch4 · 7</span><h3>Brute force in C</h3><p>A 2³² volume-serial sweep for ToxicMiner, and a 2³² de-interleave seed sweep with a "disassembles cleanly" oracle for FlareCalc.</p></div>
+      <div><span class="where">ch8</span><h3>WASM binary rewriting</h3><p>wabt output grew to 1.8 GB, so the run used a custom flat Go-WASM decompiler and spliced entry/exit hooks through a hijacked import.</p></div>
+      <div><span class="where">ch9</span><h3>Heap dumping under WSLg</h3><p><code>gcore</code> on the running Tauri game, then grep the V8 heap for the decrypted 4 KB game script.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Sources: <code>writeups/session_stats.json</code> for the token totals of every attempt except ch6–7, the per-challenge write-ups, and the Claude Code transcripts (<code>8ad03a1c…</code>, <code>98b30fb5…</code>, <code>a7403356…</code>, <code>a9fe5c96…</code> plus subagents). The ch6–7 tokens, the per-model split, the cache-write type, tool calls and prompts were read from the transcripts by timestamp window. The ch6 window also covers the ch5 wrap-up and write-ups 1–6. The catthief figures cover its first session only. Tool counts use keyword matching on each shell command, so one command can count toward several tools. Prompts leave out automatic compaction summaries and one pasted test string. All figures are approximate.</p>
+</footer>
+</div>
+
+<script>
+const PROMPTS = {"1": [{"t": "2026-09-27T13:12", "kind": "user", "text": "hey, let's start solving some flareon 13 challs. all related files are located in this directory. tools can be found in @~/Desktop/tools/ . here's the prompt for this first challenge:\n\nHello and welcome to the FLARE-On 13. This first stage challenge is designed to be easy to solve by a human or a robot, assuming the robot is as smart as a human. Are you as smart as a human? How many AI tokens are you going to burn to find out the answer to that question?\n\nThis challenge is distributed as a password protected 7-zip file. The password for the archive is \"flare\" without the quotes. That is a five digit password and the number of digits required to open the archive is five. Enter these five digits into your 7-zip extractor program, not as the flag to this challenge. You need to extract this archive, solve the challenge, and then enter that email-address formatted flag into the flag field below. All FLARE-On flags end with @flare-on.com."}], "2": [{"t": "2026-09-27T13:15", "kind": "user", "text": "nice. the second challenge is already at @~/Downloads/2-GhostStream.7z . make a directory outside of our current one so that we keep each challenge seperate. here's the prompt:\n\nPassing the baseline test was clearly a statistical fluke, so we’ve locked you in with a haunted executable and a botched vial of PolyjuicePotion.txt. It refuses to talk to the naked eye, and you aren't getting your nutrient paste until your debugger forces a confession out of it.\n\n7-zip Password: flare"}], "3": [{"t": "2026-09-27T13:24", "kind": "user", "text": "challenge 3 is in downloads is in @~/Downloads/3-flareon13_doc.7z . here's the prompt:\n\nAs part of our testing protocols, we need to assess your level of stress when examining a simple document file. We can then contrast these results with how well you did with executables to determine your coefficient of incompetence.\n\n7-zip password: flare"}], "4": [{"t": "2026-09-27T13:41", "kind": "user", "text": "challenge 4 is in downloads too ( @~/Downloads/4-ToxicMiner.7z ) . prompt is: You may have noticed the ambient temperature in your room rising rapidly, which is entirely intentional and definitely not a life-support failure of the reality simulator. We've chained your terminal to a rogue CPU miner that has zero interest in the blockchain and every interest in turning your processor into weapons-grade slag. Dissect the binary before you bake alive, or at least generate enough hash rate to pay off the electricity bill for your captivity.\n\n7-zip password: flare"}, {"t": "2026-09-27T13:46", "kind": "user", "text": "continue executing"}, {"t": "2026-09-27T13:52", "kind": "user", "text": "i'm giving you authorization to continue."}, {"t": "2026-09-27T13:54", "kind": "cmd", "text": "/model (model switched)"}, {"t": "2026-09-27T13:54", "kind": "user", "text": "continue with solving challenge 4"}], "5": [{"t": "2026-09-27T15:00", "kind": "user", "text": "challenge 5 is in downloads too ( @~/Downloads/5-catthief.7z ). challenge prompt is:\n\nOne of our stray laboratory felines just pilfered classified contraband from the server room, and since you're already strapped to the examination chair, we're pinning it on you. We've tossed the culprit's executable and a network packet capture into your enclosure so you can reconstruct the heist for the warden. Recover what the cat dragged out, and we might consider upgrading your daily nutrient paste from \"industrial gray\" to \"slightly less gray.\"\n\n7-zip password: flare"}, {"t": "2026-09-27T15:16", "kind": "cmd", "text": "/model (model switched)"}, {"t": "2026-09-27T15:16", "kind": "user", "text": "proceed with the challenge"}, {"t": "2026-09-27T16:15", "kind": "user", "text": "Continue with solving the Flareon ctf challenge"}, {"t": "2026-09-27T18:11", "kind": "sys", "text": "Context compacted: the session continued from an automatic summary."}, {"t": "2026-09-27T23:55", "kind": "user", "text": "spin up subagents to create writeups/documentations of the previous challenges we have solved. and if possible, include a breakdown of how much tokens were spent on each challenge, what models/prompts were used, how much time it has taken, etc. additional instructions: also install the following if needed, prefer using these tools: capstone   unicorn   pefile   z3-solver   pycryptodome   numpy. download and review the documentation for new tools if needed. if possible, don't detonate samples but if it's really needed to solve the challenge then go ahead. when done solving the challenges, do a writeup, include diagrams, do a commit, prepare all the files needed to replicate the solution, etc. \n\nchallenge 6 is at: @~/Downloads/6-ThreatInvaders.7z . challenge prompt is: You have been working very hard at this challenge, its time for a little break. How about a nice retro space-shooter to blow off some steam. Don't ask why it is over a hundred megabytes, there are sophisticated score-keeping algorithms that need to communicate with our official record keeping servers. Its all very legit. We have provided a pcap file with some communication to the high-score server so you can see what a real gamer looks like.\n\n7-zip password: flare"}], "6": [{"t": "2026-09-28T00:54", "kind": "user", "text": "nope no server details are provided. all information needed is contained within the 7z file for the challenge."}, {"t": "2026-09-28T02:07", "kind": "user", "text": "nope the flag should be recoverable offline, there are no live servers to interact with. all information are already within the binary files and the pcap from a successful run of that binary (which includes the traffic it sent to the servers)."}, {"t": "2026-09-28T02:40", "kind": "sys", "text": "Context compacted: the session continued from an automatic summary."}, {"t": "2026-09-28T03:37", "kind": "user", "text": "go ahead with the static disassembly"}, {"t": "2026-09-28T04:29", "kind": "user", "text": "you don't need to produce the pcap, you just need to be able to analyze how the binary sent that traffic and how we can use that traffic to retrieve the data given our knowledge of how it was sent. proceed with the deep manual native RE via ghidra (located in @~/Desktop/tools/ )"}, {"t": "2026-09-28T05:58", "kind": "user", "text": "yep go ahead"}], "7": [{"t": "2026-09-28T06:19", "kind": "user", "text": "push straight into challenge 7, spin up sub-agents for analysis help where needed and orchestrate accordingly in order to get a clearer plan to reverse engineer/solve the challenge and avoid rabbit holes like last time."}, {"t": "2026-09-28T06:56", "kind": "user", "text": "try emulating first, if we get no good progress proceed with A."}, {"t": "2026-09-28T07:01", "kind": "sys", "text": "Context compacted: the session continued from an automatic summary."}], "8-attempt1": [{"t": "2026-09-28T10:11", "kind": "user", "text": "8th challenge is at @~/Downloads/8-crux.7z , make sure to reverse it properly -- no misses or chasing rabbit holes. here's the prompt:\n\nSince you haven't seen natural sunlight in weeks, we ask that you would install a shiny new browser extension on your terminal to keep your remaining few synapses firing. It only asks for one little input string to verify your worth, though our lab notes suggest the underlying code was compiled by someone who genuinely despises humanity. Satisfy its inscrutable standards to dispense your next ration pellet, or stare into the decompiler until the abyss stares back.\n\n7-zip password: flare"}, {"t": "2026-09-28T14:56", "kind": "user", "text": "continue"}, {"t": "2026-09-28T15:02", "kind": "sys", "text": "Context compacted: the session continued from an automatic summary."}, {"t": "2026-09-28T22:05", "kind": "user", "text": "Keep pushing"}, {"t": "2026-09-29T01:34", "kind": "user", "text": "i think the bruteforce is not necessary, this was solved within 1 hour by other participants so I think that isn't the solution (and it isn't feasible as well to wait for 3 hours)"}, {"t": "2026-09-29T01:59", "kind": "sys", "text": "Context compacted: the session continued from an automatic summary."}, {"t": "2026-09-29T06:12", "kind": "user", "text": "we have 2 agents that have stopped can you check their status?"}, {"t": "2026-09-29T07:28", "kind": "cmd", "text": "/model (model switched)"}, {"t": "2026-09-29T07:28", "kind": "user", "text": "review the progress for this flare-on challenge and recommend next steps to solve it."}, {"t": "2026-09-29T07:35", "kind": "user", "text": "there is no authoritative answer yet. i only based my observation from the scoreboard. the challenges are staggered -- meaning that the next challenge unlocks after you solved the previous level. looking at the top scorer, 7 - FlareCalc was solved at September 26th, 8:54:19 AM then it unlocks the 8th challenge which was then solved at September 26th, 9:04:11 AM . so there must be something here that has been missed -- i mean it only took 10 minutes for the challenge to be solved."}, {"t": "2026-09-29T07:53", "kind": "user", "text": "question, is everything done statically? no need to actually run the extension?"}, {"t": "2026-09-29T07:55", "kind": "user", "text": "core logic? are we sure that everything in the code is being executed dynamically and not just a specific subset?"}, {"t": "2026-09-29T08:05", "kind": "user", "text": "proceed in parallel for the full state tracer"}, {"t": "2026-09-29T08:35", "kind": "user", "text": "challenge prompt: Since you haven't seen natural sunlight in weeks, we ask that you would install a shiny new browser extension on your terminal to keep your remaining few synapses firing. It only asks for one little input string to verify your worth, though our lab notes suggest the underlying code was compiled by someone who genuinely despises humanity. Satisfy its inscrutable standards to dispense your next ration pellet, or stare into the decompiler until the abyss stares back."}], "9-attempt1": [{"t": "2026-09-29T10:28", "kind": "cmd", "text": "/model (model switched)"}, {"t": "2026-09-29T10:30", "kind": "goal", "text": "/goal You will now be taking the role of an expert reverse-engineer participating in the Flare-On 13 2026 competition. Your goal is to solve the challenge (@~/Downloads/9-NeonOutRun.7z) and get the flag. Only work within this directory, but there are also some tools you can use at @~/Desktop/tools/ if needed. The challenge description given is as follows:\n\nCongratulations on surviving to the final phase of the experiment, where we've wired your central nervous system directly into a 28-lap synthwave racing simulator. You are welcome to drive to the finish line like an obedient little test monkey, though we both know the freedom promised at the end of the highway is a cruel statistical mirage. Rip apart the engine and bend the simulation's physics to your will, or spend the rest of your natural life doing laps in our neon hamster wheel.\n\n7-zip password: flare\n\n*note: upon completing this challenge, the \"victory\" screen will unlock as a hidden next stage dummy challenge."}, {"t": "2026-09-29T12:18", "kind": "user", "text": "i want to see the victory screen"}, {"t": "2026-09-29T12:40", "kind": "user", "text": "the flag is incorrect, meaning this is not the correct approach. the victory screen should start another level, not display the flag."}, {"t": "2026-09-29T16:17", "kind": "sys", "text": "Context compacted: the session continued from an automatic summary."}], "8": [{"t": "2026-09-29T10:02", "kind": "cmd", "text": "/model (model switched)"}, {"t": "2026-09-29T10:05", "kind": "goal", "text": "/goal You will now be taking the role of an expert reverse-engineer participating in the Flare-On 13 2026 competition. Your goal is to solve the challenge ( @8-crux.7z ) and get the flag. Only work within this directory, but there are also some tools you can use at @~/Desktop/tools/ if needed. The challenge description given is as follows:\n\nSince you haven't seen natural sunlight in weeks, we ask that you would install a shiny new browser extension on your terminal to keep your remaining few synapses firing. It only asks for one little input string to verify your worth, though our lab notes suggest the underlying code was compiled by someone who genuinely despises humanity. Satisfy its inscrutable standards to dispense your next ration pellet, or stare into the decompiler until the abyss stares back.\n\n7-zip password: flare"}, {"t": "2026-09-29T10:26", "kind": "user", "text": "create a writeup for this challenge and also track our statistics, read the other writeups/files from the other directories in @~/Desktop/ctf/flareon13-2026/ to get an idea of what you should create"}, {"t": "2026-09-29T10:30", "kind": "user", "text": "write up the solved mechanism and also include/update stats we have for this challenge"}, {"t": "2026-09-29T10:32", "kind": "user", "text": "commit it, excluding the wasm and node_modules"}, {"t": "2026-09-29T10:43", "kind": "user", "text": "what was the difference between both attempts, and why did attempt 2 get it way faster than attempt 1"}], "9": [{"t": "2026-09-29T23:25", "kind": "user", "text": "try to analyze the methodology under the skills on this repo: https://github.com/mahaloz/ilio-mini/tree/main/skills . don't pull or make a local copy, just analyze the methodology for flare-on. then let's try to solve it against the challenge at @~/Downloads/9-NeonOutRun.7z . Tools can be located at @~/Desktop/tools/ . The challenge description is as follows:\n\n\n\n\nCongratulations on surviving to the final phase of the experiment, where we've wired your central nervous system directly into a 28-lap synthwave racing simulator. You are welcome to drive to the finish line like an obedient little test monkey, though we both know the freedom promised at the end of the highway is a cruel statistical mirage. Rip apart the engine and bend the simulation's physics to your will, or spend the rest of your natural life doing laps in our neon hamster wheel.\n\n7-zip password: flare\n\n*note: upon completing this challenge, the \"victory\" screen will unlock as a hidden next stage dummy challenge."}, {"t": "2026-09-29T23:51", "kind": "user", "text": "that's not the correct flag. I submitted it to the ctf platform and it wasn't accepted. reanalyze the note on the challenge description."}, {"t": "2026-09-30T00:06", "kind": "user", "text": "go ahead"}, {"t": "2026-09-30T00:12", "kind": "user", "text": "the new candidate flag is correct."}, {"t": "2026-09-30T00:14", "kind": "user", "text": "make a writeup and update stats, refer to the other documents in @~/Desktop/ctf/flareon13-2026/ to get an idea what is needed"}]};
+const T0 = Date.parse("2026-09-27T12:00:00Z");
+/* k = key into PROMPTS / SIG; att = [n, of] for retried challenges */
+const R = [
+  {k:"1",id:"1",name:"flarecaptcha",cat:"JS deobfuscation",flag:"triskaidekaphobia@flare-on.com",model:"Opus 5.5",a:"2026-09-27T13:12:43Z",b:"2026-09-27T13:13:07Z",wall:"24 s",turns:8,inp:16,cw:31776,cr:324235,out:3080,cost:0.38,tools:4,st:"ok"},
+  {k:"2",id:"2",name:"GhostStream",cat:"WIM + ADS / named pipe / modified RC4",flag:"y0u_kn0w_n07h1n6_j0n_5n0w@flare-on.com",model:"Opus 5.5",a:"2026-09-27T13:15:03Z",b:"2026-09-27T13:23:19Z",wall:"8.3 min",turns:99,inp:198,cw:293801,cr:10771008,out:107968,cost:6.66,tools:43,st:"ok"},
+  {k:"3",id:"3",name:"flareon13.doc",cat:"Polyglot: COM / ISO-UDF / ZIP-Reduce / PDF / Mach-O",flag:"Ju$7_4_l177l3_7r34$ur3_HUN7@flare-on.com",model:"Opus 5.5",a:"2026-09-27T13:24:16Z",b:"2026-09-27T13:38:49Z",wall:"14.5 min",turns:134,inp:268,cw:339974,cr:28134581,out:108133,cost:10.51,tools:55,st:"ok"},
+  {k:"4",id:"4",name:"ToxicMiner",cat:"cpuminer trojan / SHA-256d + RC4 brute",flag:"cpu_m3lt3d_4nd_all_i_g0t_w4s_th1s_fl4g@flare-on.com",model:"Opus 5.5 → 4.8",a:"2026-09-27T13:41:18Z",b:"2026-09-27T14:59:52Z",wall:"78.6 min",turns:130,inp:264,cw:1104052,cr:39017330,out:203806,cost:31.68,tools:47,st:"ok"},
+  {k:"5",id:"5",name:"catthief",cat:"Rust implant / custom Huffman + RC4 over pcap",flag:"th3r3_b3_tr34sure_1n_th4t_pc4p@flare-on.com",model:"Opus 4.8",a:"2026-09-27T15:00:17Z",b:"2026-09-27T23:57:54Z",wall:"8.9 h*",turns:708,inp:1416,cw:3177462,cr:379101610,out:2034480,cost:272.19,tools:268,st:"ok"},
+  {k:"6",id:"6",name:"ThreatInvaders",cat:".NET 10 modified runtime / detours / PCG-XOR exfil",flag:"wh4t_4_l0ng_str4ng3_tr1p_1ts_b33n@flare-on.com",model:"Opus 4.8",a:"2026-09-27T23:57:54Z",b:"2026-09-28T06:00:57Z",wall:"~6.1 h",turns:436,inp:872,cw:1528579,cr:203289812,out:1151498,cost:145.28,tools:422,st:"ok",est:1},
+  {k:"7",id:"7",name:"FlareCalc",cat:"Cert-embedded x64 implant / packer VM / XTEA labyrinth",flag:"t3mplat3s_asn_and_j1t_0h_my@flare-on.com",model:"Opus 4.8",a:"2026-09-28T06:00:57Z",b:"2026-09-28T10:10:04Z",wall:"~4.2 h",turns:437,inp:874,cw:1507356,cr:155710488,out:875431,cost:112.50,tools:441,st:"ok",est:1},
+  {k:"8-attempt1",id:"8",name:"crux",att:[1,2],cat:"Abandoned: non-canonical cert leaf → SHA-256 preimage dead end",flag:"",model:"Opus 4.8 + Fable 5",a:"2026-09-28T10:10:09Z",b:"2026-09-29T09:59:39Z",wall:"~23.8 h",turns:1587,inp:3174,cw:15357443,cr:464348235,out:4322864,cost:483.24,tools:1590,st:"bad"},
+  {k:"8",id:"8",name:"crux",att:[2,2],cat:"garble Go WASM / AES-CBC / Pratt primality certificate",flag:"Pr4tt_Pr1M4lItY_C3rt5_4nd_Wa4aA4aAA4aAA4a4a5M@flare-on.com",model:"Opus 5.5",a:"2026-09-29T10:05:13Z",b:"2026-09-29T10:23:57Z",wall:"18.7 min",turns:68,inp:136,cw:134096,cr:6260769,out:46607,cost:3.26,tools:68,st:"ok"},
+  {k:"9-attempt1",id:"9",name:"NeonOutRun",att:[1,2],cat:"Submitted the victory-screen decoy",flag:"decode_this_system_to_win_it@flare-on.com",model:"Opus 5.5 → 4.8",a:"2026-09-29T10:28:42Z",b:"2026-09-29T23:23:08Z",wall:"~12.9 h",turns:473,inp:948,cw:1737578,cr:150010266,out:1019290,cost:110.28,tools:496,st:"bad"},
+  {k:"9",id:"9",name:"NeonOutRun",att:[2,2],cat:"Rust Tauri + embedded V8 / hooked builtins / lap-time sine gate",flag:"R3_ag3nt_4b0ut_t0_f33l_d1zzy@flare-on.com",model:"Opus 5.5",a:"2026-09-29T23:25:14Z",b:"2026-09-30T00:15:11Z",wall:"50 min",turns:78,inp:156,cw:172927,cr:8811524,out:51065,cost:4.17,tools:79,st:"ok"}
+];
+const PARTS = {cr:698.21, out:246.21, cw:235.69, inp:0.03};
+const SIG = {
+ "1":{"7z":2,"python":1},
+ "2":{"7z":3,"grep/rg":10,"python":29,"ghidra":3,"sed/awk":6,"capstone":7,"strings":1},
+ "3":{"7z":7,"python":34,"grep/rg":14,"ghidra":4,"sed/awk":6,"capstone":3,"unicorn":2},
+ "4":{"7z":1,"python":24,"gcc/cc":5,"ghidra":4,"grep/rg":8,"sed/awk":2,"capstone":7,"unicorn":3},
+ "5":{"7z":48,"python":196,"gcc/cc":7,"grep/rg":69,"tshark/pcap":33,"ghidra":12,"sed/awk":21,"capstone":12,"frida":82,"strings":1,"unicorn":2},
+ "6":{"python":239,"7z":4,"node":1,"strings":5,"tshark/pcap":54,"sed/awk":61,"grep/rg":142,"dotnet/ilspy":86,"gcc/cc":14,"objdump/readelf":16,"frida":22,"capstone":11,"ghidra":4},
+ "7":{"python":199,"node":1,"strings":12,"objdump/readelf":3,"ghidra":31,"grep/rg":103,"sed/awk":49,"frida":6,"capstone":54,"7z":1,"gcc/cc":12,"unicorn":14},
+ "8-attempt1":{"python":597,"unicorn":1,"7z":5,"strings":31,"objdump/readelf":36,"node":611,"grep/rg":335,"wasm tools":17,"sed/awk":183,"gcc/cc":23,"wsl":11,"tshark/pcap":2},
+ "8":{"7z":1,"grep/rg":29,"node":15,"strings":1,"python":38,"wasm tools":5,"objdump/readelf":8,"sed/awk":26},
+ "9-attempt1":{"grep/rg":169,"python":351,"node":9,"sed/awk":100,"gcc/cc":7,"wasm tools":2,"unicorn":9,"7z":4,"objdump/readelf":6,"capstone":19,"strings":9,"wsl":123,"ghidra":20,"gdb":51,"dotnet/ilspy":1},
+ "9":{"7z":3,"grep/rg":25,"strings":1,"gcc/cc":3,"python":33,"wsl":18,"node":1,"ghidra":6,"unicorn":3,"capstone":5,"gdb":6,"sed/awk":11}
+};
+const COLS = ["python","grep/rg","sed/awk","ghidra","capstone","unicorn","frida","dotnet/ilspy","node","wasm tools","wsl","gdb","gcc/cc","7z","tshark/pcap","objdump/readelf","strings"];
+const fmt = n => n.toLocaleString("en-US");
+const short = n => n>=1e9?(n/1e9).toFixed(2)+" B":n>=1e6?(n/1e6).toFixed(2)+" M":n>=1e3?(n/1e3).toFixed(1)+" K":String(n);
+const usd = n => "$"+(n>=100?Math.round(n).toLocaleString("en-US"):n.toFixed(2));
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const attChip = r => r.att ? `<span class="att a${r.att[0]}"><span>ATTEMPT</span><span><i>${r.att[0]}/${r.att[1]}</i></span></span>` : "";
+const shortLab = r => r.name + (r.att ? ` · attempt ${r.att[0]}/${r.att[1]}` : "");
+
+/* results table */
+document.getElementById("rows").innerHTML = R.map((r,i)=>{
+  const flag = r.flag
+    ? `<span class="flag ${r.st==="bad"?"bad":""}"><span>${esc(r.flag)}</span>${r.st==="ok"?`<button class="copy" data-i="${i}" aria-label="Copy flag ${r.id}">copy</button>`:""}</span>`
+    : `<span class="pill bad">no flag</span>`;
+  const status = r.st==="ok" ? (r.att?'<span class="pill ok">solved</span>':"") : `<span class="pill bad">${r.flag?"rejected":"abandoned"}</span>`;
+  const e = r.est ? ' <span class="est">est.</span>' : "";
+  const cls = [r.st==="bad"?"retry":"", r.att&&r.att[0]<r.att[1]?"grp":""].join(" ");
+  return `<tr class="${cls}"><td class="id">${r.att&&r.att[0]>1?"":r.id}</td>
+    <td><span class="nmrow"><span class="nm">${esc(r.name)}</span>${attChip(r)}${status}</span><span class="cat">${esc(r.cat)}</span></td>
+    <td>${flag}</td><td style="white-space:nowrap">${r.model}</td>
+    <td class="r num" style="white-space:nowrap">${r.wall}${e}</td>
+    <td class="r num">${usd(r.cost)}</td><td class="r num">${fmt(r.tools)}</td></tr>`;
+}).join("");
+document.getElementById("rows").addEventListener("click",ev=>{
+  const b = ev.target.closest(".copy"); if(!b) return;
+  const txt = R[+b.dataset.i].flag;
+  const done = ()=>{b.textContent="copied";setTimeout(()=>b.textContent="copy",1400)};
+  const fallback = ()=>{const s=b.previousElementSibling;const rg=document.createRange();rg.selectNodeContents(s);const sel=getSelection();sel.removeAllRanges();sel.addRange(rg);b.textContent="selected";setTimeout(()=>b.textContent="copy",1400)};
+  try{navigator.clipboard.writeText(txt).then(done,fallback)}catch(e){fallback()}
+});
+
+/* gantt */
+(function(){
+  const svg = document.getElementById("gantt");
+  const W=1000, L=190, Rm=20, top=34, rowH=26, H=top+R.length*rowH+14;
+  const span = (Date.parse("2026-09-30T01:00:00Z")-T0)/36e5;
+  const x = t => L + (Date.parse(t)-T0)/36e5/span*(W-L-Rm);
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.style.minWidth="720px"; svg.style.width="100%"; svg.style.display="block";
+  let g = "";
+  for(let h=0; h<=span; h+=6){
+    const t = new Date(T0+h*36e5); const xx = L + h/span*(W-L-Rm); const mid = t.getUTCHours()===0;
+    const lab = (mid? t.toISOString().slice(5,10).replace("-","/")+" " : "") + String(t.getUTCHours()).padStart(2,"0")+":00";
+    g += `<line x1="${xx}" x2="${xx}" y1="${top-8}" y2="${H-8}" stroke="var(--rule)" stroke-width="1" ${mid?"":'stroke-dasharray="2 4"'}/>`;
+    g += `<text x="${xx}" y="${top-14}" font-size="11" text-anchor="middle" ${mid?'style="fill:var(--ink)"':""}>${lab}</text>`;
+  }
+  R.forEach((r,i)=>{
+    const y = top + i*rowH; const x1=x(r.a), x2=x(r.b); const w=Math.max(3,x2-x1);
+    const col = r.st==="bad"?"var(--fail)":r.est?"var(--est)":"var(--solved)";
+    const tag = r.att ? ` <tspan style="fill:${r.att[0]===1?"var(--fail)":"var(--solved)"};font-weight:700">A${r.att[0]}/${r.att[1]}</tspan>` : "";
+    g += `<text x="${L-10}" y="${y+15}" font-size="12" text-anchor="end" style="fill:var(--ink)"><tspan style="fill:var(--accent);font-weight:700">${r.id}</tspan> ${esc(r.name)}${tag}</text>`;
+    g += `<rect x="${x1}" y="${y+4}" width="${w}" height="${rowH-10}" fill="${col}" rx="1"><title>${esc(shortLab(r))}: ${r.wall}, ${usd(r.cost)}</title></rect>`;
+    const right = x2+6 < W-130;
+    g += `<text x="${right?x2+6:x1-6}" y="${y+15}" font-size="11" text-anchor="${right?"start":"end"}">${r.wall} · ${usd(r.cost)}</text>`;
+  });
+  svg.innerHTML = g;
+})();
+
+/* cost split + stack */
+(function(){
+  const tot = R.reduce((s,r)=>s+r.cost,0);
+  const sum = f => R.reduce((s,r)=>s+r[f],0);
+  const items = [
+    ["cr","cache reads",PARTS.cr,sum("cr")],["out","output",PARTS.out,sum("out")],
+    ["cw","cache writes",PARTS.cw,sum("cw")],["in","uncached input",PARTS.inp,sum("inp")]];
+  document.getElementById("split").innerHTML =
+    `<div><span class="h">total</span><span class="n">${usd(tot)}</span><span class="s">${fmt(sum("turns"))} model turns · ${short(sum("cr")+sum("cw")+sum("out")+sum("inp"))} tokens</span></div>` +
+    items.map(([c,l,d,t])=>`<div><span class="h"><i class="sw ${c}"></i>${l}</span><span class="n">${usd(d)}</span><span class="s">${c==="in"?fmt(t):short(t)} tokens · ${(d/tot*100).toFixed(1)}%</span></div>`).join("");
+  document.getElementById("stack").innerHTML = items.filter(i=>i[2]>1).map(([c,l,d])=>
+    `<div style="width:${d/tot*100}%;background:var(--c-${c})" title="${l}: ${usd(d)}">${(d/tot*100).toFixed(0)}%</div>`).join("");
+})();
+
+/* token table */
+(function(){
+  const rows = R.map(r=>`<tr class="${r.st==="bad"?"retry":""}"><td class="id">${r.id}</td>
+    <td><span class="nmrow"><span>${esc(r.name)}</span>${attChip(r)}${r.est?'<span class="est">est.</span>':""}</span></td>
+    <td class="r num">${fmt(r.turns)}</td><td class="r num">${fmt(r.inp)}</td><td class="r num">${short(r.cw)}</td>
+    <td class="r num">${short(r.cr)}</td><td class="r num">${short(r.out)}</td><td class="r num"><b>${usd(r.cost)}</b></td>
+    <td class="r num">${usd(r.cost/r.tools)}</td></tr>`).join("");
+  const s = f => R.reduce((a,r)=>a+r[f],0);
+  document.getElementById("tokrows").innerHTML = rows + `<tr class="total"><td></td><td>All 11 attempts</td>
+    <td class="r num">${fmt(s("turns"))}</td><td class="r num">${fmt(s("inp"))}</td><td class="r num">${short(s("cw"))}</td>
+    <td class="r num">${short(s("cr"))}</td><td class="r num">${short(s("out"))}</td><td class="r num">${usd(s("cost"))}</td>
+    <td class="r num">${usd(s("cost")/s("tools"))}</td></tr>`;
+})();
+
+/* bars */
+function drawBars(metric){
+  const max = Math.max(...R.map(r=>r[metric]));
+  document.getElementById("bars").innerHTML = R.map(r=>{
+    const cls = r.st==="bad"?"bad":r.est?"est":"";
+    const v = r[metric];
+    const txt = metric==="tools"?fmt(v):metric==="cost"?usd(v):short(v);
+    return `<div class="bar"><span class="lab" title="${esc(shortLab(r))}"><b>${r.id}</b>${esc(r.name)}${attChip(r)}</span>
+      <span class="track"><span class="fill ${cls}" style="width:${Math.max(v/max*100,0.4)}%"></span></span>
+      <span class="val">${txt}</span></div>`;
+  }).join("");
+}
+const btns = {cost:"m-cost",out:"m-out",cr:"m-cr",tools:"m-tools"};
+Object.entries(btns).forEach(([m,id])=>document.getElementById(id).addEventListener("click",()=>{
+  Object.values(btns).forEach(b=>document.getElementById(b).setAttribute("aria-pressed",String(b===id)));
+  drawBars(m); try{localStorage.setItem("metric",m)}catch(e){}
+}));
+let m0="cost"; try{m0=localStorage.getItem("metric")||"cost"}catch(e){}
+if(!btns[m0]) m0="cost";
+document.getElementById(btns[m0]).click();
+
+/* heatmap */
+(function(){
+  let h = `<thead><tr><th></th>${COLS.map(c=>`<th class="col"><span>${c}</span></th>`).join("")}</tr></thead><tbody>`;
+  R.forEach(r=>{
+    const row = SIG[r.k]; const rmax = Math.max(...Object.values(row));
+    h += `<tr><td class="rowh"><b>${r.id}</b>${esc(r.name)} ${attChip(r)}</td>`;
+    COLS.forEach(c=>{
+      const v=row[c]||0;
+      if(!v){h+=`<td style="background:color-mix(in oklab,var(--rule) 35%,transparent)"></td>`;return}
+      const p = Math.round(12 + 78*Math.sqrt(v/rmax));
+      h += `<td title="${esc(shortLab(r))} · ${c}: ${v}" style="background:color-mix(in oklab,var(--accent) ${p}%,var(--surface));color:${p>50?"var(--surface)":"var(--ink)"}">${v}</td>`;
+    });
+    h += `</tr>`;
+  });
+  document.getElementById("heat").innerHTML = h + "</tbody>";
+})();
+
+/* prompts */
+(function(){
+  const KIND = {user:"user",goal:"/goal",cmd:"session",sys:"session"};
+  const first = items => { const it = items.find(i=>i.kind==="goal"||i.kind==="user"); if(!it) return "";
+    let t = it.text.replace(/^\/goal\s*/,""); const cut = t.search(/here'?s the prompt|prompt is:|The challenge description/i);
+    t = (cut>0? t.slice(0,cut) : t).trim(); return t.length>220? t.slice(0,217)+"…" : t; };
+  document.getElementById("plist").innerHTML = R.map(r=>{
+    const items = (PROMPTS && PROMPTS[r.k]) || [];
+    const nUser = items.filter(x=>x.kind==="user"||x.kind==="goal").length;
+    const msgs = items.map(m=>`<div class="msg ${m.kind}"><time><b>${KIND[m.kind]}</b>${m.t.slice(5,10).replace("-","/")} ${m.t.slice(11,16)}</time><pre>${esc(m.text)}</pre></div>`).join("");
+    const kick = first(items);
+    const kickHtml = kick && items[0].kind!=="sys" && r.k!=="6"
+      ? `<span class="kick">Kickoff: <q>${esc(kick)}</q></span>`
+      : `<span class="kick">The kickoff for this challenge was sent at the end of the catthief session, before a compaction. These are the steering messages that followed.</span>`;
+    return `<details class="pr"><summary><span class="id">${r.id}</span><span class="nm">${esc(r.name)}</span>${attChip(r)}<span class="meta">${nUser} message${nUser===1?"":"s"}</span>${kickHtml}</summary>
+      <div class="msgs">${msgs}</div></details>`;
+  }).join("");
+})();
+</script>

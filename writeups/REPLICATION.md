@@ -1,4 +1,4 @@
-# Replication Guide — FLARE-On 13 (1–8)
+# Replication Guide — FLARE-On 13 (1–9)
 
 How to reproduce each solve from the provided archives.
 
@@ -23,8 +23,9 @@ How to reproduce each solve from the provided archives.
 | Ghidra | 12.1.2 (headless `support/analyzeHeadless.bat`, scripts `DecompAll.java` / `DecompOne.java`) |
 | Frida | 16.5.9 (Python venv) — used for ch2 pipe sniffing and ch5 compression oracle |
 | Python | 3.12+ |
-| Python packages | `capstone`, `unicorn`, `pefile`, `z3-solver`, `pycryptodome`, `numpy`, `pillow`, `cryptography`, `sympy` (ch8) |
+| Python packages | `capstone`, `unicorn`, `pefile`, `z3-solver`, `pycryptodome`, `numpy`, `pillow`, `cryptography`, `sympy` (ch8), `lief` (ch9) |
 | Node.js | 24.x — runs Go WASM via the stock `wasm_exec.js` (ch8); `npm i wabt` only for `wasm-objdump -x` |
+| WSL Ubuntu | 26.04 with WSLg, `libwebkit2gtk-4.1-0`, `gdb`, `strace`. Only needed to run ch9 or dump its script; not needed for the solve |
 | C compiler | `python -m ziglang cc` (used for ch4 `harness.c` / `recover.c` when no native toolchain) |
 
 Install the Python deps:
@@ -112,6 +113,31 @@ python -m pip install capstone unicorn pefile z3-solver pycryptodome numpy pillo
    - `instr.py` + `trace.js`: splices entry/exit hooks into chosen functions through the `runtime.getRandomData` import (tag, then `SP|1`). Usage: `python instr.py 3140-3274 i.wasm && node trace.js <input>` → `trace.txt`, with string and bigint arguments decoded.
    - `cert.py` / `enc.py` / `build.py` / `pratt.py`: the original solve path (`facts.json` = the factor tree).
 
+### 9 — NeonOutRun
+1. Extract, then solve offline from the binary alone:
+   ```bash
+   cd 9-neonoutrun-attempt-2
+   "C:/Program Files/7-Zip/7z.exe" x -pflare 9-NeonOutRun.7z
+   python emu.py      # unicorn: per-lap (K, sign), D=180, 16 Taylor terms -> params.json
+   python solve2.py   # -> R3_ag3nt_4b0ut_t0_f33l_d1zzy@flare-on.com
+   ```
+   - `emu.py` maps the ELF LOAD segments, applies the RELATIVE relocations, and runs:
+     - the constant byte chain `0x67ed5b..0x67eec7` (→ 90);
+     - the 64-bit chains `0x67ef9f..0x67f8b8` (→ D, term count);
+     - the per-lap helpers `0x67f9d8(i, 90)` → `0x68003e`.
+   - `solve2.py` solves `K_i + s_i*t_i ≡ 90 (mod 360)` for `t_i ∈ [0,255]`. It appends `@f1are-on.com` and applies the host's `[0x1e] += 0x3b` patch.
+2. *(Optional: the decoy layer)*
+   - Run `dump.sh` in WSL Ubuntu. It launches the game detached and `gcore`s it; ptrace_scope must be 0, and the core is ~15 GB.
+   - Grep the core for `carRatio` to carve `game.js`. `python solve.py` then prints the decoy, `decode_this_system_to_win_it@f1are-on.com`.
+   - Delete the core afterwards.
+3. *(Re-deriving the hooks)* `python cdis.py <addr>` disassembles the function containing an address, using `.eh_frame_hdr` bounds. `python xref.py <addr>...` finds RIP-relative references. The hooks are:
+   - `Array.sort` = `0x67deb2`
+   - `Math.min` = `0x67eb83`
+   - `replaceAll` = `0x67e81e`
+   - G1 @ `0x1438590`, G2 @ `0x1438580`
+
+   Saved disassembly is in `disasm/`.
+
 ## Sanity checks
 - ch5: `Σ 2^-len == 1.000000` (Kraft equality) confirms the length-table parse; every recovered file starts `ff d8 ff e0` and ends `ff d9`.
 - ch4: expect exactly one serial in `[0, 2^32)` whose plaintext contains `flare-on.com`.
@@ -121,3 +147,7 @@ python -m pip install capstone unicorn pefile z3-solver pycryptodome numpy pillo
   - `AES_dec(key, 0¹⁶) = 9ba0147dcb8e3ac4d9dd815bbc2a4be1` (plain AES-256).
   - The 20-byte certificate for 3 (`0101000000010000000001000000030100000002`) passes `Kd5oA2q` and reaches the comparison against `N`.
   - The full certificate is 3,891 bytes (5,208 base64 chars), and every node satisfies ∏children = A−1.
+- ch9:
+  - `emu.py` reports the byte chain = `0x5a` (90), D = 180.0 and 16 terms.
+  - Each of the 28 congruences has **exactly one** solution in 0..255, and all are printable ASCII.
+  - The unique `add byte ptr [rcx+0x1e], 0x3b` in `.text` is at `0x67ea68`.

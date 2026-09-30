@@ -91,6 +91,56 @@
     "tmax": "2026-09-29T09:59:39.409Z",
     "session": "8ad03a1c-d47c-470b-9aee-210c2a3d8873 (+subagents)",
     "dir": "8-crux",
-    "result": "abandoned"
+    "result": "abandoned",
+    "note": "Token/turn counts above are the pre-compaction measurement only.",
+    "continuation": {
+      "name": "crux (attempt 1, resumed continuation)",
+      "session": "8ad03a1c-d47c-470b-9aee-210c2a3d8873 (post-compaction) + 5 subagents",
+      "models": [
+        "claude-opus-4-8",
+        "claude-fable-5",
+        "claude-opus-4-8"
+      ],
+      "result": "did not independently solve; mechanism fully re-derived and verified",
+      "what_it_established": "flag = pkcs7_unpad(AES-256-CBC-dec(fixed 64B CT, SHA256(M), IV)); M = canonical Pratt cert of the 256-bit prime N; proved full deterministic branch coverage of the 3270 decode; validated the formula byte-exact vs the wasm on multiple inputs.",
+      "why_it_stalled": "Encoded the prime-2 leaf as a non-canonical 14-byte 0x01-node (key=2, empty value) instead of the canonical single 0x00 byte. The verifier accepts both, so the cert passed and reached the final AES, but hashed to the wrong SHA-256 key. This produced a phantom '216 free leaf-value bytes' and a fruitless SHA-256 preimage hunt: a validated SHA-NI brute over the full uniform 4-byte space, ~50 deterministic value conventions, modexp-residue analysis, and full state-coverage instrumentation.",
+      "resolution": "Reading the attempt-2 write-up revealed the 0x00-leaf grammar. Rebuilding with 0x00 leaves gives the exact 3891-byte cert / 5208-char input; the unmodified main.wasm returns the flag, reproduced byte-for-byte in this session.",
+      "flag": "Pr4tt_Pr1M4lItY_C3rt5_4nd_Wa4aA4aAA4aAA4a4a5M@flare-on.com"
+    }
+  },
+  "9": {
+    "name": "NeonOutRun",
+    "out": 51065,
+    "inp": 156,
+    "cr": 8811524,
+    "cc": 172927,
+    "models": {
+      "claude-opus-5-5": 78
+    },
+    "tmin": "2026-09-29T23:25:14.806Z",
+    "tmax": "2026-09-30T00:15:11.168Z",
+    "session": "a9fe5c96-47eb-4585-b003-7ac857e47fa5",
+    "dir": "9-neonoutrun-attempt-2",
+    "result": "solved",
+    "flag": "R3_ag3nt_4b0ut_t0_f33l_d1zzy@flare-on.com",
+    "note": "Includes one rejected submission of the attempt-1 decoy before the builtin-hook gate was reversed; measured up to the start of the write-up."
+  },
+  "9-attempt1": {
+    "name": "NeonOutRun (attempt 1, decoy)",
+    "out": 1019290,
+    "inp": 948,
+    "cr": 150010266,
+    "cc": 1737578,
+    "models": {
+      "claude-opus-5-5": 121,
+      "claude-opus-4-8": 352
+    },
+    "tmin": "2026-09-29T10:28:42.060Z",
+    "tmax": "2026-09-29T23:23:08.637Z",
+    "session": "a7403356-aec6-4dd1-a141-2b680af9c67e (+1 subagent)",
+    "dir": "9-neonoutrun",
+    "result": "wrong flag (decoy)",
+    "flag_submitted": "decode_this_system_to_win_it@flare-on.com",
+    "why_it_failed": "Modeled the Math.min hook weight as sin(F(lap)) independent of the lap-time byte, so the G1==G2 gate looked unsatisfiable; took the JS neon string + f1are->flare patch as the flag and ignored the prompt's 'victory screen = dummy' note."
   }
 }

@@ -1,0 +1,329 @@
+INFO  Using log config file: jar:file:/C:/Users/cavila/Desktop/tools/ghidra_12.1.2_PUBLIC/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml (LoggingInitialization)  
+INFO  Using log file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\application.log (LoggingInitialization)  
+INFO  Loading user preferences: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\preferences (Preferences)  
+INFO  Loading previous preferences: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.3_PUBLIC\preferences (Preferences)  
+INFO  Searching for classes... (ClassSearcher)  
+INFO  Class search complete (728 ms) (ClassSearcher)  
+WARNING: Final field name in class ghidra.util.charset.CharsetInfo has been mutated reflectively by class com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$2 in unnamed module @6c1a5b54 (file:/C:/Users/cavila/Desktop/tools/ghidra_12.1.2_PUBLIC/Ghidra/Framework/Generic/lib/gson-2.13.2.jar)
+WARNING: Use --enable-final-field-mutation=ALL-UNNAMED to avoid a warning
+WARNING: Mutating final fields will be blocked in a future release unless final field mutation is enabled
+INFO  Initializing SSL Context (DefaultSSLContextInitializer)  
+INFO  Initializing Random Number Generator... (SecureRandomFactory)  
+INFO  Random Number Generator initialization complete: SHA1PRNG (SecureRandomFactory)  
+INFO  Trust manager disabled, cacerts have not been set (DefaultTrustManagerFactory)  
+INFO  Headless startup complete (2533 ms) (AnalyzeHeadless)  
+INFO  Class searcher loaded 59 extension points (20 false positives) (ClassSearcher)  
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldOffset has been called by org.apache.felix.framework.util.SecureAction (file:/C:/Users/cavila/Desktop/tools/ghidra_12.1.2_PUBLIC/Ghidra/Features/Base/lib/org.apache.felix.framework-7.0.5.jar)
+WARNING: Please consider reporting this to the maintainers of class org.apache.felix.framework.util.SecureAction
+WARNING: sun.misc.Unsafe::staticFieldOffset will be removed in a future release
+INFO  HEADLESS Script Paths:
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\FileFormats\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\Base\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\PyGhidra\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\DATA\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\BytePatterns\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\SwiftDemangler\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\JVM\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\VersionTracking\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\PIC\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\Atmel\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\PDB\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\WildcardAssembler\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\MicrosoftCodeAnalyzer\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Processors\8051\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\FunctionID\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\BSim\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\Decompiler\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Debug\Debugger-rmi-trace\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\DecompilerDependent\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\GnuDemangler\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Debug\Debugger\ghidra_scripts
+    C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\SystemEmulation\ghidra_scripts (HeadlessAnalyzer)  
+INFO  HEADLESS: execution starts (HeadlessAnalyzer)  
+INFO  Creating project: C:\Users\cavila\Desktop\ctf\flareon13-2026\6-threatinvaders\ThreatInvaders\exp\ghidra_proj\ti (HeadlessAnalyzer)  
+INFO  Creating project: C:\Users\cavila\Desktop\ctf\flareon13-2026\6-threatinvaders\ThreatInvaders\exp\ghidra_proj\ti (DefaultProject)  
+INFO  REPORT: Processing input files:  (HeadlessAnalyzer)  
+INFO       project: C:\Users\cavila\Desktop\ctf\flareon13-2026\6-threatinvaders\ThreatInvaders\exp\ghidra_proj\ti (HeadlessAnalyzer)  
+INFO  IMPORTING: file:///C:/Users/cavila/Desktop/ctf/flareon13-2026/6-threatinvaders/ThreatInvaders/exp/ti_pe.exe (HeadlessAnalyzer)  
+INFO  Using Loader: Portable Executable (PE) (ProgramLoader)  
+INFO  Using Language/Compiler: x86:LE:64:default:windows (ProgramLoader)  
+INFO  Using Library Search Path: [., C:\WINDOWS\SysWOW64, C:\Program Files\Java\jdk-26.0.1\bin, C:\WINDOWS\Sun\Java\bin, C:\WINDOWS\system32, C:\WINDOWS, C:\Users\cavila\bin, C:\Program Files\Git\mingw64\bin, C:\Program Files\Git\usr\local\bin, C:\Program Files\Git\usr\bin, C:\Program Files\Common Files\Oracle\Java\javapath, C:\WINDOWS\System32\Wbem, C:\WINDOWS\System32\WindowsPowerShell\v1.0, C:\WINDOWS\System32\OpenSSH, C:\Program Files\Git\cmd, C:\Program Files\7-Zip, C:\Users\cavila\AppData\Local\Android\Sdk\platform-tools, C:\Program Files\nodejs, C:\Program Files\Docker\Docker\resources\bin, C:\Program Files (x86)\cloudflared, C:\Users\cavila\AppData\Local\Microsoft\WindowsApps, C:\Users\cavila\AppData\Local\Microsoft\WinGet\Packages\marlocarlo.psmux_Microsoft.Winget.Source_8wekyb3d8bbwe, C:\Users\cavila\AppData\Local\Programs\Microsoft VS Code\bin, C:\Users\cavila\.local\bin, C:\Users\cavila\AppData\Roaming\npm, C:\Users\cavila\AppData\Local\Microsoft\WinGet\Packages\Hugo.Hugo.Extended_Microsoft.Winget.Source_8wekyb3d8bbwe, C:\Users\cavila\AppData\Local\Python\pythoncore-3.14-64\Scripts, C:\Program Files\Rizin\bin, C:\Users\cavila\.dotnet\tools, C:\Program Files\Git\usr\bin\vendor_perl, C:\Program Files\Git\usr\bin\core_perl] (ProgramLoader)  
+INFO  TLS callbacks at 140680f80 (TLSDirectory)  
+INFO  TLS callbacks at 1800e5888 (TLSDirectory)  
+INFO  TLS callbacks at 1800ae9e0 (TLSDirectory)  
+WARN  Invalid or missing function at 1800c2738 (ExportDataDirectory)  
+INFO  TLS callbacks at 180632c40 (TLSDirectory)  
+WARN  Invalid or missing function at 18071975c (ExportDataDirectory)  
+WARN  Invalid or missing function at 1800c894c (ExportDataDirectory)  
+INFO  Additional info:
+Loading file:///C:/Users/cavila/Desktop/ctf/flareon13-2026/6-threatinvaders/ThreatInvaders/exp/ti_pe.exe?MD5=167c58e9af8579935343d47453b81b9c...
+------------------------------------------------
+
+Searching 27 paths for library ADVAPI32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/advapi32.dll
+Loading file:///C:/Windows/System32/advapi32.dll?MD5=8b341831df1be2e0b83fb26fc9aba2a4...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\advapi32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CORE-WINRT-L1-1-0.DLL...
+Library not found.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-CONVERT-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-convert-l1-1-0.dll?MD5=10586394ea9480d896dc90cb41fbb349...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-convert-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-environment-l1-1-0.dll?MD5=4b2639aa215141a968dddefb30e5e21d...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-environment-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-FILESYSTEM-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-filesystem-l1-1-0.dll?MD5=2708aaf92c87e569b312556e51fb11f8...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-filesystem-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-HEAP-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-heap-l1-1-0.dll?MD5=011cf908bfb96ebe4f6dae19820b1c9f...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-heap-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-LOCALE-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-locale-l1-1-0.dll?MD5=b86b2d5160adc92730398286e29f6a39...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-locale-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-MATH-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-math-l1-1-0.dll?MD5=41f4e348b750a18e8599a756021f947a...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-math-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-runtime-l1-1-0.dll?MD5=7307d9479d874ec7df299f497c0b03f3...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-runtime-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-STDIO-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-stdio-l1-1-0.dll?MD5=a3ac58404a0ceed624f9a18d0a65852b...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-stdio-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-STRING-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-string-l1-1-0.dll?MD5=38f92437d012a0f6ad6e435dfaed6cea...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-string-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-TIME-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-time-l1-1-0.dll?MD5=d709d32a2744df53af5fb8a50c85a32f...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-time-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library API-MS-WIN-CRT-UTILITY-L1-1-0.DLL...
+Loading file:///C:/Program Files/Java/jdk-26.0.1/bin/api-ms-win-crt-utility-l1-1-0.dll?MD5=cc741d481aea80559546da3464b01ce0...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-utility-l1-1-0.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library KERNEL32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/kernel32.dll
+Loading file:///C:/Windows/System32/kernel32.dll?MD5=046e6b86273b9cc2ed367bdcf9c12b44...
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\kernel32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library OLE32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/ole32.dll
+Loading file:///C:/Windows/System32/ole32.dll?MD5=307ac650881c55f4ba2666de9a7191e4...
+[ole32.dll]: failed to create WEVTResource at 180184740: Failed to resolve data length for WEVTResource
+Created exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\ole32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library OLEAUT32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/oleaut32.dll
+Loading file:///C:/Windows/System32/oleaut32.dll?MD5=36de5774ec87b0d53c327ae1f7f103cd...
+Created exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\oleaut32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library SHELL32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/shell32.dll
+Loading file:///C:/Windows/System32/shell32.dll?MD5=aa8575c390922c7a6f00c6ddf4c63538...
+Created exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\shell32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library USER32.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/user32.dll
+Loading file:///C:/Windows/System32/user32.dll?MD5=0a96167c4b0625336617aee21c3a7ad1...
+[user32.dll]: failed to create WEVTResource at 1800e7a70: Failed to resolve data length for WEVTResource
+Using existing exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\user32.exports
+Library not saved to project.
+------------------------------------------------
+
+Searching 27 paths for library VERSION.DLL...
+Skipping library which is the wrong architecture: file:///C:/Windows/SysWOW64/version.dll
+Loading file:///C:/Windows/System32/version.dll?MD5=0793e3f7fad65b159b5f242400bfc140...
+Created exports file: C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\version.exports
+Library not saved to project.
+------------------------------------------------
+
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\kernel32.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\advapi32.exports
+Applying cached symbols from OLE32.DLL
+Applying cached symbols from OLEAUT32.DLL
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\user32.exports
+Applying cached symbols from SHELL32.DLL
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-string-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-heap-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-convert-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-stdio-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-environment-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-utility-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-runtime-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-filesystem-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-math-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-time-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\api-ms-win-crt-locale-l1-1-0.exports
+Applying C:\Users\cavila\AppData\Roaming\ghidra\ghidra_12.1.2_PUBLIC\symbols\win64\version.exports
+Linking the External Programs of 'ti_pe.exe' to imported libraries...
+  [KERNEL32.DLL] -> not found in project
+  [ADVAPI32.DLL] -> not found in project
+  [OLE32.DLL] -> not found in project
+  [OLEAUT32.DLL] -> not found in project
+  [USER32.DLL] -> not found in project
+  [SHELL32.DLL] -> not found in project
+  [API-MS-WIN-CRT-STRING-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-HEAP-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-CONVERT-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-STDIO-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-ENVIRONMENT-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-UTILITY-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-RUNTIME-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-FILESYSTEM-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-MATH-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-TIME-L1-1-0.DLL] -> not found in project
+  [API-MS-WIN-CRT-LOCALE-L1-1-0.DLL] -> not found in project
+  [VERSION.DLL] -> not found in project
+  [API-MS-WIN-CORE-WINRT-L1-1-0.DLL] -> not found in project
+------------------------------------------------
+
+ (ProgramLoader)  
+INFO  IMPORTING: Loaded 0 additional files (HeadlessAnalyzer)  
+INFO  ANALYZING all memory and code: file:///C:/Users/cavila/Desktop/ctf/flareon13-2026/6-threatinvaders/ThreatInvaders/exp/ti_pe.exe (HeadlessAnalyzer)  
+WARN  Ignoring leading '_' chars on no-return name '___raise_securityfailure' specified in file: C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\Base\data\PEFunctionsThatDoNotReturn (NoReturnFunctionAnalyzer)  
+WARN  Ignoring leading '_' chars on no-return name '___report_rangecheckfailure' specified in file: C:\Users\cavila\Desktop\tools\ghidra_12.1.2_PUBLIC\Ghidra\Features\Base\data\PEFunctionsThatDoNotReturn (NoReturnFunctionAnalyzer)  
+INFO  Skipping PDB processing: failed to locate PDB file in configured locations (PdbUniversalAnalyzer)  
+INFO  Use a script to set the PDB file location. I.e.,
+    PdbAnalyzer.setPdbFileOption(currentProgram, new File("/path/to/pdb/file.pdb")); or
+    PdbUniversalAnalyzer.setPdbFileOption(currentProgram, new File("/path/to/pdb/file.pdb"));
+Or set the symbol server search configuration using:    PdbPlugin.saveSymbolServerServiceConfig(...);
+ This must be done using a pre-script (prior to analysis). (PdbUniversalAnalyzer)  
+INFO  Packed database cache: C:\Users\cavila\AppData\Local\ghidra\packed-db-cache (PackedDatabaseCache)  
+INFO  hit non-returning function, restarting decompiler switch analyzer later (DecompilerSwitchAnalyzer)  
+WARN  Decompiling 14019c590, pcode error at 14019c624: Unable to resolve constructor at 14019c624 (DecompileCallback)  
+WARN  Decompiling 1405280b0: Unable to read bytes at ram:20ccccccc (DecompileCallback)  
+WARN  Decompiling 14043fb60: Unable to read bytes at ram:168ec8348 (DecompileCallback)  
+WARN  Decompiling 1405535c0: Unable to read bytes at ram:143020100 (DecompileCallback)  
+WARN  Decompiling 14024a200, pcode error at 14024a43c: Unable to resolve constructor at 14024a43c (DecompileCallback)  
+WARN  Decompiling 1400f8b10, pcode error at 14000000c: Unable to resolve constructor at 14000000c (DecompileCallback)  
+WARN  Decompiling 14016d6b0, pcode error at 14016d88e: Unable to resolve constructor at 14016d88e (DecompileCallback)  
+WARN  Decompiling 1403ef900: Unable to read bytes at ram:141010101 (DecompileCallback)  
+WARN  Decompiling 1403ef900, pcode error at 14000000c: Unable to resolve constructor at 14000000c (DecompileCallback)  
+WARN  Decompiling 1403ef900: Unable to read bytes at ram:141010101 (DecompileCallback)  
+WARN  Decompiling 1403ef900, pcode error at 14000000c: Unable to resolve constructor at 14000000c (DecompileCallback)  
+WARN  Decompiling 1400ecaf0, pcode error at 1400ed556: Unable to resolve constructor at 1400ed556 (DecompileCallback)  
+WARN  Decompiling 1400ecaf0, pcode error at 1400ed556: Unable to resolve constructor at 1400ed556 (DecompileCallback)  
+WARN  Decompiling 140218840, pcode error at 140218b93: Unable to resolve constructor at 140218b93 (DecompileCallback)  
+WARN  Decompiling 14019c040, pcode error at 14019c130: Unable to resolve constructor at 14019c130 (DecompileCallback)  
+WARN  Decompiling 140442000: Unable to read bytes at ram:20ccccccc (DecompileCallback)  
+WARN  Decompiling 140521500: Unable to read bytes at ram:144040100 (DecompileCallback)  
+WARN  Decompiling 1403f5060: Unable to read bytes at ram:141010000 (DecompileCallback)  
+WARN  Decompiling 1403f5060, pcode error at 14000000c: Unable to resolve constructor at 14000000c (DecompileCallback)  
+WARN  Decompiling 14019c650, pcode error at 14019c755: Unable to resolve constructor at 14019c755 (DecompileCallback)  
+WARN  Decompiling 1405535c0: Unable to read bytes at ram:143020100 (DecompileCallback)  
+WARN  Decompiling 14028e5e0, pcode error at ea8d0028: Could not follow disassembly flow into non-existing memory at ea8d0028 (DecompileCallback)  
+WARN  Decompiling 14043fa70: Unable to read bytes at ram:20ccccccc (DecompileCallback)  
+WARN  Decompiling 14054ccb0: Unable to read bytes at ram:1e9480073 (DecompileCallback)  
+WARN  Decompiling 1401f72a0: Unable to read bytes at ram:148080000 (DecompileCallback)  
+WARN  Decompiling 1401f72a0, pcode error at 14000000c: Unable to resolve constructor at 14000000c (DecompileCallback)  
+WARN  Decompiling 14054ccb0: Unable to read bytes at ram:1e9480073 (DecompileCallback)  
+WARN  Decompiling 14043fc90: Unable to read bytes at ram:168ec8348 (DecompileCallback)  
+WARN  Decompiling 1400f9a90, pcode error at 14000000c: Unable to resolve constructor at 14000000c (DecompileCallback)  
+WARN  Decompiling 140249f00, pcode error at 14024a16c: Unable to resolve constructor at 14024a16c (DecompileCallback)  
+WARN  Decompiling 14025d3a0, pcode error at 14000000c: Unable to resolve constructor at 14000000c (DecompileCallback)  
+WARN  Decompiling 14021d660: Unable to read bytes at ram:144040000 (DecompileCallback)  
+WARN  Decompiling 1403c3e90: Unable to read bytes at ram:20ccccccc (DecompileCallback)  
+WARN  Decompiling 14021d660: Unable to read bytes at ram:144040000 (DecompileCallback)  
+WARN  Decompiling 140545910: Unable to read bytes at ram:143030303 (DecompileCallback)  
+WARN  Decompiling 140577b10: Unable to read bytes at ram:141010101 (DecompileCallback)  
+WARN  Decompiling 140577b10, pcode error at 14000000c: Unable to resolve constructor at 14000000c (DecompileCallback)  
+WARN  Decompiling 1405d49f0: Unable to read bytes at ram:143020103 (DecompileCallback)  
+WARN  Decompiling 1405d49f0, pcode error at 140020104: Unable to resolve constructor at 140020104 (DecompileCallback)  
+WARN  Decompiling 140584a00: Unable to read bytes at ram:143020100 (DecompileCallback)  
+WARN  Decompiling 1401af150: Unable to read bytes at ram:142010000 (DecompileCallback)  
+WARN  Decompiling 1403d2860: Unable to read bytes at ram:142020100 (DecompileCallback)  
+WARN  Decompiling 1401af150: Unable to read bytes at ram:142010000 (DecompileCallback)  
+WARN  Decompiling 1403d2860: Unable to read bytes at ram:142020100 (DecompileCallback)  
+INFO  Unprocessed TypeDescriptor: enum StatusCode (TypeDescriptorModel)  
+INFO  Unprocessed TypeDescriptor: enum StatusCode (TypeDescriptorModel)  
+INFO  Unprocessed TypeDescriptor: void * __ptr64 (TypeDescriptorModel)  
+INFO  Unprocessed TypeDescriptor: void * __ptr64 (TypeDescriptorModel)  
+INFO  Unprocessed TypeDescriptor: enum StatusCode (TypeDescriptorModel)  
+INFO  Unprocessed TypeDescriptor: enum StatusCode (TypeDescriptorModel)  
+INFO  Unprocessed TypeDescriptor: void * __ptr64 (TypeDescriptorModel)  
+INFO  Unprocessed TypeDescriptor: void * __ptr64 (TypeDescriptorModel)  
+INFO  Applied data type archive: windows_vs12_64 (ApplyDataArchiveAnalyzer)  
+INFO  Applied data type archive: windows_vs12_64 (ApplyDataArchiveAnalyzer)  
+INFO  -----------------------------------------------------
+    ASCII Strings                              2.047 secs
+    Apply Data Archives                        1.063 secs
+    Call Convention ID                         0.347 secs
+    Call-Fixup Installer                       0.370 secs
+    Create Address Tables                      3.305 secs
+    Create Address Tables - One Time           8.146 secs
+    Create Function                            0.448 secs
+    Data Reference                             5.707 secs
+    Decompiler Switch Analysis                 6.893 secs
+    Decompiler Switch Analysis - One Time    132.421 secs
+    Demangler Microsoft                        0.138 secs
+    Disassemble Entry Points                  58.030 secs
+    Embedded Media                             0.142 secs
+    External Entry References                  0.002 secs
+    Function ID                               19.183 secs
+    Function Start Search                      0.651 secs
+    Non-Returning Functions - Discovered      29.104 secs
+    Non-Returning Functions - Known            0.071 secs
+    PDB Universal                              0.037 secs
+    Reference                                  5.653 secs
+    Scalar Operand References                 22.658 secs
+    Shared Return Calls                        4.411 secs
+    Stack                                    104.212 secs
+    Subroutine References                      3.016 secs
+    Subroutine References - One Time           0.137 secs
+    Windows x86 PE Exception Handling          2.698 secs
+    Windows x86 PE RTTI Analyzer               8.822 secs
+    Windows x86 Thread Environment Block (TEB) Analyzer     0.043 secs
+    WindowsResourceReference                   2.259 secs
+    x86 Constant Reference Analyzer           93.137 secs
+-----------------------------------------------------
+     Total Time   515 secs
+-----------------------------------------------------
+ (AutoAnalysisManager)  
+INFO  REPORT: Analysis succeeded for file: file:///C:/Users/cavila/Desktop/ctf/flareon13-2026/6-threatinvaders/ThreatInvaders/exp/ti_pe.exe (HeadlessAnalyzer)  
+INFO  /ti_pe.exe: file created (cavila) (LocalFileSystem)  
+INFO  REPORT: Save succeeded for: /ti_pe.exe (ti:/ti_pe.exe) (HeadlessAnalyzer)  
+INFO  REPORT: Import succeeded (HeadlessAnalyzer)  

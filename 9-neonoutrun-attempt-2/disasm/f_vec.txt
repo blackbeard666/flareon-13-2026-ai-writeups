@@ -1,0 +1,21 @@
+==== func 67e633 size 46
+67e633: push rbx
+67e634: mov rbx, rdi
+67e637: push 1
+67e639: pop rcx
+67e63a: xor eax, eax
+67e63c: lock cmpxchg dword ptr [rip + 0xda9e9c], ecx
+67e644: jne 0x67e66b
+67e646: lea rdi, [rip + 0xda9e97]
+67e64d: call 0x4c2ce5
+67e652: lea rcx, [rip + 0xda9e87]
+67e659: movzx eax, al
+67e65c: and eax, 1
+67e65f: mov qword ptr [rbx + 8], rcx
+67e663: mov byte ptr [rbx + 0x10], dl
+67e666: mov qword ptr [rbx], rax
+67e669: pop rbx
+67e66a: ret 
+67e66b: lea rdi, [rip + 0xda9e6e]
+67e672: call 0x620ae0
+67e677: jmp 0x67e646

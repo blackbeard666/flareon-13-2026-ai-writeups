@@ -1,0 +1,11 @@
+spawned 1984
+TEL#0 conn=1 fb_len=0 decoded=4096 nonzero=0 head=000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+TEL#1 conn=2 fb_len=600 decoded=4096 nonzero=0 head=000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+game hwnds: [8391682]
+submitted feedback round 0
+submitted feedback round 1
+submitted feedback round 2
+submitted feedback round 3
+waiting for exfil beacons...
+done; distinct beacons: 2
+updater ran count: 5
