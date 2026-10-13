@@ -2,7 +2,10 @@
 
 **9/9 flags recovered with Claude Code on Windows 11.** Every challenge was solved offline, from a 24-second JavaScript pun to a garbled Go WASM Pratt-certificate verifier. **Two challenges needed a second attempt.** Each retry started a fresh session and cost under 4% of the failed first attempt.
 
-> 📊 **Interactive version:** [FLARE-On 13 Run Report](https://claude.ai/artifact/HHHxvuztfY72i6gDE4GEk2) (local copy: [`writeups/flareon13-report.html`](writeups/flareon13-report.html)) · 📝 **Write-ups:** [FLARE-On 13 Write-ups](https://claude.ai/artifact/AwJL5PqBTku6hnMb4TK5qm) (local copy: [`writeups/flareon13-writeups.html`](writeups/flareon13-writeups.html))
+> [!TIP]
+> **For a better view of this run report, navigate to the [HTML version](https://raw.githack.com/blackbeard666/flareon-13-2026-ai-writeups/main/writeups/flareon13-report.html)**, which has the interactive timeline, charts and tool heatmap.
+>
+> 📝 The write-ups also have an [HTML version](https://raw.githack.com/blackbeard666/flareon-13-2026-ai-writeups/main/writeups/flareon13-writeups.html).
 
 | Flags accepted | Attempts | First prompt → last flag | API list-price equivalent | Output tokens | Cache-read tokens | Tool calls |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
@@ -546,7 +549,7 @@ Every message the user typed during each attempt, from the transcripts in time o
 | 8 | crux | garble Go WASM / AES-CBC / Pratt primality certificate | [08-crux.md](writeups/08-crux.md) |
 | 9 | NeonOutRun | Rust Tauri + embedded V8 / hooked builtins / lap-time sine gate | [09-neonoutrun.md](writeups/09-neonoutrun.md) |
 
-The combined write-ups page is [`writeups/flareon13-writeups.html`](writeups/flareon13-writeups.html) ([online](https://claude.ai/artifact/AwJL5PqBTku6hnMb4TK5qm)). Notes for reproducing each solve are in [`writeups/REPLICATION.md`](writeups/REPLICATION.md), and the metrics index is [`writeups/README.md`](writeups/README.md).
+The combined write-ups page is [`writeups/flareon13-writeups.html`](writeups/flareon13-writeups.html) ([rendered](https://raw.githack.com/blackbeard666/flareon-13-2026-ai-writeups/main/writeups/flareon13-writeups.html)). Notes for reproducing each solve are in [`writeups/REPLICATION.md`](writeups/REPLICATION.md), and the metrics index is [`writeups/README.md`](writeups/README.md).
 
 ## Repository layout
 
