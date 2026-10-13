@@ -39,34 +39,40 @@ python -m pip install capstone unicorn pefile z3-solver pycryptodome numpy pillo
 - Open `flarecaptcha.html`, read the inline `<script>`, satisfy the CAPTCHA gate (theme: *fear of 13* → `triskaidekaphobia`). Flag assembled by the success branch.
 
 ### 2 — GhostStream
-1. `7z x -pflare -sns GhostStream.wim` (grab the ADS files, incl. `PolyjuicePotion.txt`).
-2. (Optional) `sniff.py` — pre-locks the child drop path, launches `GhostStream.exe` with a redirected `%TEMP%`, and reads `\\.\pipe\FlareChallenge`.
-3. `dec.py` reproduces the multi-mode (byte-sum-selected) string decryptor.
-4. `solve.py` / `brute.py` implement the **modified RC4** (`i += 19` step, output masked by `Dt[k] ^ ((19+C[k])&0xff)`), enumerate the themed key candidates, and print the output containing `flare-on`.
+1. `7z x -sns -oextracted GhostStream.wim` (keeps the ADS `PolyjuicePotion.txt:LordVoldemort`). Defender may lock the extracted WIM; extract it in an excluded folder if so.
+2. `python carve_child.py` — writes `child.exe` (the dropped `Partner_CTF.exe`) from the parent's PE resources.
+3. `python flag.py` → `y0u_kn0w_n07h1n6_j0n_5n0w@flare-on.com`. It runs the child's **modified RC4** (PRGA step `i += 18`, output masked by `Dt[k] ^ ((18+C[k])&0xff)`) keyed with `HarryPotter`.
+4. *(Where the key comes from)* `HarryPotter` is what the parent writes to `\\.\pipe\FlareChallenge`. To observe it live: `python patch_parent.py` (rebuilds `run/` with the parent's two checks NOPed at `0xe93`/`0xfae`), then `python sniff.py`, which pre-locks the child drop path, launches the parent with a redirected `%TEMP%`, and prints `PIPE: b'HarryPotter'`.
+5. `dec.py` reproduces the multi-mode (byte-sum-selected) string decryptor. `solve.py` / `brute.py` are the exploratory key-candidate searches.
 
 ### 3 — flareon13.doc (polyglot)
-1. `com_emu.py` / `small_emu.py` — Unicorn 16-bit emulation of the DOS COM stage (hook `int 0x21` AH=09h/02h).
-2. Carve the container layers: ISO/UDF (`cd.iso`, `udf`), the ZIP (`layer.zip`) whose entries use **Reduce** → `unreduce.py` (+ `zipr.py`), and the PDF via `pdfdec.py`.
-3. Extract the Mach-O `macho/click_me~.arm64-3`.
-4. `final.py` — verify the 6 fragments against their embedded MD5s, build `key = XOR of SHA256(frag)`, RC4-decrypt the blob → flag.
+1. `python carve.py` — `flareon13.doc` is a raw-mode CD image (2352-byte sectors); joining each sector's 2048-byte data block gives `cd.iso`, 7-Zip pulls `udf/click_me` out of its UDF, and the fat Mach-O's slices are written to `macho/click_me~.arm64` and `macho/click_me~.arm64-3`. (Running 7-Zip directly on the `.doc` gives a different, decoy Mach-O.)
+2. `python final.py` — verify the 6 fragments against their embedded MD5s, build `key = XOR of SHA256(frag)`, RC4-decrypt the blob → flag.
+3. *(Other layers, not needed for the flag)* `com_emu.py` / `small_emu.py` — Unicorn 16-bit emulation of the DOS COM stage (hook `int 0x21` AH=09h/02h); the ZIP (`layer.zip`) uses **Reduce** → `unreduce.py` (+ `zipr.py`); the PDF objects via `pdfdec.py`.
 
 ### 4 — ToxicMiner
-1. Produce the mapped image `image.bin` (pefile) and build the harness:
+1. Produce the mapped image `image.bin` and build the harness:
    ```bash
-   python -m ziglang cc harness.c -o harness.exe -lkernel32   # maps image.bin @0x140000000, calls the sample's own key+RC4 fns
+   7z e -so -pflare 4-ToxicMiner.7z ToxicMiner.exe | python make_image.py -   # sample never touches disk
+   python -m ziglang cc -O2 harness.c -o harness.exe -lkernel32   # maps image.bin @0x140000000, calls the sample's own key+RC4 fns
+   ./harness.exe 0x01CEC000 0x01CEC100                           # quick check around the winning serial
    ```
-   or use the standalone `recover.c` (pure-C SHA-256d + RC4).
+   The standalone `recover.c` (pure-C SHA-256d + RC4) does **not** reproduce the flag: the sample's SHA is modified, which is why the harness calls the sample's own code.
 2. Brute the 32-bit volume serial space (sharded via `h_*.txt`/`hit_*.txt`), select the plaintext containing `flare-on.com`.
 3. Winning serial `0x01CEC01D` → flag. `emu_key.py` / `emu_comp.py` were used to validate the derivation.
 
 ### 5 — catthief
-1. `decoder.py` does the whole recovery from the pcap bodies:
+1. Recover the exfiltrated files from the pcap:
+   ```bash
+   cd 5-catthief
+   7z x -pflare 5-catthief.7z catthief/capture.pcapng   # only the pcap is needed
+   python extract_bodies.py   # pure-Python pcapng parser -> streams/req_<port>.bin, streams/body_<port>.bin
+   python solve5.py           # writes recovered/*.jpg (5 files)
+   ```
+   `solve5.py` uses `decoder.py`'s primitives:
    - RC4 with `key=b"i11_b3_p1und3r1n_y3r_d474"` (keystream from pos 0),
    - `parse_lengths` = `int.from_bytes(pt[1:262],'big') >> 5` (base-256 code lengths),
-   - standard **canonical** codes, decode MSB-first from **bit 2091** to `EOI ff d9`.
-   ```bash
-   cd 5-catthief && python decoder.py    # writes recovered/*.jpg
-   ```
+   - standard **canonical** codes, decode MSB-first from **bit 2091**, trimmed at the last `ff d9`.
 2. The flag is painted on the treasure-chest scroll in `recovered/catcatcat.jpg`.
 3. *(Only if re-deriving the format)* the Frida **compression oracle** scripts (`c2.py`, `decoracle*.py`, etc.) replay the pcap commands and feed known-frequency probe files to confirm the table layout and the bit-2091 data start — **not required** to reproduce the flag from the provided pcap.
 

@@ -36,12 +36,12 @@ Strings are encrypted with a **sum-selected multi-mode** scheme — the decrypto
 ### 4. The cipher: a *modified* RC4
 The flag emitter is RC4 with a twist (`solve.py`):
 - **KSA**: standard `j = j + key[i%len] + S[i]`.
-- **PRGA**: the index step is **`i += 19`** (not `+1`), and each keystream byte is additionally masked:
-  `out[k] = S[(S[i]+S[j])&0xff] ^ Dt[k] ^ ((19 + C[k]) & 0xff)`
+- **PRGA**: the index step is **`i += 18`** (not `+1`), and each keystream byte is additionally masked:
+  `out[k] = S[(S[i]+S[j])&0xff] ^ Dt[k] ^ ((18 + C[k]) & 0xff)`
   where `Dt` is a string run through a *patched* `strlen`-style transform (`s[i] = ((s[i]+i+1)&0xff) ^ 0x13`) and `C` is a fixed 38-byte blob embedded in the child.
 
 ### 5. Recover the key & flag
-The key material is themed (`AlbusDumbledore`, the Polyjuice Potion). We enumerated the plausible key candidates (potion text, the window-create message variants, `AlbusDumbledore ` with/without trailing space) and the step value `L ∈ {18,19}`, ran them through the modified PRGA, and selected the output containing `flare-on`:
+The key material is themed: the parent reads `AlbusDumbledore` from the ADS `PolyjuicePotion.txt:LordVoldemort` and transforms it before sending it to the child. Enumerating static candidates (potion text, window-create message variants, `AlbusDumbledore ` with/without trailing space) didn't hit. Running the patched parent under `sniff.py` showed the pipe message is `HarryPotter`. Keying the modified PRGA with it, with step `L ∈ {18,19}` and mask `Dt`, gave the flag at `L = 18` (`flag.py`):
 
 ```
 y0u_kn0w_n07h1n6_j0n_5n0w@flare-on.com
@@ -55,9 +55,9 @@ flowchart TD
     P -->|drops child| C["Partner_CTF.exe<br/>(named pipe: \\.\pipe\FlareChallenge)"]
     C --> DEC[Multi-mode string decryptor<br/>op chosen by byte-sum]
     subgraph Modified RC4
-      K[key: AlbusDumbledore theme] --> KSA[standard KSA]
-      KSA --> PRGA["PRGA with i += 19"]
-      PRGA --> M["mask: ^ Dt[k] ^ ((19+C[k])&0xff)"]
+      K["key: HarryPotter (pipe message)"] --> KSA[standard KSA]
+      KSA --> PRGA["PRGA with i += 18"]
+      PRGA --> M["mask: ^ Dt[k] ^ ((18+C[k])&0xff)"]
     end
     DEC --> K
     M --> FLAG["y0u_kn0w_n07h1n6_j0n_5n0w@flare-on.com"]
