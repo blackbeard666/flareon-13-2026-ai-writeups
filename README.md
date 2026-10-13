@@ -1,4 +1,8 @@
-# FLARE-On 13 (2026) Run Report
+# FLARE-On 13 (2026): Driving AI Through the Challenges
+
+This is how I approached FLARE-On 13 and drove AI (Claude Code) to solve the challenges. It covers how I set up and prompted each challenge, how I steered the sessions when they stalled, where the AI went wrong, what the run cost, and what I'd change next year. Everything below is the run report for the whole event. The per-challenge write-ups and solver scripts are in [`writeups/`](writeups/) and the challenge folders.
+
+## Run report
 
 **9/9 flags recovered with Claude Code on Windows 11.** Every challenge was solved offline, from a 24-second JavaScript pun to a garbled Go WASM Pratt-certificate verifier. **Two challenges needed a second attempt.** Each retry started a fresh session and cost under 4% of the failed first attempt.
 
